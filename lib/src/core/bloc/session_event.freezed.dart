@@ -55,14 +55,13 @@ extension SessionEventPatterns on SessionEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _SessionStarted value)?  sessionStarted,TResult Function( _SessionLoggedIn value)?  sessionLoggedIn,TResult Function( _SessionLoggedOut value)?  sessionLoggedOut,TResult Function( _RefreshTokenTriggered value)?  refreshTokenTriggered,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _SessionStarted value)?  sessionStarted,TResult Function( _SessionLoggedIn value)?  sessionLoggedIn,TResult Function( _SessionLoggedOut value)?  sessionLoggedOut,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _SessionStarted() when sessionStarted != null:
 return sessionStarted(_that);case _SessionLoggedIn() when sessionLoggedIn != null:
 return sessionLoggedIn(_that);case _SessionLoggedOut() when sessionLoggedOut != null:
-return sessionLoggedOut(_that);case _RefreshTokenTriggered() when refreshTokenTriggered != null:
-return refreshTokenTriggered(_that);case _:
+return sessionLoggedOut(_that);case _:
   return orElse();
 
 }
@@ -80,14 +79,13 @@ return refreshTokenTriggered(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _SessionStarted value)  sessionStarted,required TResult Function( _SessionLoggedIn value)  sessionLoggedIn,required TResult Function( _SessionLoggedOut value)  sessionLoggedOut,required TResult Function( _RefreshTokenTriggered value)  refreshTokenTriggered,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _SessionStarted value)  sessionStarted,required TResult Function( _SessionLoggedIn value)  sessionLoggedIn,required TResult Function( _SessionLoggedOut value)  sessionLoggedOut,}){
 final _that = this;
 switch (_that) {
 case _SessionStarted():
 return sessionStarted(_that);case _SessionLoggedIn():
 return sessionLoggedIn(_that);case _SessionLoggedOut():
-return sessionLoggedOut(_that);case _RefreshTokenTriggered():
-return refreshTokenTriggered(_that);case _:
+return sessionLoggedOut(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -104,14 +102,13 @@ return refreshTokenTriggered(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _SessionStarted value)?  sessionStarted,TResult? Function( _SessionLoggedIn value)?  sessionLoggedIn,TResult? Function( _SessionLoggedOut value)?  sessionLoggedOut,TResult? Function( _RefreshTokenTriggered value)?  refreshTokenTriggered,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _SessionStarted value)?  sessionStarted,TResult? Function( _SessionLoggedIn value)?  sessionLoggedIn,TResult? Function( _SessionLoggedOut value)?  sessionLoggedOut,}){
 final _that = this;
 switch (_that) {
 case _SessionStarted() when sessionStarted != null:
 return sessionStarted(_that);case _SessionLoggedIn() when sessionLoggedIn != null:
 return sessionLoggedIn(_that);case _SessionLoggedOut() when sessionLoggedOut != null:
-return sessionLoggedOut(_that);case _RefreshTokenTriggered() when refreshTokenTriggered != null:
-return refreshTokenTriggered(_that);case _:
+return sessionLoggedOut(_that);case _:
   return null;
 
 }
@@ -128,13 +125,12 @@ return refreshTokenTriggered(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  sessionStarted,TResult Function()?  sessionLoggedIn,TResult Function( String? message,  bool isManualLogout)?  sessionLoggedOut,TResult Function()?  refreshTokenTriggered,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  sessionStarted,TResult Function()?  sessionLoggedIn,TResult Function( String? message,  bool isManualLogout)?  sessionLoggedOut,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SessionStarted() when sessionStarted != null:
 return sessionStarted();case _SessionLoggedIn() when sessionLoggedIn != null:
 return sessionLoggedIn();case _SessionLoggedOut() when sessionLoggedOut != null:
-return sessionLoggedOut(_that.message,_that.isManualLogout);case _RefreshTokenTriggered() when refreshTokenTriggered != null:
-return refreshTokenTriggered();case _:
+return sessionLoggedOut(_that.message,_that.isManualLogout);case _:
   return orElse();
 
 }
@@ -152,13 +148,12 @@ return refreshTokenTriggered();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  sessionStarted,required TResult Function()  sessionLoggedIn,required TResult Function( String? message,  bool isManualLogout)  sessionLoggedOut,required TResult Function()  refreshTokenTriggered,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  sessionStarted,required TResult Function()  sessionLoggedIn,required TResult Function( String? message,  bool isManualLogout)  sessionLoggedOut,}) {final _that = this;
 switch (_that) {
 case _SessionStarted():
 return sessionStarted();case _SessionLoggedIn():
 return sessionLoggedIn();case _SessionLoggedOut():
-return sessionLoggedOut(_that.message,_that.isManualLogout);case _RefreshTokenTriggered():
-return refreshTokenTriggered();case _:
+return sessionLoggedOut(_that.message,_that.isManualLogout);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -175,13 +170,12 @@ return refreshTokenTriggered();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  sessionStarted,TResult? Function()?  sessionLoggedIn,TResult? Function( String? message,  bool isManualLogout)?  sessionLoggedOut,TResult? Function()?  refreshTokenTriggered,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  sessionStarted,TResult? Function()?  sessionLoggedIn,TResult? Function( String? message,  bool isManualLogout)?  sessionLoggedOut,}) {final _that = this;
 switch (_that) {
 case _SessionStarted() when sessionStarted != null:
 return sessionStarted();case _SessionLoggedIn() when sessionLoggedIn != null:
 return sessionLoggedIn();case _SessionLoggedOut() when sessionLoggedOut != null:
-return sessionLoggedOut(_that.message,_that.isManualLogout);case _RefreshTokenTriggered() when refreshTokenTriggered != null:
-return refreshTokenTriggered();case _:
+return sessionLoggedOut(_that.message,_that.isManualLogout);case _:
   return null;
 
 }
@@ -320,37 +314,5 @@ as bool,
 
 
 }
-
-/// @nodoc
-
-
-class _RefreshTokenTriggered implements SessionEvent {
-  const _RefreshTokenTriggered();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RefreshTokenTriggered);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'SessionEvent.refreshTokenTriggered()';
-}
-
-
-}
-
-
-
 
 // dart format on

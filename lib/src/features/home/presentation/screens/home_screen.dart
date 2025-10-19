@@ -38,7 +38,7 @@ class _HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final userFullName = context.select<SessionBloc, String?>(
       (bloc) =>
-          bloc.state.mapOrNull(authenticated: (state) => state.user.fullName),
+          bloc.state.mapOrNull(authenticated: (state) => state.user.namaLengkap),
     );
 
     return BlocListener<AuthBloc, AuthState>(

@@ -2,8 +2,7 @@ import 'package:alice/alice.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quanta_hris/src/core/di/injector.dart';
-import 'package:quanta_hris/src/features/authentication/presentation/screens/login_screen.dart'; // Akan kita buat
-import 'package:quanta_hris/src/features/authentication/presentation/screens/register_screen.dart';
+import 'package:quanta_hris/src/features/authentication/presentation/screens/login_screen.dart'; 
 import 'package:quanta_hris/src/features/home/presentation/screens/home_screen.dart'; // Akan kita buat
 import 'package:quanta_hris/src/features/splash/presentation/screens/splash_screen.dart'; // Akan kita buat
 
@@ -28,13 +27,6 @@ final GoRouter appRouter = GoRouter(
       path: '/login',
       builder: (BuildContext context, GoRouterState state) {
         return const LoginScreen();
-      },
-    ),
-    GoRoute(
-      name: 'register',
-      path: '/register',
-      builder: (BuildContext context, GoRouterState state) {
-        return const RegisterScreen();
       },
     ),
     // Rute untuk Home Screen (setelah login berhasil)

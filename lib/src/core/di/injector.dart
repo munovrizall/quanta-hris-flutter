@@ -5,11 +5,9 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quanta_hris/src/core/bloc/session_bloc.dart';
-import 'package:quanta_hris/src/core/bloc/session_event.dart';
 import 'package:quanta_hris/src/core/config/flavor_config.dart';
 import 'package:quanta_hris/src/core/network/auth_interceptor.dart';
 import 'package:quanta_hris/src/core/network/logging_interceptor.dart';
-import 'package:quanta_hris/src/core/network/token_interceptor.dart';
 import 'package:quanta_hris/src/core/routes/app_router.dart';
 import 'package:quanta_hris/src/core/storage/session_storage_repository.dart';
 import 'package:quanta_hris/src/core/storage/session_storage_repository_impl.dart';
@@ -19,8 +17,6 @@ import 'package:quanta_hris/src/features/authentication/data/repositories/auth_r
 import 'package:quanta_hris/src/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:quanta_hris/src/features/authentication/domain/usecases/login_usecase.dart';
 import 'package:quanta_hris/src/features/authentication/domain/usecases/logout_usecase.dart';
-import 'package:quanta_hris/src/features/authentication/domain/usecases/refresh_token_usecase.dart';
-import 'package:quanta_hris/src/features/authentication/domain/usecases/register_usecase.dart';
 import 'package:quanta_hris/src/features/authentication/domain/usecases/save_session_usecase.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:quanta_hris/src/features/home/data/datasources/home_remote_data_source.dart';
@@ -132,14 +128,11 @@ void _registerAuth() {
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
       getIt<AuthRemoteDataSource>(),
-      getIt<SessionStorageRepository>(),
     ),
   );
 
   // Use Cases
   getIt.registerFactory(() => LoginUseCase(getIt<AuthRepository>()));
-
-  getIt.registerFactory(() => RegisterUseCase(getIt<AuthRepository>()));
 
   getIt.registerFactory(
     () => SaveSessionUseCase(getIt<SessionStorageRepository>()),
@@ -153,13 +146,6 @@ void _registerAuth() {
   );
 
   getIt.registerFactory(
-    () => RefreshTokenUseCase(
-      authRepository: getIt<AuthRepository>(),
-      sessionStorageRepository: getIt<SessionStorageRepository>(),
-    ),
-  );
-
-  getIt.registerFactory(
     () => CheckSessionUseCase(getIt<SessionStorageRepository>()),
   );
 
@@ -167,7 +153,6 @@ void _registerAuth() {
   getIt.registerLazySingleton(
     () => SessionBloc(
       checkSessionUseCase: getIt<CheckSessionUseCase>(),
-      refreshTokenUseCase: getIt<RefreshTokenUseCase>(),
       sessionStorage: getIt<SessionStorageRepository>(),
     ),
   );
@@ -176,7 +161,6 @@ void _registerAuth() {
   getIt.registerFactory<AuthBloc>(
     () => AuthBloc(
       loginUseCase: getIt<LoginUseCase>(),
-      registerUseCase: getIt<RegisterUseCase>(),
       saveSessionUseCase: getIt<SaveSessionUseCase>(),
       logoutUseCase: getIt<LogoutUseCase>(),
       sessionBloc: getIt<SessionBloc>(),
@@ -252,29 +236,6 @@ void _configureDioInterceptors() {
   final mainInterceptors = <Interceptor>[
     LoggingInterceptor(),
     AuthInterceptor(sessionStorage),
-    TokenInterceptor(
-      getIt<AuthRepository>(),
-      dio,
-      onUnauthorized: (String message) {
-        AppLogger.e('🚨 UNAUTHORIZED ACCESS - $message');
-
-        // Automatic logout karena token invalid
-        getIt<SessionBloc>().add(
-          SessionEvent.sessionLoggedOut(
-            message: message,
-            isManualLogout: false,
-          ),
-        );
-
-        // Navigate to login screen
-        try {
-          router.go('/login');
-          AppLogger.i('✅ Successfully navigated to login');
-        } catch (e) {
-          AppLogger.e('❌ Error navigating to login: $e');
-        }
-      },
-    ),
   ];
 
   // Add Alice only if not production

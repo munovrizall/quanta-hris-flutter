@@ -7,20 +7,38 @@ part of 'user_model.dart';
 // **************************************************************************
 
 _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
-  id: (json['id'] as num).toInt(),
-  title: json['title'] as String?,
-  firstName: json['first_name'] as String,
-  lastName: json['last_name'] as String?,
-  clientId: (json['client_id'] as num).toInt(),
+  karyawanId: json['karyawan_id'] as String,
+  namaLengkap: json['nama_lengkap'] as String,
   email: json['email'] as String,
+  role: Role.fromJson(json['role'] as Map<String, dynamic>),
+  departemen: json['departemen'] as String,
+  jabatan: json['jabatan'] as String,
+  nomorTelepon: json['nomor_telepon'] as String,
 );
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'first_name': instance.firstName,
-      'last_name': instance.lastName,
-      'client_id': instance.clientId,
+      'karyawan_id': instance.karyawanId,
+      'nama_lengkap': instance.namaLengkap,
       'email': instance.email,
+      'role': instance.role,
+      'departemen': instance.departemen,
+      'jabatan': instance.jabatan,
+      'nomor_telepon': instance.nomorTelepon,
     };
+
+_Role _$RoleFromJson(Map<String, dynamic> json) => _Role(
+  roleId: json['role_id'] as String,
+  name: json['name'] as String,
+  guardName: json['guard_name'] as String,
+  createdAt: json['created_at'] as String,
+  updatedAt: json['updated_at'] as String,
+);
+
+Map<String, dynamic> _$RoleToJson(_Role instance) => <String, dynamic>{
+  'role_id': instance.roleId,
+  'name': instance.name,
+  'guard_name': instance.guardName,
+  'created_at': instance.createdAt,
+  'updated_at': instance.updatedAt,
+};

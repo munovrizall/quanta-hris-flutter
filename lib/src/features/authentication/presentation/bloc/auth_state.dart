@@ -1,6 +1,6 @@
 import 'package:quanta_hris/src/core/error/app_exception.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:quanta_hris/src/features/authentication/domain/entities/user_entity.dart';
+import 'package:quanta_hris/src/features/authentication/domain/entities/auth_entity.dart';
 
 part 'auth_state.freezed.dart';
 

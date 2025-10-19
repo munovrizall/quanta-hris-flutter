@@ -1,5 +1,5 @@
 import 'package:quanta_hris/src/core/storage/session_storage_repository.dart';
-import 'package:quanta_hris/src/features/authentication/domain/entities/user_entity.dart';
+import 'package:quanta_hris/src/features/authentication/domain/entities/auth_entity.dart';
 
 class CheckSessionUseCase {
   final SessionStorageRepository _sessionStorageRepository;
@@ -7,7 +7,7 @@ class CheckSessionUseCase {
   CheckSessionUseCase(this._sessionStorageRepository);
 
   Future<UserEntity?> call() async {
-    final authFuture = _sessionStorageRepository.getAuth();
+    final authFuture = _sessionStorageRepository.getToken();
     final userFuture = _sessionStorageRepository.getUser();
 
     final auth = await authFuture;

@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:quanta_hris/src/core/utils/app_logger.dart';
-import 'package:quanta_hris/src/features/authentication/domain/entities/auth_entity.dart';
-import 'package:quanta_hris/src/features/authentication/domain/entities/user_entity.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_secure_storage_devtool/flutter_secure_storage_devtool.dart';
+import 'package:quanta_hris/src/core/utils/app_logger.dart';
+import 'package:quanta_hris/src/features/authentication/domain/entities/auth_entity.dart';
 
 import 'session_storage_repository.dart';
 
@@ -40,8 +39,8 @@ class SessionStorageRepositoryImpl implements SessionStorageRepository {
   }
 
   @override
-  Future<void> saveAuth(AuthEntity auth) {
-    return _storage.write(key: _authKey, value: jsonEncode(auth.toJson()));
+  Future<void> saveToken(String token) {
+    return _storage.write(key: _authKey, value: jsonEncode(token));
   }
 
   @override
@@ -50,10 +49,11 @@ class SessionStorageRepositoryImpl implements SessionStorageRepository {
   }
 
   @override
-  Future<AuthEntity?> getAuth() async {
-    final authString = await _storage.read(key: _authKey);
-    if (authString != null) {
-      return AuthEntity.fromJson(jsonDecode(authString));
+  Future<String?> getToken() async {
+    final token = await _storage.read(key: _authKey);
+    
+    if (token != null) {
+      return token;
     }
     return null;
   }

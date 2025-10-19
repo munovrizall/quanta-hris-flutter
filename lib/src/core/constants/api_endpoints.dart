@@ -14,10 +14,8 @@ class ApiEndpoints {
 class AuthEndpoints {
   const AuthEndpoints();
 
-  final String login = '/v1/login';
-  final String logout = '/v1/logout';
-  final String register = '/v1/register';
-  final String refreshToken = '/v1/service/auth-refresh';
+  final String login = '/login';
+  final String logout = '/logout';
 }
 
 class HomeEndpoints {
@@ -39,5 +37,4 @@ class HomeEndpoints {
 class ProfileEndpoints {
   const ProfileEndpoints();
 
-  final String getProfile = '/v1/profile/user';
 }

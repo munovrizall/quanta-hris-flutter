@@ -15,12 +15,11 @@ class AuthInterceptor extends Interceptor {
     // Periksa apakah request ini BUKAN untuk endpoint login
     if (options.path != ApiEndpoints.auth.login) {
       // Jika bukan login, ambil token dari storage
-      final authData = await _sessionStorageRepository.getAuth();
-      final accessToken = authData?.accessToken;
+      final token = await _sessionStorageRepository.getToken();
 
-      if (accessToken != null) {
+      if (token != null) {
         // Jika token ada, tambahkan ke header
-        options.headers['Authorization'] = 'Bearer $accessToken';
+        options.headers['Authorization'] = 'Bearer $token';
       }
     }
 

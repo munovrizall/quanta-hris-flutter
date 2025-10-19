@@ -14,6 +14,4 @@ abstract class SessionEvent with _$SessionEvent {
     String? message,
     @Default(false) bool isManualLogout,
   }) = _SessionLoggedOut;
-
-  const factory SessionEvent.refreshTokenTriggered() = _RefreshTokenTriggered;
 }

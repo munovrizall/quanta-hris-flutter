@@ -26,7 +26,6 @@ class App extends StatelessWidget {
         ),
       ],
       child: MaterialApp.router(
-        title: flavorConfig.appName,
         theme: AppTheme.lightTheme,
         themeMode: ThemeMode.light,
         routerConfig: getIt<GoRouter>(),

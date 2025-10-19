@@ -24,7 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
-  // Hapus _isLoading karena akan menggunakan BLoC state
 
   @override
   void dispose() {
@@ -56,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 content: Text(
                   AppStrings.auth.messageLoginSuccess.replaceAll(
                     '{name}',
-                    user.fullName,
+                    user.namaLengkap,
                   ),
                 ),
                 backgroundColor: AppColors.primary,
@@ -231,31 +230,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
 
                                 const SizedBox(height: AppSpacing.medium),
-
-                                // TODO: Implement forgot password feature
-                                // Forgot Password
-                                Center(
-                                  child: PrimaryButton(
-                                    text: AppStrings.auth.buttonForgotPassword,
-                                    variant: PrimaryButtonVariant.outline,
-                                    size: PrimaryButtonSize.large,
-                                    onPressed: isLoading
-                                        ? null
-                                        : () {
-                                            ScaffoldMessenger.of(
-                                              context,
-                                            ).showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  AppStrings
-                                                      .auth
-                                                      .featureForgotPasswordNotAvailable,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                  ),
-                                ),
                               ],
                             ),
                           ],
