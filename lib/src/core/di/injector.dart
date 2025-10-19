@@ -83,7 +83,6 @@ void _registerNetworking() {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'x-api-key': config.apiKey,
         },
       ),
     );
@@ -104,7 +103,6 @@ void _registerNetworking() {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'x-api-key': config.apiKey,
         },
       ),
     );
