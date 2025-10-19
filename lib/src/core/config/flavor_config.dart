@@ -7,14 +7,10 @@ enum Flavor { production, dev }
 @immutable
 class FlavorConfig {
   final Flavor flavor;
-  final String appName;
   final String baseUrl;
-  final String apiKey;
 
   const FlavorConfig({
     required this.flavor,
-    required this.appName,
     required this.baseUrl,
-    required this.apiKey,
   });
 }

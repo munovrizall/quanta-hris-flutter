@@ -13,9 +13,7 @@ void main() {
   // 1. Konfigurasi spesifik untuk Dev
   final devConfig = FlavorConfig(
     flavor: Flavor.dev,
-    appName: "ACSM Dev",
-    baseUrl: "https://api2.smartcool.id/api",
-    apiKey: "95eb5617-d6ae-4b18-b682-7e43122f7c52",
+    baseUrl: "https://hris.smartcool.id/api",
   );
 
   // Panggil konfigurasi DI di sini

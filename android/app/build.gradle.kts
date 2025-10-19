@@ -42,18 +42,12 @@ android {
             dimension = "environment"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            resValue("string", "app_name", "ACSM Dev")
-        }
-        create("staging") {
-            dimension = "environment"
-            applicationIdSuffix = ".staging"
-            versionNameSuffix = "-staging"
-            resValue("string", "app_name", "ACSM Staging")
+            resValue("string", "app_name", "Quanta Dev")
         }
         create("production") {
             dimension = "environment"
             // Tidak ada suffix untuk production agar sesuai dengan rilis utama
-            resValue("string", "app_name", "ACSM Mobile")
+            resValue("string", "app_name", "Quanta HRIS")
         }
     }
 

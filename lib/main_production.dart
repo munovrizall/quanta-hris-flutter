@@ -13,9 +13,7 @@ void main() {
   // 1. Konfigurasi spesifik untuk Production
   final productionConfig = FlavorConfig(
     flavor: Flavor.production,
-    appName: "SmartCool",
-    baseUrl: "https://api.smartcool.id/api",
-    apiKey: "95eb5617-d6ae-4b18-b682-7e43122f7c52",
+    baseUrl: "https://hris.smartcool.id/api",
   );
 
   // Panggil konfigurasi DI di sini
