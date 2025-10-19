@@ -1,3 +1,9 @@
+import 'package:alice/alice.dart';
+import 'package:alice/model/alice_configuration.dart';
+import 'package:alice_dio/alice_dio_adapter.dart';
+import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quanta_hris/src/core/bloc/session_bloc.dart';
 import 'package:quanta_hris/src/core/bloc/session_event.dart';
 import 'package:quanta_hris/src/core/config/flavor_config.dart';
@@ -18,7 +24,6 @@ import 'package:quanta_hris/src/features/authentication/domain/usecases/register
 import 'package:quanta_hris/src/features/authentication/domain/usecases/save_session_usecase.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:quanta_hris/src/features/home/data/datasources/home_remote_data_source.dart';
-import 'package:quanta_hris/src/features/home/data/models/post_power_state_request.dart';
 import 'package:quanta_hris/src/features/home/data/repositories/home_repository_impl.dart';
 import 'package:quanta_hris/src/features/home/domain/repositories/home_repository.dart';
 import 'package:quanta_hris/src/features/home/domain/usecases/get_emission_usecase.dart';
@@ -26,18 +31,7 @@ import 'package:quanta_hris/src/features/home/domain/usecases/get_placement_acsm
 import 'package:quanta_hris/src/features/home/domain/usecases/get_site_dropdown_usecase.dart';
 import 'package:quanta_hris/src/features/home/domain/usecases/post_power_state_usecase.dart';
 import 'package:quanta_hris/src/features/home/presentation/bloc/home_bloc.dart';
-import 'package:quanta_hris/src/features/profile/data/datasources/profile_remote_data_source.dart';
-import 'package:quanta_hris/src/features/profile/data/repositories/profile_repository_impl.dart';
-import 'package:quanta_hris/src/features/profile/domain/repositories/profile_repository.dart';
-import 'package:quanta_hris/src/features/profile/domain/usecases/profile_usecase.dart';
-import 'package:quanta_hris/src/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:quanta_hris/src/features/splash/domain/usecases/check_session_usecase.dart';
-import 'package:alice/alice.dart';
-import 'package:alice/model/alice_configuration.dart';
-import 'package:alice_dio/alice_dio_adapter.dart';
-import 'package:dio/dio.dart';
-import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 
 final getIt = GetIt.instance;
 
@@ -47,7 +41,6 @@ void configureDependencies(FlavorConfig config) {
   _registerRouting();
   _registerAuth();
   _registerHome();
-  _registerProfile();
   _configureDioInterceptors();
 }
 
@@ -226,29 +219,6 @@ void _registerHome() {
   );
 }
 
-/// Register profile dependencies
-void _registerProfile() {
-  AppLogger.i('👤 Registering profile dependencies...');
-
-  // Data Source (uses main Dio - will be configured with interceptors)
-  getIt.registerLazySingleton<ProfileRemoteDataSource>(
-    () => ProfileRemoteDataSourceImpl(getIt<Dio>()),
-  );
-
-  // Repository
-  getIt.registerLazySingleton<ProfileRepository>(
-    () => ProfileRepositoryImpl(getIt<ProfileRemoteDataSource>()),
-  );
-
-  // Use Case
-  getIt.registerFactory(() => ProfileUseCase(getIt<ProfileRepository>()));
-
-  // BLoC
-  getIt.registerFactory(
-    () => ProfileBloc(profileUseCase: getIt<ProfileUseCase>()),
-  );
-}
-
 /// Configure Dio interceptors after all dependencies are registered
 void _configureDioInterceptors() {
   AppLogger.i('🔧 Configuring Dio interceptors...');
@@ -330,8 +300,7 @@ void validateDependencies() {
     GoRouter,
     AuthRepository,
     SessionBloc,
-    HomeRepository, // UPDATED: HomeRepository bukan ProfileRepository
-    ProfileRepository,
+    HomeRepository,
   ];
 
   for (final dep in dependencies) {
