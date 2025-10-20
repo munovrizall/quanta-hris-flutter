@@ -168,6 +168,8 @@ class AuthStrings {
 }
 
 /// Strings specific to the Home feature
+
+/// Strings specific to the Home feature
 class HomeStrings {
   const HomeStrings();
 
@@ -191,6 +193,30 @@ class HomeStrings {
   final String errorNoRoomInSite = 'Tidak ada ruangan di lokasi ini';
   final String errorNoAcInRoom = 'Tidak ada AC di ruangan ini';
   final String errorNoAcRegistered = 'Belum ada AC terdaftar';
+
+  // New strings for Home Screen UI
+  final String greetingPrefix = 'Halo, ';
+  final String greetingDefaultUser = 'Pengguna';
+  final String greetingSuffix = '!';
+  final String greetingSubtitle = 'Semoga harimu menyenangkan';
+
+  final String workTimeInLabel = 'Jam Masuk';
+  final String workTimeOutLabel = 'Jam Pulang';
+  final String defaultInTime = '08:00';
+  final String defaultOutTime = '17:00';
+
+  final String checkInButtonText = 'ABSEN MASUK';
+  final String checkOutButtonText = 'ABSEN PULANG';
+  final String checkInSubtitle = 'Tap untuk mencatat kehadiran';
+  final String checkOutSubtitle = 'Tap untuk mencatat jam pulang';
+
+  final String adminMenuTitle = 'Menu Administrasi';
+  final String leaveRequestLabel = 'Pengajuan\nCuti';
+  final String overtimeRequestLabel = 'Pengajuan\nLembur';
+  final String permissionRequestLabel = 'Pengajuan\nIzin';
+
+  final String absentTodayTitle = 'Tidak Hadir Hari Ini';
+  final String viewAllText = 'Lihat Semua';
 }
 
 class MonitoringStrings {
