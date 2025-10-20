@@ -80,13 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
         );
 
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () => context.go('/onboarding'),
-            ),
-          ),
           body: SafeArea(
             child: LayoutBuilder(
               builder: (context, constraints) {
