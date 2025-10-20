@@ -8,6 +8,7 @@ import 'package:quanta_hris/src/core/di/injector.dart';
 import 'package:quanta_hris/src/core/utils/date_formatter.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_state.dart';
+import 'package:quanta_hris/src/features/home/domain/entities/operational_hour_entity.dart';
 import 'package:quanta_hris/src/features/home/presentation/bloc/home_bloc.dart';
 import 'package:quanta_hris/src/features/home/presentation/bloc/home_event.dart';
 import 'package:quanta_hris/src/features/home/presentation/widgets/absentee_card.dart';
@@ -48,8 +49,29 @@ class _HomeViewState extends State<_HomeView> {
       ),
     );
 
+    final operationalHourData = context
+        .select<HomeBloc, OperationalHourEntity?>(
+          (bloc) => bloc.state.operationalHourData,
+        );
+
+    final isLoadingOperationalHour = context.select<HomeBloc, bool>(
+      (bloc) => bloc.state.isLoadingOperationalHour,
+    );
+
     final currentTime = DateFormatter.getCurrentTime();
     final currentDate = DateFormatter.getCurrentDateIndonesian();
+
+    // Extract working hours from API data or use defaults if not available
+    final startTime = operationalHourData?.workingHours.startTime ?? '--';
+    final endTime = operationalHourData?.workingHours.endTime ?? '--';
+
+    // Format time to HH:mm (remove seconds if present)
+    final formattedStartTime = startTime != '--'
+        ? startTime.split(':').take(2).join(':')
+        : '--';
+    final formattedEndTime = endTime != '--'
+        ? endTime.split(':').take(2).join(':')
+        : '--';
 
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
@@ -167,7 +189,7 @@ class _HomeViewState extends State<_HomeView> {
                               WorkTimeItem(
                                 icon: Icons.login,
                                 label: AppStrings.home.workTimeInLabel,
-                                time: AppStrings.home.defaultInTime,
+                                time: formattedStartTime,
                                 color: AppColors.success,
                               ),
                               Container(
@@ -175,10 +197,11 @@ class _HomeViewState extends State<_HomeView> {
                                 height: AppSizes.buttonMedium,
                                 color: AppColors.border,
                               ),
+
                               WorkTimeItem(
                                 icon: Icons.logout,
                                 label: AppStrings.home.workTimeOutLabel,
-                                time: AppStrings.home.defaultOutTime,
+                                time: formattedEndTime,
                                 color: AppColors.warning,
                               ),
                             ],

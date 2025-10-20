@@ -21,17 +21,8 @@ class AuthEndpoints {
 class HomeEndpoints {
   const HomeEndpoints();
 
-  final String getEmission = '/v1/emission-by-client';
-
-  String getPlacementAcsmsByClient(int clientId) =>
-      '/v1/placement-acsms-by-site/$clientId';
-
-  String getPlacementAcsmsBySite(int clientId, int siteId) =>
-      '/v1/placement-acsms-by-site/$clientId/$siteId';
-
-  final String getSiteDropdown = '/v1/site-filter';
-
-  String postPowerStateByAc(int acId) => '/v1/acs/$acId/power';
+  final String getOperationalHours = '/company/operational-hours';
+  final String getTodayLeaves = '/attendance/today-leaves-permits';
 }
 
 class ProfileEndpoints {

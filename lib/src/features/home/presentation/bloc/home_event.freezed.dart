@@ -55,15 +55,12 @@ extension HomeEventPatterns on HomeEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchInitialData value)?  fetchInitialData,TResult Function( _FetchEmissionData value)?  fetchEmissionData,TResult Function( _FetchSiteDropdownData value)?  fetchSiteDropdownData,TResult Function( _FetchPlacementAcsmBySiteData value)?  fetchPlacementAcsmBySiteData,TResult Function( _ToggleAc value)?  toggleAcPower,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchInitialData value)?  fetchInitialData,TResult Function( _FetchOperationalHourData value)?  fetchOperationalHourData,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _FetchInitialData() when fetchInitialData != null:
-return fetchInitialData(_that);case _FetchEmissionData() when fetchEmissionData != null:
-return fetchEmissionData(_that);case _FetchSiteDropdownData() when fetchSiteDropdownData != null:
-return fetchSiteDropdownData(_that);case _FetchPlacementAcsmBySiteData() when fetchPlacementAcsmBySiteData != null:
-return fetchPlacementAcsmBySiteData(_that);case _ToggleAc() when toggleAcPower != null:
-return toggleAcPower(_that);case _:
+return fetchInitialData(_that);case _FetchOperationalHourData() when fetchOperationalHourData != null:
+return fetchOperationalHourData(_that);case _:
   return orElse();
 
 }
@@ -81,15 +78,12 @@ return toggleAcPower(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchInitialData value)  fetchInitialData,required TResult Function( _FetchEmissionData value)  fetchEmissionData,required TResult Function( _FetchSiteDropdownData value)  fetchSiteDropdownData,required TResult Function( _FetchPlacementAcsmBySiteData value)  fetchPlacementAcsmBySiteData,required TResult Function( _ToggleAc value)  toggleAcPower,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchInitialData value)  fetchInitialData,required TResult Function( _FetchOperationalHourData value)  fetchOperationalHourData,}){
 final _that = this;
 switch (_that) {
 case _FetchInitialData():
-return fetchInitialData(_that);case _FetchEmissionData():
-return fetchEmissionData(_that);case _FetchSiteDropdownData():
-return fetchSiteDropdownData(_that);case _FetchPlacementAcsmBySiteData():
-return fetchPlacementAcsmBySiteData(_that);case _ToggleAc():
-return toggleAcPower(_that);case _:
+return fetchInitialData(_that);case _FetchOperationalHourData():
+return fetchOperationalHourData(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -106,15 +100,12 @@ return toggleAcPower(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchInitialData value)?  fetchInitialData,TResult? Function( _FetchEmissionData value)?  fetchEmissionData,TResult? Function( _FetchSiteDropdownData value)?  fetchSiteDropdownData,TResult? Function( _FetchPlacementAcsmBySiteData value)?  fetchPlacementAcsmBySiteData,TResult? Function( _ToggleAc value)?  toggleAcPower,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchInitialData value)?  fetchInitialData,TResult? Function( _FetchOperationalHourData value)?  fetchOperationalHourData,}){
 final _that = this;
 switch (_that) {
 case _FetchInitialData() when fetchInitialData != null:
-return fetchInitialData(_that);case _FetchEmissionData() when fetchEmissionData != null:
-return fetchEmissionData(_that);case _FetchSiteDropdownData() when fetchSiteDropdownData != null:
-return fetchSiteDropdownData(_that);case _FetchPlacementAcsmBySiteData() when fetchPlacementAcsmBySiteData != null:
-return fetchPlacementAcsmBySiteData(_that);case _ToggleAc() when toggleAcPower != null:
-return toggleAcPower(_that);case _:
+return fetchInitialData(_that);case _FetchOperationalHourData() when fetchOperationalHourData != null:
+return fetchOperationalHourData(_that);case _:
   return null;
 
 }
@@ -131,14 +122,11 @@ return toggleAcPower(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchInitialData,TResult Function()?  fetchEmissionData,TResult Function()?  fetchSiteDropdownData,TResult Function( int clientId,  int siteId,  bool isPolling)?  fetchPlacementAcsmBySiteData,TResult Function( int acId,  bool powerState)?  toggleAcPower,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchInitialData,TResult Function()?  fetchOperationalHourData,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FetchInitialData() when fetchInitialData != null:
-return fetchInitialData();case _FetchEmissionData() when fetchEmissionData != null:
-return fetchEmissionData();case _FetchSiteDropdownData() when fetchSiteDropdownData != null:
-return fetchSiteDropdownData();case _FetchPlacementAcsmBySiteData() when fetchPlacementAcsmBySiteData != null:
-return fetchPlacementAcsmBySiteData(_that.clientId,_that.siteId,_that.isPolling);case _ToggleAc() when toggleAcPower != null:
-return toggleAcPower(_that.acId,_that.powerState);case _:
+return fetchInitialData();case _FetchOperationalHourData() when fetchOperationalHourData != null:
+return fetchOperationalHourData();case _:
   return orElse();
 
 }
@@ -156,14 +144,11 @@ return toggleAcPower(_that.acId,_that.powerState);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchInitialData,required TResult Function()  fetchEmissionData,required TResult Function()  fetchSiteDropdownData,required TResult Function( int clientId,  int siteId,  bool isPolling)  fetchPlacementAcsmBySiteData,required TResult Function( int acId,  bool powerState)  toggleAcPower,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchInitialData,required TResult Function()  fetchOperationalHourData,}) {final _that = this;
 switch (_that) {
 case _FetchInitialData():
-return fetchInitialData();case _FetchEmissionData():
-return fetchEmissionData();case _FetchSiteDropdownData():
-return fetchSiteDropdownData();case _FetchPlacementAcsmBySiteData():
-return fetchPlacementAcsmBySiteData(_that.clientId,_that.siteId,_that.isPolling);case _ToggleAc():
-return toggleAcPower(_that.acId,_that.powerState);case _:
+return fetchInitialData();case _FetchOperationalHourData():
+return fetchOperationalHourData();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -180,14 +165,11 @@ return toggleAcPower(_that.acId,_that.powerState);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchInitialData,TResult? Function()?  fetchEmissionData,TResult? Function()?  fetchSiteDropdownData,TResult? Function( int clientId,  int siteId,  bool isPolling)?  fetchPlacementAcsmBySiteData,TResult? Function( int acId,  bool powerState)?  toggleAcPower,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchInitialData,TResult? Function()?  fetchOperationalHourData,}) {final _that = this;
 switch (_that) {
 case _FetchInitialData() when fetchInitialData != null:
-return fetchInitialData();case _FetchEmissionData() when fetchEmissionData != null:
-return fetchEmissionData();case _FetchSiteDropdownData() when fetchSiteDropdownData != null:
-return fetchSiteDropdownData();case _FetchPlacementAcsmBySiteData() when fetchPlacementAcsmBySiteData != null:
-return fetchPlacementAcsmBySiteData(_that.clientId,_that.siteId,_that.isPolling);case _ToggleAc() when toggleAcPower != null:
-return toggleAcPower(_that.acId,_that.powerState);case _:
+return fetchInitialData();case _FetchOperationalHourData() when fetchOperationalHourData != null:
+return fetchOperationalHourData();case _:
   return null;
 
 }
@@ -230,8 +212,8 @@ String toString() {
 /// @nodoc
 
 
-class _FetchEmissionData implements HomeEvent {
-  const _FetchEmissionData();
+class _FetchOperationalHourData implements HomeEvent {
+  const _FetchOperationalHourData();
   
 
 
@@ -241,7 +223,7 @@ class _FetchEmissionData implements HomeEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchEmissionData);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchOperationalHourData);
 }
 
 
@@ -250,7 +232,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'HomeEvent.fetchEmissionData()';
+  return 'HomeEvent.fetchOperationalHourData()';
 }
 
 
@@ -258,175 +240,5 @@ String toString() {
 
 
 
-
-/// @nodoc
-
-
-class _FetchSiteDropdownData implements HomeEvent {
-  const _FetchSiteDropdownData();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchSiteDropdownData);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'HomeEvent.fetchSiteDropdownData()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
-class _FetchPlacementAcsmBySiteData implements HomeEvent {
-  const _FetchPlacementAcsmBySiteData({required this.clientId, required this.siteId, this.isPolling = false});
-  
-
- final  int clientId;
- final  int siteId;
-@JsonKey() final  bool isPolling;
-
-/// Create a copy of HomeEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$FetchPlacementAcsmBySiteDataCopyWith<_FetchPlacementAcsmBySiteData> get copyWith => __$FetchPlacementAcsmBySiteDataCopyWithImpl<_FetchPlacementAcsmBySiteData>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchPlacementAcsmBySiteData&&(identical(other.clientId, clientId) || other.clientId == clientId)&&(identical(other.siteId, siteId) || other.siteId == siteId)&&(identical(other.isPolling, isPolling) || other.isPolling == isPolling));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,clientId,siteId,isPolling);
-
-@override
-String toString() {
-  return 'HomeEvent.fetchPlacementAcsmBySiteData(clientId: $clientId, siteId: $siteId, isPolling: $isPolling)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$FetchPlacementAcsmBySiteDataCopyWith<$Res> implements $HomeEventCopyWith<$Res> {
-  factory _$FetchPlacementAcsmBySiteDataCopyWith(_FetchPlacementAcsmBySiteData value, $Res Function(_FetchPlacementAcsmBySiteData) _then) = __$FetchPlacementAcsmBySiteDataCopyWithImpl;
-@useResult
-$Res call({
- int clientId, int siteId, bool isPolling
-});
-
-
-
-
-}
-/// @nodoc
-class __$FetchPlacementAcsmBySiteDataCopyWithImpl<$Res>
-    implements _$FetchPlacementAcsmBySiteDataCopyWith<$Res> {
-  __$FetchPlacementAcsmBySiteDataCopyWithImpl(this._self, this._then);
-
-  final _FetchPlacementAcsmBySiteData _self;
-  final $Res Function(_FetchPlacementAcsmBySiteData) _then;
-
-/// Create a copy of HomeEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? clientId = null,Object? siteId = null,Object? isPolling = null,}) {
-  return _then(_FetchPlacementAcsmBySiteData(
-clientId: null == clientId ? _self.clientId : clientId // ignore: cast_nullable_to_non_nullable
-as int,siteId: null == siteId ? _self.siteId : siteId // ignore: cast_nullable_to_non_nullable
-as int,isPolling: null == isPolling ? _self.isPolling : isPolling // ignore: cast_nullable_to_non_nullable
-as bool,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _ToggleAc implements HomeEvent {
-  const _ToggleAc({required this.acId, required this.powerState});
-  
-
- final  int acId;
- final  bool powerState;
-
-/// Create a copy of HomeEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$ToggleAcCopyWith<_ToggleAc> get copyWith => __$ToggleAcCopyWithImpl<_ToggleAc>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ToggleAc&&(identical(other.acId, acId) || other.acId == acId)&&(identical(other.powerState, powerState) || other.powerState == powerState));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,acId,powerState);
-
-@override
-String toString() {
-  return 'HomeEvent.toggleAcPower(acId: $acId, powerState: $powerState)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$ToggleAcCopyWith<$Res> implements $HomeEventCopyWith<$Res> {
-  factory _$ToggleAcCopyWith(_ToggleAc value, $Res Function(_ToggleAc) _then) = __$ToggleAcCopyWithImpl;
-@useResult
-$Res call({
- int acId, bool powerState
-});
-
-
-
-
-}
-/// @nodoc
-class __$ToggleAcCopyWithImpl<$Res>
-    implements _$ToggleAcCopyWith<$Res> {
-  __$ToggleAcCopyWithImpl(this._self, this._then);
-
-  final _ToggleAc _self;
-  final $Res Function(_ToggleAc) _then;
-
-/// Create a copy of HomeEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? acId = null,Object? powerState = null,}) {
-  return _then(_ToggleAc(
-acId: null == acId ? _self.acId : acId // ignore: cast_nullable_to_non_nullable
-as int,powerState: null == powerState ? _self.powerState : powerState // ignore: cast_nullable_to_non_nullable
-as bool,
-  ));
-}
-
-
-}
 
 // dart format on
