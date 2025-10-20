@@ -1,7 +1,4 @@
-import 'package:quanta_hris/src/features/home/domain/entities/emission_entity.dart';
 import 'package:quanta_hris/src/features/home/domain/entities/operational_hour_entity.dart';
-import 'package:quanta_hris/src/features/home/domain/entities/placement_acsm_entity.dart';
-import 'package:quanta_hris/src/features/home/domain/entities/site_dropdown_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'home_state.freezed.dart';
