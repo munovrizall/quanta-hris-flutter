@@ -39,19 +39,19 @@ class SessionStorageRepositoryImpl implements SessionStorageRepository {
   }
 
   @override
-  Future<void> saveToken(String token) {
-    return _storage.write(key: _authKey, value: jsonEncode(token));
+  Future<void> saveToken(String token) async {
+    await _storage.write(key: _authKey, value: token.trim());
   }
 
   @override
-  Future<void> saveUser(UserEntity user) {
-    return _storage.write(key: _userKey, value: jsonEncode(user.toJson()));
+  Future<void> saveUser(UserEntity user) async {
+    await _storage.write(key: _userKey, value: jsonEncode(user.toJson()));
   }
 
   @override
   Future<String?> getToken() async {
     final token = await _storage.read(key: _authKey);
-    
+
     if (token != null) {
       return token;
     }
