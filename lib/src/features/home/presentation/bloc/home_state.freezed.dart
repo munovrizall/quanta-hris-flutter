@@ -14,8 +14,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeState {
 
-// Emission Data
- OperationalHourEntity? get operationalHourData; bool get isLoadingOperationalHour; String? get operationalHourError;
+// Operational Hour Data
+ OperationalHourEntity? get operationalHourData; bool get isLoadingOperationalHour; String? get operationalHourError;// Today Leaves Data
+ TodayLeavesEntity? get todayLeavesData; bool get isLoadingTodayLeaves; String? get todayLeavesError;
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +27,16 @@ $HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.operationalHourData, operationalHourData) || other.operationalHourData == operationalHourData)&&(identical(other.isLoadingOperationalHour, isLoadingOperationalHour) || other.isLoadingOperationalHour == isLoadingOperationalHour)&&(identical(other.operationalHourError, operationalHourError) || other.operationalHourError == operationalHourError));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.operationalHourData, operationalHourData) || other.operationalHourData == operationalHourData)&&(identical(other.isLoadingOperationalHour, isLoadingOperationalHour) || other.isLoadingOperationalHour == isLoadingOperationalHour)&&(identical(other.operationalHourError, operationalHourError) || other.operationalHourError == operationalHourError)&&(identical(other.todayLeavesData, todayLeavesData) || other.todayLeavesData == todayLeavesData)&&(identical(other.isLoadingTodayLeaves, isLoadingTodayLeaves) || other.isLoadingTodayLeaves == isLoadingTodayLeaves)&&(identical(other.todayLeavesError, todayLeavesError) || other.todayLeavesError == todayLeavesError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,operationalHourData,isLoadingOperationalHour,operationalHourError);
+int get hashCode => Object.hash(runtimeType,operationalHourData,isLoadingOperationalHour,operationalHourError,todayLeavesData,isLoadingTodayLeaves,todayLeavesError);
 
 @override
 String toString() {
-  return 'HomeState(operationalHourData: $operationalHourData, isLoadingOperationalHour: $isLoadingOperationalHour, operationalHourError: $operationalHourError)';
+  return 'HomeState(operationalHourData: $operationalHourData, isLoadingOperationalHour: $isLoadingOperationalHour, operationalHourError: $operationalHourError, todayLeavesData: $todayLeavesData, isLoadingTodayLeaves: $isLoadingTodayLeaves, todayLeavesError: $todayLeavesError)';
 }
 
 
@@ -46,11 +47,11 @@ abstract mixin class $HomeStateCopyWith<$Res>  {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
 @useResult
 $Res call({
- OperationalHourEntity? operationalHourData, bool isLoadingOperationalHour, String? operationalHourError
+ OperationalHourEntity? operationalHourData, bool isLoadingOperationalHour, String? operationalHourError, TodayLeavesEntity? todayLeavesData, bool isLoadingTodayLeaves, String? todayLeavesError
 });
 
 
-$OperationalHourEntityCopyWith<$Res>? get operationalHourData;
+$OperationalHourEntityCopyWith<$Res>? get operationalHourData;$TodayLeavesEntityCopyWith<$Res>? get todayLeavesData;
 
 }
 /// @nodoc
@@ -63,11 +64,14 @@ class _$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? operationalHourData = freezed,Object? isLoadingOperationalHour = null,Object? operationalHourError = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? operationalHourData = freezed,Object? isLoadingOperationalHour = null,Object? operationalHourError = freezed,Object? todayLeavesData = freezed,Object? isLoadingTodayLeaves = null,Object? todayLeavesError = freezed,}) {
   return _then(_self.copyWith(
 operationalHourData: freezed == operationalHourData ? _self.operationalHourData : operationalHourData // ignore: cast_nullable_to_non_nullable
 as OperationalHourEntity?,isLoadingOperationalHour: null == isLoadingOperationalHour ? _self.isLoadingOperationalHour : isLoadingOperationalHour // ignore: cast_nullable_to_non_nullable
 as bool,operationalHourError: freezed == operationalHourError ? _self.operationalHourError : operationalHourError // ignore: cast_nullable_to_non_nullable
+as String?,todayLeavesData: freezed == todayLeavesData ? _self.todayLeavesData : todayLeavesData // ignore: cast_nullable_to_non_nullable
+as TodayLeavesEntity?,isLoadingTodayLeaves: null == isLoadingTodayLeaves ? _self.isLoadingTodayLeaves : isLoadingTodayLeaves // ignore: cast_nullable_to_non_nullable
+as bool,todayLeavesError: freezed == todayLeavesError ? _self.todayLeavesError : todayLeavesError // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -82,6 +86,18 @@ $OperationalHourEntityCopyWith<$Res>? get operationalHourData {
 
   return $OperationalHourEntityCopyWith<$Res>(_self.operationalHourData!, (value) {
     return _then(_self.copyWith(operationalHourData: value));
+  });
+}/// Create a copy of HomeState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TodayLeavesEntityCopyWith<$Res>? get todayLeavesData {
+    if (_self.todayLeavesData == null) {
+    return null;
+  }
+
+  return $TodayLeavesEntityCopyWith<$Res>(_self.todayLeavesData!, (value) {
+    return _then(_self.copyWith(todayLeavesData: value));
   });
 }
 }
@@ -165,10 +181,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( OperationalHourEntity? operationalHourData,  bool isLoadingOperationalHour,  String? operationalHourError)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( OperationalHourEntity? operationalHourData,  bool isLoadingOperationalHour,  String? operationalHourError,  TodayLeavesEntity? todayLeavesData,  bool isLoadingTodayLeaves,  String? todayLeavesError)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
-return $default(_that.operationalHourData,_that.isLoadingOperationalHour,_that.operationalHourError);case _:
+return $default(_that.operationalHourData,_that.isLoadingOperationalHour,_that.operationalHourError,_that.todayLeavesData,_that.isLoadingTodayLeaves,_that.todayLeavesError);case _:
   return orElse();
 
 }
@@ -186,10 +202,10 @@ return $default(_that.operationalHourData,_that.isLoadingOperationalHour,_that.o
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( OperationalHourEntity? operationalHourData,  bool isLoadingOperationalHour,  String? operationalHourError)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( OperationalHourEntity? operationalHourData,  bool isLoadingOperationalHour,  String? operationalHourError,  TodayLeavesEntity? todayLeavesData,  bool isLoadingTodayLeaves,  String? todayLeavesError)  $default,) {final _that = this;
 switch (_that) {
 case _HomeState():
-return $default(_that.operationalHourData,_that.isLoadingOperationalHour,_that.operationalHourError);case _:
+return $default(_that.operationalHourData,_that.isLoadingOperationalHour,_that.operationalHourError,_that.todayLeavesData,_that.isLoadingTodayLeaves,_that.todayLeavesError);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -206,10 +222,10 @@ return $default(_that.operationalHourData,_that.isLoadingOperationalHour,_that.o
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( OperationalHourEntity? operationalHourData,  bool isLoadingOperationalHour,  String? operationalHourError)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( OperationalHourEntity? operationalHourData,  bool isLoadingOperationalHour,  String? operationalHourError,  TodayLeavesEntity? todayLeavesData,  bool isLoadingTodayLeaves,  String? todayLeavesError)?  $default,) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
-return $default(_that.operationalHourData,_that.isLoadingOperationalHour,_that.operationalHourError);case _:
+return $default(_that.operationalHourData,_that.isLoadingOperationalHour,_that.operationalHourError,_that.todayLeavesData,_that.isLoadingTodayLeaves,_that.todayLeavesError);case _:
   return null;
 
 }
@@ -221,13 +237,17 @@ return $default(_that.operationalHourData,_that.isLoadingOperationalHour,_that.o
 
 
 class _HomeState extends HomeState {
-  const _HomeState({this.operationalHourData = null, this.isLoadingOperationalHour = false, this.operationalHourError = null}): super._();
+  const _HomeState({this.operationalHourData = null, this.isLoadingOperationalHour = false, this.operationalHourError = null, this.todayLeavesData = null, this.isLoadingTodayLeaves = false, this.todayLeavesError = null}): super._();
   
 
-// Emission Data
+// Operational Hour Data
 @override@JsonKey() final  OperationalHourEntity? operationalHourData;
 @override@JsonKey() final  bool isLoadingOperationalHour;
 @override@JsonKey() final  String? operationalHourError;
+// Today Leaves Data
+@override@JsonKey() final  TodayLeavesEntity? todayLeavesData;
+@override@JsonKey() final  bool isLoadingTodayLeaves;
+@override@JsonKey() final  String? todayLeavesError;
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
@@ -239,16 +259,16 @@ _$HomeStateCopyWith<_HomeState> get copyWith => __$HomeStateCopyWithImpl<_HomeSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.operationalHourData, operationalHourData) || other.operationalHourData == operationalHourData)&&(identical(other.isLoadingOperationalHour, isLoadingOperationalHour) || other.isLoadingOperationalHour == isLoadingOperationalHour)&&(identical(other.operationalHourError, operationalHourError) || other.operationalHourError == operationalHourError));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.operationalHourData, operationalHourData) || other.operationalHourData == operationalHourData)&&(identical(other.isLoadingOperationalHour, isLoadingOperationalHour) || other.isLoadingOperationalHour == isLoadingOperationalHour)&&(identical(other.operationalHourError, operationalHourError) || other.operationalHourError == operationalHourError)&&(identical(other.todayLeavesData, todayLeavesData) || other.todayLeavesData == todayLeavesData)&&(identical(other.isLoadingTodayLeaves, isLoadingTodayLeaves) || other.isLoadingTodayLeaves == isLoadingTodayLeaves)&&(identical(other.todayLeavesError, todayLeavesError) || other.todayLeavesError == todayLeavesError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,operationalHourData,isLoadingOperationalHour,operationalHourError);
+int get hashCode => Object.hash(runtimeType,operationalHourData,isLoadingOperationalHour,operationalHourError,todayLeavesData,isLoadingTodayLeaves,todayLeavesError);
 
 @override
 String toString() {
-  return 'HomeState(operationalHourData: $operationalHourData, isLoadingOperationalHour: $isLoadingOperationalHour, operationalHourError: $operationalHourError)';
+  return 'HomeState(operationalHourData: $operationalHourData, isLoadingOperationalHour: $isLoadingOperationalHour, operationalHourError: $operationalHourError, todayLeavesData: $todayLeavesData, isLoadingTodayLeaves: $isLoadingTodayLeaves, todayLeavesError: $todayLeavesError)';
 }
 
 
@@ -259,11 +279,11 @@ abstract mixin class _$HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Re
   factory _$HomeStateCopyWith(_HomeState value, $Res Function(_HomeState) _then) = __$HomeStateCopyWithImpl;
 @override @useResult
 $Res call({
- OperationalHourEntity? operationalHourData, bool isLoadingOperationalHour, String? operationalHourError
+ OperationalHourEntity? operationalHourData, bool isLoadingOperationalHour, String? operationalHourError, TodayLeavesEntity? todayLeavesData, bool isLoadingTodayLeaves, String? todayLeavesError
 });
 
 
-@override $OperationalHourEntityCopyWith<$Res>? get operationalHourData;
+@override $OperationalHourEntityCopyWith<$Res>? get operationalHourData;@override $TodayLeavesEntityCopyWith<$Res>? get todayLeavesData;
 
 }
 /// @nodoc
@@ -276,11 +296,14 @@ class __$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? operationalHourData = freezed,Object? isLoadingOperationalHour = null,Object? operationalHourError = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? operationalHourData = freezed,Object? isLoadingOperationalHour = null,Object? operationalHourError = freezed,Object? todayLeavesData = freezed,Object? isLoadingTodayLeaves = null,Object? todayLeavesError = freezed,}) {
   return _then(_HomeState(
 operationalHourData: freezed == operationalHourData ? _self.operationalHourData : operationalHourData // ignore: cast_nullable_to_non_nullable
 as OperationalHourEntity?,isLoadingOperationalHour: null == isLoadingOperationalHour ? _self.isLoadingOperationalHour : isLoadingOperationalHour // ignore: cast_nullable_to_non_nullable
 as bool,operationalHourError: freezed == operationalHourError ? _self.operationalHourError : operationalHourError // ignore: cast_nullable_to_non_nullable
+as String?,todayLeavesData: freezed == todayLeavesData ? _self.todayLeavesData : todayLeavesData // ignore: cast_nullable_to_non_nullable
+as TodayLeavesEntity?,isLoadingTodayLeaves: null == isLoadingTodayLeaves ? _self.isLoadingTodayLeaves : isLoadingTodayLeaves // ignore: cast_nullable_to_non_nullable
+as bool,todayLeavesError: freezed == todayLeavesError ? _self.todayLeavesError : todayLeavesError // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -296,6 +319,18 @@ $OperationalHourEntityCopyWith<$Res>? get operationalHourData {
 
   return $OperationalHourEntityCopyWith<$Res>(_self.operationalHourData!, (value) {
     return _then(_self.copyWith(operationalHourData: value));
+  });
+}/// Create a copy of HomeState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TodayLeavesEntityCopyWith<$Res>? get todayLeavesData {
+    if (_self.todayLeavesData == null) {
+    return null;
+  }
+
+  return $TodayLeavesEntityCopyWith<$Res>(_self.todayLeavesData!, (value) {
+    return _then(_self.copyWith(todayLeavesData: value));
   });
 }
 }

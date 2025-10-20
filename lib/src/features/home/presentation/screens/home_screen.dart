@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:quanta_hris/src/core/bloc/session_bloc.dart';
 import 'package:quanta_hris/src/core/bloc/session_state.dart';
 import 'package:quanta_hris/src/core/constants/app_strings.dart';
@@ -9,6 +11,7 @@ import 'package:quanta_hris/src/core/utils/date_formatter.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_state.dart';
 import 'package:quanta_hris/src/features/home/domain/entities/operational_hour_entity.dart';
+import 'package:quanta_hris/src/features/home/domain/entities/today_leaves_entity.dart';
 import 'package:quanta_hris/src/features/home/presentation/bloc/home_bloc.dart';
 import 'package:quanta_hris/src/features/home/presentation/bloc/home_event.dart';
 import 'package:quanta_hris/src/features/home/presentation/widgets/absentee_card.dart';
@@ -42,6 +45,29 @@ class _HomeViewState extends State<_HomeView> {
   bool isCheckedIn = false;
 
   @override
+  void initState() {
+    super.initState();
+    initializeDateFormatting('id');
+  }
+
+  String formatDateRange(String start, String end) {
+    final startDate = DateTime.parse(start);
+    final endDate = DateTime.parse(end);
+
+    if (startDate.isAtSameMomentAs(endDate)) {
+      return DateFormat('d MMM yyyy', 'id').format(startDate);
+    } else {
+      return '${DateFormat('d', 'id').format(startDate)} - ${DateFormat('d MMM yyyy', 'id').format(endDate)}';
+    }
+  }
+
+  Color getColorForType(String tipe) {
+    if (tipe == 'Cuti') return AppColors.warning;
+    if (tipe == 'Izin') return AppColors.error;
+    return AppColors.warning;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final userFullName = context.select<SessionBloc, String?>(
       (bloc) => bloc.state.mapOrNull(
@@ -56,6 +82,14 @@ class _HomeViewState extends State<_HomeView> {
 
     final isLoadingOperationalHour = context.select<HomeBloc, bool>(
       (bloc) => bloc.state.isLoadingOperationalHour,
+    );
+
+    final todayLeavesData = context.select<HomeBloc, TodayLeavesEntity?>(
+      (bloc) => bloc.state.todayLeavesData,
+    );
+
+    final isLoadingTodayLeaves = context.select<HomeBloc, bool>(
+      (bloc) => bloc.state.isLoadingTodayLeaves,
     );
 
     final currentTime = DateFormatter.getCurrentTime();
@@ -197,7 +231,6 @@ class _HomeViewState extends State<_HomeView> {
                                 height: AppSizes.buttonMedium,
                                 color: AppColors.border,
                               ),
-
                               WorkTimeItem(
                                 icon: Icons.logout,
                                 label: AppStrings.home.workTimeOutLabel,
@@ -363,26 +396,30 @@ class _HomeViewState extends State<_HomeView> {
                         ],
                       ),
                       const SizedBox(height: AppSpacing.medium),
-                      AbsenteeCard(
-                        name: 'Ahmad Fauzi',
-                        type: 'Cuti Tahunan',
-                        date: '20 - 22 Okt 2025',
-                        color: AppColors.primary,
-                      ),
-                      const SizedBox(height: AppSpacing.small),
-                      AbsenteeCard(
-                        name: 'Siti Nurhaliza',
-                        type: 'Izin Sakit',
-                        date: '20 Okt 2025',
-                        color: AppColors.error,
-                      ),
-                      const SizedBox(height: AppSpacing.small),
-                      AbsenteeCard(
-                        name: 'Budi Santoso',
-                        type: 'Cuti Penting',
-                        date: '20 Okt 2025',
-                        color: AppColors.warning,
-                      ),
+                      if (isLoadingTodayLeaves)
+                        const Center(child: CircularProgressIndicator())
+                      else if (todayLeavesData != null &&
+                          todayLeavesData.leavesData.isNotEmpty)
+                        ...todayLeavesData.leavesData.map(
+                          (item) => Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: AppSpacing.small,
+                            ),
+                            child: AbsenteeCard(
+                              name: item.nama,
+                              type: item.jenis,
+                              date: formatDateRange(
+                                item.tanggalMulai,
+                                item.tanggalSelesai,
+                              ),
+                              color: getColorForType(item.tipe),
+                            ),
+                          ),
+                        )
+                      else
+                        const Center(
+                          child: Text('Tidak ada data cuti/izin hari ini'),
+                        ),
                     ],
                   ),
                 ),

@@ -23,6 +23,7 @@ import 'package:quanta_hris/src/features/home/data/datasources/home_remote_data_
 import 'package:quanta_hris/src/features/home/data/repositories/home_repository_impl.dart';
 import 'package:quanta_hris/src/features/home/domain/repositories/home_repository.dart';
 import 'package:quanta_hris/src/features/home/domain/usecases/get_operational_hour_usecase.dart';
+import 'package:quanta_hris/src/features/home/domain/usecases/get_today_leaves_usecase.dart';
 import 'package:quanta_hris/src/features/home/presentation/bloc/home_bloc.dart';
 import 'package:quanta_hris/src/features/splash/domain/usecases/check_session_usecase.dart';
 
@@ -181,11 +182,13 @@ void _registerHome() {
 
   // Use Cases
   getIt.registerFactory(() => GetOperationalHourUseCase(getIt<HomeRepository>()));
+  getIt.registerFactory(() => GetTodayLeavesUseCase(getIt<HomeRepository>()));
   
   // BLoC
   getIt.registerFactory(
     () => HomeBloc(
       getOperationalHoursUseCase: getIt<GetOperationalHourUseCase>(),
+      getTodayLeavesUseCase: getIt<GetTodayLeavesUseCase>(),
     ),
   );
 }

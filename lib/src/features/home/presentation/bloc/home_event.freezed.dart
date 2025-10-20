@@ -55,12 +55,13 @@ extension HomeEventPatterns on HomeEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchInitialData value)?  fetchInitialData,TResult Function( _FetchOperationalHourData value)?  fetchOperationalHourData,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchInitialData value)?  fetchInitialData,TResult Function( _FetchOperationalHourData value)?  fetchOperationalHourData,TResult Function( _FetchTodayLeavesData value)?  fetchTodayLeavesData,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _FetchInitialData() when fetchInitialData != null:
 return fetchInitialData(_that);case _FetchOperationalHourData() when fetchOperationalHourData != null:
-return fetchOperationalHourData(_that);case _:
+return fetchOperationalHourData(_that);case _FetchTodayLeavesData() when fetchTodayLeavesData != null:
+return fetchTodayLeavesData(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return fetchOperationalHourData(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchInitialData value)  fetchInitialData,required TResult Function( _FetchOperationalHourData value)  fetchOperationalHourData,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchInitialData value)  fetchInitialData,required TResult Function( _FetchOperationalHourData value)  fetchOperationalHourData,required TResult Function( _FetchTodayLeavesData value)  fetchTodayLeavesData,}){
 final _that = this;
 switch (_that) {
 case _FetchInitialData():
 return fetchInitialData(_that);case _FetchOperationalHourData():
-return fetchOperationalHourData(_that);case _:
+return fetchOperationalHourData(_that);case _FetchTodayLeavesData():
+return fetchTodayLeavesData(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return fetchOperationalHourData(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchInitialData value)?  fetchInitialData,TResult? Function( _FetchOperationalHourData value)?  fetchOperationalHourData,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchInitialData value)?  fetchInitialData,TResult? Function( _FetchOperationalHourData value)?  fetchOperationalHourData,TResult? Function( _FetchTodayLeavesData value)?  fetchTodayLeavesData,}){
 final _that = this;
 switch (_that) {
 case _FetchInitialData() when fetchInitialData != null:
 return fetchInitialData(_that);case _FetchOperationalHourData() when fetchOperationalHourData != null:
-return fetchOperationalHourData(_that);case _:
+return fetchOperationalHourData(_that);case _FetchTodayLeavesData() when fetchTodayLeavesData != null:
+return fetchTodayLeavesData(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return fetchOperationalHourData(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchInitialData,TResult Function()?  fetchOperationalHourData,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchInitialData,TResult Function()?  fetchOperationalHourData,TResult Function()?  fetchTodayLeavesData,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FetchInitialData() when fetchInitialData != null:
 return fetchInitialData();case _FetchOperationalHourData() when fetchOperationalHourData != null:
-return fetchOperationalHourData();case _:
+return fetchOperationalHourData();case _FetchTodayLeavesData() when fetchTodayLeavesData != null:
+return fetchTodayLeavesData();case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return fetchOperationalHourData();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchInitialData,required TResult Function()  fetchOperationalHourData,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchInitialData,required TResult Function()  fetchOperationalHourData,required TResult Function()  fetchTodayLeavesData,}) {final _that = this;
 switch (_that) {
 case _FetchInitialData():
 return fetchInitialData();case _FetchOperationalHourData():
-return fetchOperationalHourData();case _:
+return fetchOperationalHourData();case _FetchTodayLeavesData():
+return fetchTodayLeavesData();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return fetchOperationalHourData();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchInitialData,TResult? Function()?  fetchOperationalHourData,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchInitialData,TResult? Function()?  fetchOperationalHourData,TResult? Function()?  fetchTodayLeavesData,}) {final _that = this;
 switch (_that) {
 case _FetchInitialData() when fetchInitialData != null:
 return fetchInitialData();case _FetchOperationalHourData() when fetchOperationalHourData != null:
-return fetchOperationalHourData();case _:
+return fetchOperationalHourData();case _FetchTodayLeavesData() when fetchTodayLeavesData != null:
+return fetchTodayLeavesData();case _:
   return null;
 
 }
@@ -233,6 +239,38 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString() {
   return 'HomeEvent.fetchOperationalHourData()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _FetchTodayLeavesData implements HomeEvent {
+  const _FetchTodayLeavesData();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchTodayLeavesData);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'HomeEvent.fetchTodayLeavesData()';
 }
 
 
