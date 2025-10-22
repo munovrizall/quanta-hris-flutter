@@ -13,7 +13,7 @@ abstract class UserModel with _$UserModel {
     required String departemen,
     required String jabatan,
     @JsonKey(name: 'nomor_telepon') required String nomorTelepon,
-    @JsonKey(name: 'face_embedding') required String faceEmbedding,
+    @JsonKey(name: 'face_embedding') String? faceEmbedding,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

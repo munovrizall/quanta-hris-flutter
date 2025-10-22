@@ -334,10 +334,24 @@ class _FaceRecognitionScreenState extends State<FaceRecognitionScreen> {
       setState(() {
         isBusy = false;
       });
+      if (register && mounted) {
+        register = false;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Tidak ada data kamera yang dapat diproses.'),
+          ),
+        );
+      }
       return;
     }
 
     if (faces.isEmpty) {
+      if (register && mounted) {
+        register = false;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Wajah belum terdeteksi, coba lagi.')),
+        );
+      }
       setState(() {
         isBusy = false;
         _scanResults = [];
@@ -454,81 +468,77 @@ class _FaceRecognitionScreenState extends State<FaceRecognitionScreen> {
           value: _registerFaceBloc,
           child: AlertDialog(
             title: const Text('Face Registration', textAlign: TextAlign.center),
-            content: SizedBox(
-              height: MediaQuery.of(context).size.height / 2,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 20),
-                  Image.memory(
-                    Uint8List.fromList(img.encodeBmp(croppedFace)),
-                    width: 200,
-                    height: 200,
-                  ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: BlocConsumer<RegisterFaceBloc, RegisterFaceState>(
-                      listener: (context, state) {
-                        debugPrint(
-                          '📊 RegisterFaceBloc state: loading=${state.isRegisterFaceLoading}, error=${state.registerFaceError}',
-                        );
+            content: Column(
+              mainAxisSize: MainAxisSize.min, // ✅ Use minimum space needed
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 20),
+                Image.memory(
+                  Uint8List.fromList(img.encodeBmp(croppedFace)),
+                  width: 200,
+                  height: 200,
+                ),
+                const SizedBox(height: 20),
+                BlocConsumer<RegisterFaceBloc, RegisterFaceState>(
+                  listener: (context, state) {
+                    debugPrint(
+                      '📊 RegisterFaceBloc state: loading=${state.isRegisterFaceLoading}, error=${state.registerFaceError}',
+                    );
 
-                        if (state.registerFaceError != null) {
-                          Navigator.of(dialogContext).pop();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(state.registerFaceError!),
-                              backgroundColor: AppColors.error,
-                            ),
-                          );
-                        } else if (!state.isRegisterFaceLoading &&
-                            state.registeredFaceData != null) {
-                          Navigator.of(dialogContext).pop();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Face registered successfully!'),
-                              backgroundColor: Colors.green,
-                            ),
-                          );
-                          Navigator.of(context).pop();
-                        }
-                      },
-                      builder: (context, state) {
-                        if (state.isRegisterFaceLoading) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return Column(
-                          children: [
-                            PrimaryButton(
-                              text: 'Register',
-                              onPressed: () {
-                                debugPrint('🚀 Registering face');
-                                _registerFaceBloc.add(
-                                  RegisterEvent.updateProfileRegisterFace(
-                                    recognition.embedding.join(','),
-                                    null,
-                                  ),
-                                );
-                              },
-                            ),
-                            const SizedBox(height: 8),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(dialogContext).pop();
-                              },
-                              child: const Text('Cancel'),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                    if (state.registerFaceError != null) {
+                      Navigator.of(dialogContext).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.registerFaceError!),
+                          backgroundColor: AppColors.error,
+                        ),
+                      );
+                    } else if (!state.isRegisterFaceLoading &&
+                        state.registeredFaceData != null) {
+                      Navigator.of(dialogContext).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Face registered successfully!'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state.isRegisterFaceLoading) {
+                      return const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return Column(
+                      mainAxisSize: MainAxisSize.min, // ✅ Use minimum space
+                      children: [
+                        PrimaryButton(
+                          text: 'Register',
+                          onPressed: () {
+                            debugPrint('🚀 Registering face');
+                            _registerFaceBloc.add(
+                              RegisterEvent.updateProfileRegisterFace(
+                                recognition.embedding.join(','),
+                                null,
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 8),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(dialogContext).pop();
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
             ),
             contentPadding: const EdgeInsets.all(16),
           ),

@@ -34,7 +34,7 @@ class FaceRecognitionRepositoryImpl implements FaceRecognitionRepository {
         departemen: data.departemen,
         jabatan: data.jabatan,
         nomorTelepon: data.nomorTelepon,
-        faceEmbedding: data.faceEmbedding,
+        faceEmbedding: data.faceEmbedding ?? '',
       );
     } on ApiException {
       rethrow;

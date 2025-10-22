@@ -14,7 +14,7 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   departemen: json['departemen'] as String,
   jabatan: json['jabatan'] as String,
   nomorTelepon: json['nomor_telepon'] as String,
-  faceEmbedding: json['face_embedding'] as String,
+  faceEmbedding: json['face_embedding'] as String?,
 );
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
