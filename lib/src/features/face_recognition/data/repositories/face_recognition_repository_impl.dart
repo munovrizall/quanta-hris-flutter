@@ -1,0 +1,45 @@
+import 'package:quanta_hris/src/core/error/app_exception.dart';
+import 'package:quanta_hris/src/features/authentication/domain/entities/auth_entity.dart';
+import 'package:quanta_hris/src/features/face_recognition/data/datasources/face_recognition_remote_data_source.dart';
+import 'package:quanta_hris/src/features/face_recognition/data/models/update_profile_request.dart';
+import 'package:quanta_hris/src/features/face_recognition/domain/repositories/face_recognition_repository.dart';
+
+class FaceRecognitionRepositoryImpl implements FaceRecognitionRepository {
+  final FaceRecognitionRemoteDataSource _remoteDataSource;
+
+  FaceRecognitionRepositoryImpl(this._remoteDataSource);
+
+  @override
+  Future<UserEntity> postUpdateProfile({required String faceEmbedding}) async {
+    try {
+      final requestModel = UpdateProfileRequest(faceEmbedding: faceEmbedding);
+
+      final responseModel = await _remoteDataSource.postUpdateProfile(
+        requestModel: requestModel,
+      );
+
+      final data = responseModel.data;
+
+      return UserEntity(
+        karyawanId: data.karyawanId,
+        namaLengkap: data.namaLengkap,
+        email: data.email,
+        role: RoleEntity(
+          roleId: data.role.roleId,
+          name: data.role.name,
+          guardName: data.role.guardName,
+          createdAt: data.role.createdAt,
+          updatedAt: data.role.updatedAt,
+        ),
+        departemen: data.departemen,
+        jabatan: data.jabatan,
+        nomorTelepon: data.nomorTelepon,
+        faceEmbedding: data.faceEmbedding,
+      );
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException('An unexpected error occurred in the repository.');
+    }
+  }
+}

@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quanta_hris/src/core/bloc/session_bloc.dart';
 import 'package:quanta_hris/src/core/config/flavor_config.dart';
+import 'package:quanta_hris/src/core/ml/recognizer.dart';
 import 'package:quanta_hris/src/core/network/auth_interceptor.dart';
 import 'package:quanta_hris/src/core/network/logging_interceptor.dart';
 import 'package:quanta_hris/src/core/routes/app_router.dart';
@@ -26,6 +27,11 @@ import 'package:quanta_hris/src/features/home/domain/usecases/get_operational_ho
 import 'package:quanta_hris/src/features/home/domain/usecases/get_today_leaves_usecase.dart';
 import 'package:quanta_hris/src/features/home/presentation/bloc/home_bloc.dart';
 import 'package:quanta_hris/src/features/splash/domain/usecases/check_session_usecase.dart';
+import 'package:quanta_hris/src/features/face_recognition/data/datasources/face_recognition_remote_data_source.dart';
+import 'package:quanta_hris/src/features/face_recognition/data/repositories/face_recognition_repository_impl.dart';
+import 'package:quanta_hris/src/features/face_recognition/domain/repositories/face_recognition_repository.dart';
+import 'package:quanta_hris/src/features/face_recognition/domain/usecases/update_profile_usecase.dart';
+import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/register_face_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -35,6 +41,7 @@ void configureDependencies(FlavorConfig config) {
   _registerRouting();
   _registerAuth();
   _registerHome();
+  _registerFaceRecognition();
   _configureDioInterceptors();
 }
 
@@ -48,6 +55,10 @@ void _registerCore(FlavorConfig config) {
   // Storage
   getIt.registerLazySingleton<SessionStorageRepository>(
     () => SessionStorageRepositoryImpl(),
+  );
+
+  getIt.registerLazySingleton<Recognizer>(
+    () => Recognizer(sessionStorage: getIt<SessionStorageRepository>()),
   );
 }
 
@@ -124,9 +135,7 @@ void _registerAuth() {
 
   // Repository
   getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(
-      getIt<AuthRemoteDataSource>(),
-    ),
+    () => AuthRepositoryImpl(getIt<AuthRemoteDataSource>()),
   );
 
   // Use Cases
@@ -181,15 +190,41 @@ void _registerHome() {
   );
 
   // Use Cases
-  getIt.registerFactory(() => GetOperationalHourUseCase(getIt<HomeRepository>()));
+  getIt.registerFactory(
+    () => GetOperationalHourUseCase(getIt<HomeRepository>()),
+  );
   getIt.registerFactory(() => GetTodayLeavesUseCase(getIt<HomeRepository>()));
-  
+
   // BLoC
   getIt.registerFactory(
     () => HomeBloc(
       getOperationalHoursUseCase: getIt<GetOperationalHourUseCase>(),
       getTodayLeavesUseCase: getIt<GetTodayLeavesUseCase>(),
     ),
+  );
+}
+
+void _registerFaceRecognition() {
+  AppLogger.i('🧠 Registering face recognition dependencies...');
+
+  getIt.registerLazySingleton<FaceRecognitionRemoteDataSource>(
+    () => FaceRecognitionRemoteDataSourceImpl(getIt<Dio>()),
+  );
+
+  getIt.registerLazySingleton<FaceRecognitionRepository>(
+    () =>
+        FaceRecognitionRepositoryImpl(getIt<FaceRecognitionRemoteDataSource>()),
+  );
+
+  getIt.registerFactory(
+    () => UpdateProfileUseCase(
+      getIt<FaceRecognitionRepository>(),
+      getIt<SessionStorageRepository>(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => RegisterFaceBloc(updateProfileUseCase: getIt<UpdateProfileUseCase>()),
   );
 }
 

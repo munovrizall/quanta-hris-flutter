@@ -56,9 +56,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       final response = await _dio.post(
         ApiEndpoints.auth.logout,
         options: Options(
-          headers: {
-            if (auth != null) 'Authorization': 'Bearer $auth',
-          },
+          headers: {if (auth != null) 'Authorization': 'Bearer $auth'},
         ),
       );
 

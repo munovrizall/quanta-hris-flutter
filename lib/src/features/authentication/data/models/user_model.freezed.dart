@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
-@JsonKey(name: 'karyawan_id') String get karyawanId;@JsonKey(name: 'nama_lengkap') String get namaLengkap; String get email; Role get role; String get departemen; String get jabatan;@JsonKey(name: 'nomor_telepon') String get nomorTelepon;
+@JsonKey(name: 'karyawan_id') String get karyawanId;@JsonKey(name: 'nama_lengkap') String get namaLengkap; String get email; Role get role; String get departemen; String get jabatan;@JsonKey(name: 'nomor_telepon') String get nomorTelepon;@JsonKey(name: 'face_embedding') String get faceEmbedding;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.karyawanId, karyawanId) || other.karyawanId == karyawanId)&&(identical(other.namaLengkap, namaLengkap) || other.namaLengkap == namaLengkap)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role)&&(identical(other.departemen, departemen) || other.departemen == departemen)&&(identical(other.jabatan, jabatan) || other.jabatan == jabatan)&&(identical(other.nomorTelepon, nomorTelepon) || other.nomorTelepon == nomorTelepon));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.karyawanId, karyawanId) || other.karyawanId == karyawanId)&&(identical(other.namaLengkap, namaLengkap) || other.namaLengkap == namaLengkap)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role)&&(identical(other.departemen, departemen) || other.departemen == departemen)&&(identical(other.jabatan, jabatan) || other.jabatan == jabatan)&&(identical(other.nomorTelepon, nomorTelepon) || other.nomorTelepon == nomorTelepon)&&(identical(other.faceEmbedding, faceEmbedding) || other.faceEmbedding == faceEmbedding));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,karyawanId,namaLengkap,email,role,departemen,jabatan,nomorTelepon);
+int get hashCode => Object.hash(runtimeType,karyawanId,namaLengkap,email,role,departemen,jabatan,nomorTelepon,faceEmbedding);
 
 @override
 String toString() {
-  return 'UserModel(karyawanId: $karyawanId, namaLengkap: $namaLengkap, email: $email, role: $role, departemen: $departemen, jabatan: $jabatan, nomorTelepon: $nomorTelepon)';
+  return 'UserModel(karyawanId: $karyawanId, namaLengkap: $namaLengkap, email: $email, role: $role, departemen: $departemen, jabatan: $jabatan, nomorTelepon: $nomorTelepon, faceEmbedding: $faceEmbedding)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'karyawan_id') String karyawanId,@JsonKey(name: 'nama_lengkap') String namaLengkap, String email, Role role, String departemen, String jabatan,@JsonKey(name: 'nomor_telepon') String nomorTelepon
+@JsonKey(name: 'karyawan_id') String karyawanId,@JsonKey(name: 'nama_lengkap') String namaLengkap, String email, Role role, String departemen, String jabatan,@JsonKey(name: 'nomor_telepon') String nomorTelepon,@JsonKey(name: 'face_embedding') String faceEmbedding
 });
 
 
@@ -65,7 +65,7 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? karyawanId = null,Object? namaLengkap = null,Object? email = null,Object? role = null,Object? departemen = null,Object? jabatan = null,Object? nomorTelepon = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? karyawanId = null,Object? namaLengkap = null,Object? email = null,Object? role = null,Object? departemen = null,Object? jabatan = null,Object? nomorTelepon = null,Object? faceEmbedding = null,}) {
   return _then(_self.copyWith(
 karyawanId: null == karyawanId ? _self.karyawanId : karyawanId // ignore: cast_nullable_to_non_nullable
 as String,namaLengkap: null == namaLengkap ? _self.namaLengkap : namaLengkap // ignore: cast_nullable_to_non_nullable
@@ -74,6 +74,7 @@ as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non
 as Role,departemen: null == departemen ? _self.departemen : departemen // ignore: cast_nullable_to_non_nullable
 as String,jabatan: null == jabatan ? _self.jabatan : jabatan // ignore: cast_nullable_to_non_nullable
 as String,nomorTelepon: null == nomorTelepon ? _self.nomorTelepon : nomorTelepon // ignore: cast_nullable_to_non_nullable
+as String,faceEmbedding: null == faceEmbedding ? _self.faceEmbedding : faceEmbedding // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -168,10 +169,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'karyawan_id')  String karyawanId, @JsonKey(name: 'nama_lengkap')  String namaLengkap,  String email,  Role role,  String departemen,  String jabatan, @JsonKey(name: 'nomor_telepon')  String nomorTelepon)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'karyawan_id')  String karyawanId, @JsonKey(name: 'nama_lengkap')  String namaLengkap,  String email,  Role role,  String departemen,  String jabatan, @JsonKey(name: 'nomor_telepon')  String nomorTelepon, @JsonKey(name: 'face_embedding')  String faceEmbedding)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.karyawanId,_that.namaLengkap,_that.email,_that.role,_that.departemen,_that.jabatan,_that.nomorTelepon);case _:
+return $default(_that.karyawanId,_that.namaLengkap,_that.email,_that.role,_that.departemen,_that.jabatan,_that.nomorTelepon,_that.faceEmbedding);case _:
   return orElse();
 
 }
@@ -189,10 +190,10 @@ return $default(_that.karyawanId,_that.namaLengkap,_that.email,_that.role,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'karyawan_id')  String karyawanId, @JsonKey(name: 'nama_lengkap')  String namaLengkap,  String email,  Role role,  String departemen,  String jabatan, @JsonKey(name: 'nomor_telepon')  String nomorTelepon)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'karyawan_id')  String karyawanId, @JsonKey(name: 'nama_lengkap')  String namaLengkap,  String email,  Role role,  String departemen,  String jabatan, @JsonKey(name: 'nomor_telepon')  String nomorTelepon, @JsonKey(name: 'face_embedding')  String faceEmbedding)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
-return $default(_that.karyawanId,_that.namaLengkap,_that.email,_that.role,_that.departemen,_that.jabatan,_that.nomorTelepon);case _:
+return $default(_that.karyawanId,_that.namaLengkap,_that.email,_that.role,_that.departemen,_that.jabatan,_that.nomorTelepon,_that.faceEmbedding);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -209,10 +210,10 @@ return $default(_that.karyawanId,_that.namaLengkap,_that.email,_that.role,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'karyawan_id')  String karyawanId, @JsonKey(name: 'nama_lengkap')  String namaLengkap,  String email,  Role role,  String departemen,  String jabatan, @JsonKey(name: 'nomor_telepon')  String nomorTelepon)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'karyawan_id')  String karyawanId, @JsonKey(name: 'nama_lengkap')  String namaLengkap,  String email,  Role role,  String departemen,  String jabatan, @JsonKey(name: 'nomor_telepon')  String nomorTelepon, @JsonKey(name: 'face_embedding')  String faceEmbedding)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.karyawanId,_that.namaLengkap,_that.email,_that.role,_that.departemen,_that.jabatan,_that.nomorTelepon);case _:
+return $default(_that.karyawanId,_that.namaLengkap,_that.email,_that.role,_that.departemen,_that.jabatan,_that.nomorTelepon,_that.faceEmbedding);case _:
   return null;
 
 }
@@ -224,7 +225,7 @@ return $default(_that.karyawanId,_that.namaLengkap,_that.email,_that.role,_that.
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({@JsonKey(name: 'karyawan_id') required this.karyawanId, @JsonKey(name: 'nama_lengkap') required this.namaLengkap, required this.email, required this.role, required this.departemen, required this.jabatan, @JsonKey(name: 'nomor_telepon') required this.nomorTelepon});
+  const _UserModel({@JsonKey(name: 'karyawan_id') required this.karyawanId, @JsonKey(name: 'nama_lengkap') required this.namaLengkap, required this.email, required this.role, required this.departemen, required this.jabatan, @JsonKey(name: 'nomor_telepon') required this.nomorTelepon, @JsonKey(name: 'face_embedding') required this.faceEmbedding});
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override@JsonKey(name: 'karyawan_id') final  String karyawanId;
@@ -234,6 +235,7 @@ class _UserModel implements UserModel {
 @override final  String departemen;
 @override final  String jabatan;
 @override@JsonKey(name: 'nomor_telepon') final  String nomorTelepon;
+@override@JsonKey(name: 'face_embedding') final  String faceEmbedding;
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
@@ -248,16 +250,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.karyawanId, karyawanId) || other.karyawanId == karyawanId)&&(identical(other.namaLengkap, namaLengkap) || other.namaLengkap == namaLengkap)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role)&&(identical(other.departemen, departemen) || other.departemen == departemen)&&(identical(other.jabatan, jabatan) || other.jabatan == jabatan)&&(identical(other.nomorTelepon, nomorTelepon) || other.nomorTelepon == nomorTelepon));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.karyawanId, karyawanId) || other.karyawanId == karyawanId)&&(identical(other.namaLengkap, namaLengkap) || other.namaLengkap == namaLengkap)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role)&&(identical(other.departemen, departemen) || other.departemen == departemen)&&(identical(other.jabatan, jabatan) || other.jabatan == jabatan)&&(identical(other.nomorTelepon, nomorTelepon) || other.nomorTelepon == nomorTelepon)&&(identical(other.faceEmbedding, faceEmbedding) || other.faceEmbedding == faceEmbedding));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,karyawanId,namaLengkap,email,role,departemen,jabatan,nomorTelepon);
+int get hashCode => Object.hash(runtimeType,karyawanId,namaLengkap,email,role,departemen,jabatan,nomorTelepon,faceEmbedding);
 
 @override
 String toString() {
-  return 'UserModel(karyawanId: $karyawanId, namaLengkap: $namaLengkap, email: $email, role: $role, departemen: $departemen, jabatan: $jabatan, nomorTelepon: $nomorTelepon)';
+  return 'UserModel(karyawanId: $karyawanId, namaLengkap: $namaLengkap, email: $email, role: $role, departemen: $departemen, jabatan: $jabatan, nomorTelepon: $nomorTelepon, faceEmbedding: $faceEmbedding)';
 }
 
 
@@ -268,7 +270,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'karyawan_id') String karyawanId,@JsonKey(name: 'nama_lengkap') String namaLengkap, String email, Role role, String departemen, String jabatan,@JsonKey(name: 'nomor_telepon') String nomorTelepon
+@JsonKey(name: 'karyawan_id') String karyawanId,@JsonKey(name: 'nama_lengkap') String namaLengkap, String email, Role role, String departemen, String jabatan,@JsonKey(name: 'nomor_telepon') String nomorTelepon,@JsonKey(name: 'face_embedding') String faceEmbedding
 });
 
 
@@ -285,7 +287,7 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? karyawanId = null,Object? namaLengkap = null,Object? email = null,Object? role = null,Object? departemen = null,Object? jabatan = null,Object? nomorTelepon = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? karyawanId = null,Object? namaLengkap = null,Object? email = null,Object? role = null,Object? departemen = null,Object? jabatan = null,Object? nomorTelepon = null,Object? faceEmbedding = null,}) {
   return _then(_UserModel(
 karyawanId: null == karyawanId ? _self.karyawanId : karyawanId // ignore: cast_nullable_to_non_nullable
 as String,namaLengkap: null == namaLengkap ? _self.namaLengkap : namaLengkap // ignore: cast_nullable_to_non_nullable
@@ -294,6 +296,7 @@ as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non
 as Role,departemen: null == departemen ? _self.departemen : departemen // ignore: cast_nullable_to_non_nullable
 as String,jabatan: null == jabatan ? _self.jabatan : jabatan // ignore: cast_nullable_to_non_nullable
 as String,nomorTelepon: null == nomorTelepon ? _self.nomorTelepon : nomorTelepon // ignore: cast_nullable_to_non_nullable
+as String,faceEmbedding: null == faceEmbedding ? _self.faceEmbedding : faceEmbedding // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

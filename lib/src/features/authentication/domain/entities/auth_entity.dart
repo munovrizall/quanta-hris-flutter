@@ -24,6 +24,7 @@ abstract class UserEntity with _$UserEntity {
     required String departemen,
     required String jabatan,
     @JsonKey(name: 'nomor_telepon') required String nomorTelepon,
+    @JsonKey(name: 'face_embedding') required String faceEmbedding,
   }) = _UserEntity;
 
   factory UserEntity.fromJson(Map<String, dynamic> json) =>

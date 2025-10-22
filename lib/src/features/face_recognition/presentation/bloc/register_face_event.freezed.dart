@@ -1,0 +1,274 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'register_face_event.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+// dart format off
+T _$identity<T>(T value) => value;
+/// @nodoc
+mixin _$RegisterEvent {
+
+ String get embedding; XFile? get image;
+/// Create a copy of RegisterEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$RegisterEventCopyWith<RegisterEvent> get copyWith => _$RegisterEventCopyWithImpl<RegisterEvent>(this as RegisterEvent, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegisterEvent&&(identical(other.embedding, embedding) || other.embedding == embedding)&&(identical(other.image, image) || other.image == image));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,embedding,image);
+
+@override
+String toString() {
+  return 'RegisterEvent(embedding: $embedding, image: $image)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $RegisterEventCopyWith<$Res>  {
+  factory $RegisterEventCopyWith(RegisterEvent value, $Res Function(RegisterEvent) _then) = _$RegisterEventCopyWithImpl;
+@useResult
+$Res call({
+ String embedding, XFile? image
+});
+
+
+
+
+}
+/// @nodoc
+class _$RegisterEventCopyWithImpl<$Res>
+    implements $RegisterEventCopyWith<$Res> {
+  _$RegisterEventCopyWithImpl(this._self, this._then);
+
+  final RegisterEvent _self;
+  final $Res Function(RegisterEvent) _then;
+
+/// Create a copy of RegisterEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? embedding = null,Object? image = freezed,}) {
+  return _then(_self.copyWith(
+embedding: null == embedding ? _self.embedding : embedding // ignore: cast_nullable_to_non_nullable
+as String,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as XFile?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [RegisterEvent].
+extension RegisterEventPatterns on RegisterEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
+return updateProfileRegisterFace(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _UpdateProfileRegisterFace value)  updateProfileRegisterFace,}){
+final _that = this;
+switch (_that) {
+case _UpdateProfileRegisterFace():
+return updateProfileRegisterFace(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,}){
+final _that = this;
+switch (_that) {
+case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
+return updateProfileRegisterFace(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String embedding,  XFile? image)?  updateProfileRegisterFace,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
+return updateProfileRegisterFace(_that.embedding,_that.image);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String embedding,  XFile? image)  updateProfileRegisterFace,}) {final _that = this;
+switch (_that) {
+case _UpdateProfileRegisterFace():
+return updateProfileRegisterFace(_that.embedding,_that.image);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String embedding,  XFile? image)?  updateProfileRegisterFace,}) {final _that = this;
+switch (_that) {
+case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
+return updateProfileRegisterFace(_that.embedding,_that.image);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _UpdateProfileRegisterFace implements RegisterEvent {
+  const _UpdateProfileRegisterFace(this.embedding, this.image);
+  
+
+@override final  String embedding;
+@override final  XFile? image;
+
+/// Create a copy of RegisterEvent
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UpdateProfileRegisterFaceCopyWith<_UpdateProfileRegisterFace> get copyWith => __$UpdateProfileRegisterFaceCopyWithImpl<_UpdateProfileRegisterFace>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateProfileRegisterFace&&(identical(other.embedding, embedding) || other.embedding == embedding)&&(identical(other.image, image) || other.image == image));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,embedding,image);
+
+@override
+String toString() {
+  return 'RegisterEvent.updateProfileRegisterFace(embedding: $embedding, image: $image)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$UpdateProfileRegisterFaceCopyWith<$Res> implements $RegisterEventCopyWith<$Res> {
+  factory _$UpdateProfileRegisterFaceCopyWith(_UpdateProfileRegisterFace value, $Res Function(_UpdateProfileRegisterFace) _then) = __$UpdateProfileRegisterFaceCopyWithImpl;
+@override @useResult
+$Res call({
+ String embedding, XFile? image
+});
+
+
+
+
+}
+/// @nodoc
+class __$UpdateProfileRegisterFaceCopyWithImpl<$Res>
+    implements _$UpdateProfileRegisterFaceCopyWith<$Res> {
+  __$UpdateProfileRegisterFaceCopyWithImpl(this._self, this._then);
+
+  final _UpdateProfileRegisterFace _self;
+  final $Res Function(_UpdateProfileRegisterFace) _then;
+
+/// Create a copy of RegisterEvent
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? embedding = null,Object? image = freezed,}) {
+  return _then(_UpdateProfileRegisterFace(
+null == embedding ? _self.embedding : embedding // ignore: cast_nullable_to_non_nullable
+as String,freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as XFile?,
+  ));
+}
+
+
+}
+
+// dart format on

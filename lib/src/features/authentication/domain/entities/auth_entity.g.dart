@@ -22,6 +22,7 @@ _UserEntity _$UserEntityFromJson(Map<String, dynamic> json) => _UserEntity(
   departemen: json['departemen'] as String,
   jabatan: json['jabatan'] as String,
   nomorTelepon: json['nomor_telepon'] as String,
+  faceEmbedding: json['face_embedding'] as String,
 );
 
 Map<String, dynamic> _$UserEntityToJson(_UserEntity instance) =>
@@ -33,6 +34,7 @@ Map<String, dynamic> _$UserEntityToJson(_UserEntity instance) =>
       'departemen': instance.departemen,
       'jabatan': instance.jabatan,
       'nomor_telepon': instance.nomorTelepon,
+      'face_embedding': instance.faceEmbedding,
     };
 
 _RoleEntity _$RoleEntityFromJson(Map<String, dynamic> json) => _RoleEntity(

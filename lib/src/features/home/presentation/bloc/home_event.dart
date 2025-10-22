@@ -12,4 +12,5 @@ class HomeEvent with _$HomeEvent {
 
   /// Perintah untuk mengambil/memperbarui data cuti dan izin hari ini
   const factory HomeEvent.fetchTodayLeavesData() = _FetchTodayLeavesData;
+
 }

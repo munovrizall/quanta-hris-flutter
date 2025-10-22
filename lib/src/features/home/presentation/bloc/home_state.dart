@@ -16,6 +16,8 @@ abstract class HomeState with _$HomeState {
     @Default(null) TodayLeavesEntity? todayLeavesData,
     @Default(false) bool isLoadingTodayLeaves,
     @Default(null) String? todayLeavesError,
+
+    
   }) = _HomeState;
 
   const HomeState._();

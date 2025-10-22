@@ -39,6 +39,7 @@ class AuthRepositoryImpl implements AuthRepository {
           departemen: data.user.departemen,
           jabatan: data.user.jabatan,
           nomorTelepon: data.user.nomorTelepon,
+          faceEmbedding: data.user.faceEmbedding,
         ),
       );
 

@@ -257,10 +257,7 @@ class _HomeViewState extends State<_HomeView> {
                     borderRadius: BorderRadius.circular(AppRadius.xl),
                     child: InkWell(
                       onTap: () {
-                        setState(() {
-                          isCheckedIn = !isCheckedIn;
-                        });
-                        // TODO: Implement attendance logic
+                        context.push('/face-recognition');
                       },
                       borderRadius: BorderRadius.circular(AppRadius.xl),
                       child: Container(

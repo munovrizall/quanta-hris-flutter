@@ -16,6 +16,8 @@ class AuthEndpoints {
 
   final String login = '/login';
   final String logout = '/logout';
+
+  final String postUpdateProfile = '/update-profile';
 }
 
 class HomeEndpoints {
