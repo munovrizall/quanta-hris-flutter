@@ -604,6 +604,28 @@ class _FaceRecognitionScreenState extends State<FaceRecognitionScreen> {
     super.dispose();
   }
 
+  Widget _buildPreviewContainer(Widget child) {
+    final controller = _controller!;
+    final previewSize = controller.value.previewSize!;
+    final double previewWidth = previewSize.height;
+    final double previewHeight = previewSize.width;
+
+    return ClipRect(
+      child: FittedBox(
+        fit: BoxFit.cover,
+        child: SizedBox(
+          width: previewWidth,
+          height: previewHeight,
+          child: child,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCameraPreview() {
+    return _buildPreviewContainer(CameraPreview(_controller!));
+  }
+
   Widget buildResult() {
     final controller = _controller;
     if (controller == null || !controller.value.isInitialized) {
@@ -621,7 +643,9 @@ class _FaceRecognitionScreenState extends State<FaceRecognitionScreen> {
       _scanResults,
       camDirec,
     );
-    return IgnorePointer(child: CustomPaint(painter: painter));
+    return IgnorePointer(
+      child: _buildPreviewContainer(CustomPaint(painter: painter)),
+    );
   }
 
   @override
@@ -636,20 +660,8 @@ class _FaceRecognitionScreenState extends State<FaceRecognitionScreen> {
         child: Scaffold(
           body: Stack(
             children: [
-              Positioned(
-                top: 0.0,
-                left: 0.0,
-                width: size.width,
-                height: size.height,
-                child: CameraPreview(_controller!),
-              ),
-              Positioned(
-                top: 0.0,
-                left: 0.0,
-                width: size.width,
-                height: size.height,
-                child: buildResult(),
-              ),
+              Positioned.fill(child: _buildCameraPreview()),
+              Positioned.fill(child: buildResult()),
               Positioned(
                 bottom: 5.0,
                 left: 0.0,
