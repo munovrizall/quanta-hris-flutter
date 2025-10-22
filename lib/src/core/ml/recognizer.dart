@@ -9,24 +9,15 @@ import 'package:quanta_hris/src/core/utils/app_logger.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 class Recognizer {
-  late Interpreter interpreter;
-  late InterpreterOptions _interpreterOptions;
+  Interpreter? _interpreter;
+  late final InterpreterOptions _interpreterOptions;
   final SessionStorageRepository _sessionStorage;
+  Future<void>? _initialization;
 
-  static const int WIDTH = 112;
-  static const int HEIGHT = 112;
+  static const int _inputWidth = 112;
+  static const int _inputHeight = 112;
 
   String get modelName => 'assets/mobile_face_net.tflite';
-
-  Future<void> loadModel() async {
-    try {
-      interpreter = await Interpreter.fromAsset(modelName);
-    } catch (e) {
-      AppLogger.d(
-        'Unable to create interpreter, Caught Exception: ${e.toString()}',
-      );
-    }
-  }
 
   Recognizer({
     required SessionStorageRepository sessionStorage,
@@ -37,14 +28,46 @@ class Recognizer {
     if (numThreads != null) {
       _interpreterOptions.threads = numThreads;
     }
-    loadModel();
+  }
+
+  bool get isLoaded => _interpreter != null;
+
+  Future<void> loadModel() {
+    _initialization ??= _createInterpreter();
+    return _initialization!;
+  }
+
+  Future<void> _createInterpreter() async {
+    if (_interpreter != null) {
+      return;
+    }
+
+    try {
+      _interpreter = await Interpreter.fromAsset(
+        modelName,
+        options: _interpreterOptions,
+      );
+    } catch (e) {
+      AppLogger.d(
+        'Unable to create interpreter, Caught Exception: ${e.toString()}',
+      );
+      rethrow;
+    }
+  }
+
+  Interpreter get _ensureInterpreter {
+    final interpreter = _interpreter;
+    if (interpreter == null) {
+      throw StateError('Face recognition interpreter has not been loaded.');
+    }
+    return interpreter;
   }
 
   List<dynamic> imageToArray(img.Image inputImage) {
     img.Image resizedImage = img.copyResize(
       inputImage,
-      width: WIDTH,
-      height: HEIGHT,
+      width: _inputWidth,
+      height: _inputHeight,
     );
     List<double> flattenedList = resizedImage.data!
         .expand((channel) => [channel.r, channel.g, channel.b])
@@ -52,8 +75,8 @@ class Recognizer {
         .toList();
     Float32List float32Array = Float32List.fromList(flattenedList);
     int channels = 3;
-    int height = HEIGHT;
-    int width = WIDTH;
+    int height = _inputHeight;
+    int width = _inputWidth;
     Float32List reshapedArray = Float32List(1 * height * width * channels);
     for (int c = 0; c < channels; c++) {
       for (int h = 0; h < height; h++) {
@@ -69,12 +92,12 @@ class Recognizer {
   }
 
   RecognitionEmbedding recognize(img.Image image, Rect location) {
+    final interpreter = _ensureInterpreter;
     var input = imageToArray(image);
     AppLogger.d(input.shape.toString());
 
     List output = List.filled(1 * 192, 0).reshape([1, 192]);
 
-    final runs = DateTime.now().millisecondsSinceEpoch;
     interpreter.run(input, output);
 
     List<double> outputArray = output.first.cast<double>();
