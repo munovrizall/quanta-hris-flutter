@@ -6,15 +6,28 @@
       "request": "launch",
       "type": "dart",
       "program": "lib/main_dev.dart",
-      "args": ["--flavor", "dev", "--verbose"],
-      "noDebug": true 
+      "args": [
+        "--flavor",
+        "dev",
+        "--verbose"
+      ],
+      "noDebug": true
     },
     {
       "name": "Run Production",
       "request": "launch",
       "type": "dart",
       "program": "lib/main_production.dart",
-      "args": ["--flavor", "production"]
+      "args": [
+        "--flavor",
+        "production"
+      ]
+    },
+    {
+      "name": "Flutter (lib/src/features/face_recognition/presentation/bloc/register_face_event.dart)",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/src/features/face_recognition/presentation/bloc/register_face_event.dart"
     }
   ]
 }

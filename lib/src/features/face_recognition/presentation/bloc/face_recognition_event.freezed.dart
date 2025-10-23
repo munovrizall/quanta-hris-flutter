@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'register_face_event.dart';
+part of 'face_recognition_event.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,20 +12,20 @@ part of 'register_face_event.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$RegisterEvent {
+mixin _$FaceRecognitionEvent {
 
  String get embedding; XFile? get image;
-/// Create a copy of RegisterEvent
+/// Create a copy of FaceRecognitionEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$RegisterEventCopyWith<RegisterEvent> get copyWith => _$RegisterEventCopyWithImpl<RegisterEvent>(this as RegisterEvent, _$identity);
+$FaceRecognitionEventCopyWith<FaceRecognitionEvent> get copyWith => _$FaceRecognitionEventCopyWithImpl<FaceRecognitionEvent>(this as FaceRecognitionEvent, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegisterEvent&&(identical(other.embedding, embedding) || other.embedding == embedding)&&(identical(other.image, image) || other.image == image));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FaceRecognitionEvent&&(identical(other.embedding, embedding) || other.embedding == embedding)&&(identical(other.image, image) || other.image == image));
 }
 
 
@@ -34,15 +34,15 @@ int get hashCode => Object.hash(runtimeType,embedding,image);
 
 @override
 String toString() {
-  return 'RegisterEvent(embedding: $embedding, image: $image)';
+  return 'FaceRecognitionEvent(embedding: $embedding, image: $image)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $RegisterEventCopyWith<$Res>  {
-  factory $RegisterEventCopyWith(RegisterEvent value, $Res Function(RegisterEvent) _then) = _$RegisterEventCopyWithImpl;
+abstract mixin class $FaceRecognitionEventCopyWith<$Res>  {
+  factory $FaceRecognitionEventCopyWith(FaceRecognitionEvent value, $Res Function(FaceRecognitionEvent) _then) = _$FaceRecognitionEventCopyWithImpl;
 @useResult
 $Res call({
  String embedding, XFile? image
@@ -53,14 +53,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$RegisterEventCopyWithImpl<$Res>
-    implements $RegisterEventCopyWith<$Res> {
-  _$RegisterEventCopyWithImpl(this._self, this._then);
+class _$FaceRecognitionEventCopyWithImpl<$Res>
+    implements $FaceRecognitionEventCopyWith<$Res> {
+  _$FaceRecognitionEventCopyWithImpl(this._self, this._then);
 
-  final RegisterEvent _self;
-  final $Res Function(RegisterEvent) _then;
+  final FaceRecognitionEvent _self;
+  final $Res Function(FaceRecognitionEvent) _then;
 
-/// Create a copy of RegisterEvent
+/// Create a copy of FaceRecognitionEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? embedding = null,Object? image = freezed,}) {
   return _then(_self.copyWith(
@@ -73,8 +73,8 @@ as XFile?,
 }
 
 
-/// Adds pattern-matching-related methods to [RegisterEvent].
-extension RegisterEventPatterns on RegisterEvent {
+/// Adds pattern-matching-related methods to [FaceRecognitionEvent].
+extension FaceRecognitionEventPatterns on FaceRecognitionEvent {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -206,14 +206,14 @@ return updateProfileRegisterFace(_that.embedding,_that.image);case _:
 /// @nodoc
 
 
-class _UpdateProfileRegisterFace implements RegisterEvent {
+class _UpdateProfileRegisterFace implements FaceRecognitionEvent {
   const _UpdateProfileRegisterFace(this.embedding, this.image);
   
 
 @override final  String embedding;
 @override final  XFile? image;
 
-/// Create a copy of RegisterEvent
+/// Create a copy of FaceRecognitionEvent
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -232,14 +232,14 @@ int get hashCode => Object.hash(runtimeType,embedding,image);
 
 @override
 String toString() {
-  return 'RegisterEvent.updateProfileRegisterFace(embedding: $embedding, image: $image)';
+  return 'FaceRecognitionEvent.updateProfileRegisterFace(embedding: $embedding, image: $image)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$UpdateProfileRegisterFaceCopyWith<$Res> implements $RegisterEventCopyWith<$Res> {
+abstract mixin class _$UpdateProfileRegisterFaceCopyWith<$Res> implements $FaceRecognitionEventCopyWith<$Res> {
   factory _$UpdateProfileRegisterFaceCopyWith(_UpdateProfileRegisterFace value, $Res Function(_UpdateProfileRegisterFace) _then) = __$UpdateProfileRegisterFaceCopyWithImpl;
 @override @useResult
 $Res call({
@@ -258,7 +258,7 @@ class __$UpdateProfileRegisterFaceCopyWithImpl<$Res>
   final _UpdateProfileRegisterFace _self;
   final $Res Function(_UpdateProfileRegisterFace) _then;
 
-/// Create a copy of RegisterEvent
+/// Create a copy of FaceRecognitionEvent
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? embedding = null,Object? image = freezed,}) {
   return _then(_UpdateProfileRegisterFace(

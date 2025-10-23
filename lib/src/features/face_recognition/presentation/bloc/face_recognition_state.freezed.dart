@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'register_face_state.dart';
+part of 'face_recognition_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,20 +12,20 @@ part of 'register_face_state.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$RegisterFaceState {
+mixin _$FaceRecognitionState {
 
  UserEntity? get registeredFaceData; bool get isRegisterFaceLoading; String? get registerFaceError;
-/// Create a copy of RegisterFaceState
+/// Create a copy of FaceRecognitionState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$RegisterFaceStateCopyWith<RegisterFaceState> get copyWith => _$RegisterFaceStateCopyWithImpl<RegisterFaceState>(this as RegisterFaceState, _$identity);
+$FaceRecognitionStateCopyWith<FaceRecognitionState> get copyWith => _$FaceRecognitionStateCopyWithImpl<FaceRecognitionState>(this as FaceRecognitionState, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegisterFaceState&&(identical(other.registeredFaceData, registeredFaceData) || other.registeredFaceData == registeredFaceData)&&(identical(other.isRegisterFaceLoading, isRegisterFaceLoading) || other.isRegisterFaceLoading == isRegisterFaceLoading)&&(identical(other.registerFaceError, registerFaceError) || other.registerFaceError == registerFaceError));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FaceRecognitionState&&(identical(other.registeredFaceData, registeredFaceData) || other.registeredFaceData == registeredFaceData)&&(identical(other.isRegisterFaceLoading, isRegisterFaceLoading) || other.isRegisterFaceLoading == isRegisterFaceLoading)&&(identical(other.registerFaceError, registerFaceError) || other.registerFaceError == registerFaceError));
 }
 
 
@@ -34,15 +34,15 @@ int get hashCode => Object.hash(runtimeType,registeredFaceData,isRegisterFaceLoa
 
 @override
 String toString() {
-  return 'RegisterFaceState(registeredFaceData: $registeredFaceData, isRegisterFaceLoading: $isRegisterFaceLoading, registerFaceError: $registerFaceError)';
+  return 'FaceRecognitionState(registeredFaceData: $registeredFaceData, isRegisterFaceLoading: $isRegisterFaceLoading, registerFaceError: $registerFaceError)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $RegisterFaceStateCopyWith<$Res>  {
-  factory $RegisterFaceStateCopyWith(RegisterFaceState value, $Res Function(RegisterFaceState) _then) = _$RegisterFaceStateCopyWithImpl;
+abstract mixin class $FaceRecognitionStateCopyWith<$Res>  {
+  factory $FaceRecognitionStateCopyWith(FaceRecognitionState value, $Res Function(FaceRecognitionState) _then) = _$FaceRecognitionStateCopyWithImpl;
 @useResult
 $Res call({
  UserEntity? registeredFaceData, bool isRegisterFaceLoading, String? registerFaceError
@@ -53,14 +53,14 @@ $UserEntityCopyWith<$Res>? get registeredFaceData;
 
 }
 /// @nodoc
-class _$RegisterFaceStateCopyWithImpl<$Res>
-    implements $RegisterFaceStateCopyWith<$Res> {
-  _$RegisterFaceStateCopyWithImpl(this._self, this._then);
+class _$FaceRecognitionStateCopyWithImpl<$Res>
+    implements $FaceRecognitionStateCopyWith<$Res> {
+  _$FaceRecognitionStateCopyWithImpl(this._self, this._then);
 
-  final RegisterFaceState _self;
-  final $Res Function(RegisterFaceState) _then;
+  final FaceRecognitionState _self;
+  final $Res Function(FaceRecognitionState) _then;
 
-/// Create a copy of RegisterFaceState
+/// Create a copy of FaceRecognitionState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? registeredFaceData = freezed,Object? isRegisterFaceLoading = null,Object? registerFaceError = freezed,}) {
   return _then(_self.copyWith(
@@ -70,7 +70,7 @@ as bool,registerFaceError: freezed == registerFaceError ? _self.registerFaceErro
 as String?,
   ));
 }
-/// Create a copy of RegisterFaceState
+/// Create a copy of FaceRecognitionState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -86,8 +86,8 @@ $UserEntityCopyWith<$Res>? get registeredFaceData {
 }
 
 
-/// Adds pattern-matching-related methods to [RegisterFaceState].
-extension RegisterFaceStatePatterns on RegisterFaceState {
+/// Adds pattern-matching-related methods to [FaceRecognitionState].
+extension FaceRecognitionStatePatterns on FaceRecognitionState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -100,10 +100,10 @@ extension RegisterFaceStatePatterns on RegisterFaceState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _RegisterFaceState value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _FaceRecognitionState value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _RegisterFaceState() when $default != null:
+case _FaceRecognitionState() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -122,10 +122,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _RegisterFaceState value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _FaceRecognitionState value)  $default,){
 final _that = this;
 switch (_that) {
-case _RegisterFaceState():
+case _FaceRecognitionState():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -143,10 +143,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _RegisterFaceState value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _FaceRecognitionState value)?  $default,){
 final _that = this;
 switch (_that) {
-case _RegisterFaceState() when $default != null:
+case _FaceRecognitionState() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -166,7 +166,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _RegisterFaceState() when $default != null:
+case _FaceRecognitionState() when $default != null:
 return $default(_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError);case _:
   return orElse();
 
@@ -187,7 +187,7 @@ return $default(_that.registeredFaceData,_that.isRegisterFaceLoading,_that.regis
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError)  $default,) {final _that = this;
 switch (_that) {
-case _RegisterFaceState():
+case _FaceRecognitionState():
 return $default(_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError);case _:
   throw StateError('Unexpected subclass');
 
@@ -207,7 +207,7 @@ return $default(_that.registeredFaceData,_that.isRegisterFaceLoading,_that.regis
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError)?  $default,) {final _that = this;
 switch (_that) {
-case _RegisterFaceState() when $default != null:
+case _FaceRecognitionState() when $default != null:
 return $default(_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError);case _:
   return null;
 
@@ -219,25 +219,25 @@ return $default(_that.registeredFaceData,_that.isRegisterFaceLoading,_that.regis
 /// @nodoc
 
 
-class _RegisterFaceState extends RegisterFaceState {
-  const _RegisterFaceState({this.registeredFaceData = null, this.isRegisterFaceLoading = false, this.registerFaceError = null}): super._();
+class _FaceRecognitionState extends FaceRecognitionState {
+  const _FaceRecognitionState({this.registeredFaceData = null, this.isRegisterFaceLoading = false, this.registerFaceError = null}): super._();
   
 
 @override@JsonKey() final  UserEntity? registeredFaceData;
 @override@JsonKey() final  bool isRegisterFaceLoading;
 @override@JsonKey() final  String? registerFaceError;
 
-/// Create a copy of RegisterFaceState
+/// Create a copy of FaceRecognitionState
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$RegisterFaceStateCopyWith<_RegisterFaceState> get copyWith => __$RegisterFaceStateCopyWithImpl<_RegisterFaceState>(this, _$identity);
+_$FaceRecognitionStateCopyWith<_FaceRecognitionState> get copyWith => __$FaceRecognitionStateCopyWithImpl<_FaceRecognitionState>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RegisterFaceState&&(identical(other.registeredFaceData, registeredFaceData) || other.registeredFaceData == registeredFaceData)&&(identical(other.isRegisterFaceLoading, isRegisterFaceLoading) || other.isRegisterFaceLoading == isRegisterFaceLoading)&&(identical(other.registerFaceError, registerFaceError) || other.registerFaceError == registerFaceError));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FaceRecognitionState&&(identical(other.registeredFaceData, registeredFaceData) || other.registeredFaceData == registeredFaceData)&&(identical(other.isRegisterFaceLoading, isRegisterFaceLoading) || other.isRegisterFaceLoading == isRegisterFaceLoading)&&(identical(other.registerFaceError, registerFaceError) || other.registerFaceError == registerFaceError));
 }
 
 
@@ -246,15 +246,15 @@ int get hashCode => Object.hash(runtimeType,registeredFaceData,isRegisterFaceLoa
 
 @override
 String toString() {
-  return 'RegisterFaceState(registeredFaceData: $registeredFaceData, isRegisterFaceLoading: $isRegisterFaceLoading, registerFaceError: $registerFaceError)';
+  return 'FaceRecognitionState(registeredFaceData: $registeredFaceData, isRegisterFaceLoading: $isRegisterFaceLoading, registerFaceError: $registerFaceError)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$RegisterFaceStateCopyWith<$Res> implements $RegisterFaceStateCopyWith<$Res> {
-  factory _$RegisterFaceStateCopyWith(_RegisterFaceState value, $Res Function(_RegisterFaceState) _then) = __$RegisterFaceStateCopyWithImpl;
+abstract mixin class _$FaceRecognitionStateCopyWith<$Res> implements $FaceRecognitionStateCopyWith<$Res> {
+  factory _$FaceRecognitionStateCopyWith(_FaceRecognitionState value, $Res Function(_FaceRecognitionState) _then) = __$FaceRecognitionStateCopyWithImpl;
 @override @useResult
 $Res call({
  UserEntity? registeredFaceData, bool isRegisterFaceLoading, String? registerFaceError
@@ -265,17 +265,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$RegisterFaceStateCopyWithImpl<$Res>
-    implements _$RegisterFaceStateCopyWith<$Res> {
-  __$RegisterFaceStateCopyWithImpl(this._self, this._then);
+class __$FaceRecognitionStateCopyWithImpl<$Res>
+    implements _$FaceRecognitionStateCopyWith<$Res> {
+  __$FaceRecognitionStateCopyWithImpl(this._self, this._then);
 
-  final _RegisterFaceState _self;
-  final $Res Function(_RegisterFaceState) _then;
+  final _FaceRecognitionState _self;
+  final $Res Function(_FaceRecognitionState) _then;
 
-/// Create a copy of RegisterFaceState
+/// Create a copy of FaceRecognitionState
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? registeredFaceData = freezed,Object? isRegisterFaceLoading = null,Object? registerFaceError = freezed,}) {
-  return _then(_RegisterFaceState(
+  return _then(_FaceRecognitionState(
 registeredFaceData: freezed == registeredFaceData ? _self.registeredFaceData : registeredFaceData // ignore: cast_nullable_to_non_nullable
 as UserEntity?,isRegisterFaceLoading: null == isRegisterFaceLoading ? _self.isRegisterFaceLoading : isRegisterFaceLoading // ignore: cast_nullable_to_non_nullable
 as bool,registerFaceError: freezed == registerFaceError ? _self.registerFaceError : registerFaceError // ignore: cast_nullable_to_non_nullable
@@ -283,7 +283,7 @@ as String?,
   ));
 }
 
-/// Create a copy of RegisterFaceState
+/// Create a copy of FaceRecognitionState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')

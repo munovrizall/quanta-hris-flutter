@@ -31,7 +31,7 @@ import 'package:quanta_hris/src/features/face_recognition/data/datasources/face_
 import 'package:quanta_hris/src/features/face_recognition/data/repositories/face_recognition_repository_impl.dart';
 import 'package:quanta_hris/src/features/face_recognition/domain/repositories/face_recognition_repository.dart';
 import 'package:quanta_hris/src/features/face_recognition/domain/usecases/update_profile_usecase.dart';
-import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/register_face_bloc.dart';
+import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -224,7 +224,9 @@ void _registerFaceRecognition() {
   );
 
   getIt.registerFactory(
-    () => RegisterFaceBloc(updateProfileUseCase: getIt<UpdateProfileUseCase>()),
+    () => FaceRecognitionBloc(
+      updateProfileUseCase: getIt<UpdateProfileUseCase>(),
+    ),
   );
 }
 
