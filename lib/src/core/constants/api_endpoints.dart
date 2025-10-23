@@ -25,6 +25,8 @@ class HomeEndpoints {
 
   final String getOperationalHours = '/company/operational-hours';
   final String getTodayLeaves = '/attendance/today-leaves-permits';
+
+  final String getIsClockedIn = '/attendance/is-clocked-in';
 }
 
 class ProfileEndpoints {

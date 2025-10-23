@@ -2,12 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:quanta_hris/src/core/constants/api_endpoints.dart';
 import 'package:quanta_hris/src/core/error/error_handler.dart';
 import 'package:quanta_hris/src/core/network/api_response_model.dart';
+import 'package:quanta_hris/src/features/home/data/models/get_is_clocked_in_response.dart';
 import 'package:quanta_hris/src/features/home/data/models/get_operational_hour_response.dart';
 import 'package:quanta_hris/src/features/home/data/models/get_today_leaves_response.dart';
 
 abstract class HomeRemoteDataSource {
   Future<ApiResponseModel<GetOperationalHourResponse>> getOperationalHours();
   Future<ApiResponseModel<GetTodayLeavesResponse>> getTodayLeaves();
+  Future<ApiResponseModel<GetIsClockedInResponse>> getIsClockedIn();
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -39,6 +41,20 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       return ApiResponseModel.fromJson(
         response.data,
         (json) => GetTodayLeavesResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+ 
+  @override
+  Future<ApiResponseModel<GetIsClockedInResponse>> getIsClockedIn() async {
+    try {
+      final response = await _dio.get(ApiEndpoints.home.getIsClockedIn);
+
+      return ApiResponseModel.fromJson(
+        response.data,
+        (json) => GetIsClockedInResponse.fromJson(json as Map<String, dynamic>),
       );
     } catch (error) {
       throw ErrorHandler.handle(error);

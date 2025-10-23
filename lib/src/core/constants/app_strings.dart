@@ -209,6 +209,8 @@ class HomeStrings {
   final String checkOutButtonText = 'ABSEN PULANG';
   final String checkInSubtitle = 'Tap untuk mencatat kehadiran';
   final String checkOutSubtitle = 'Tap untuk mencatat jam pulang';
+  final String registerFaceButtonText = 'REGISTER FACE';
+  final String registerFaceSubtitle = 'Tap untuk mendaftarkan wajah Anda';
 
   final String adminMenuTitle = 'Menu Administrasi';
   final String leaveRequestLabel = 'Pengajuan\nCuti';

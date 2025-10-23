@@ -1,5 +1,6 @@
 import 'package:quanta_hris/src/core/error/app_exception.dart';
 import 'package:quanta_hris/src/features/home/data/datasources/home_remote_data_source.dart';
+import 'package:quanta_hris/src/features/home/domain/entities/is_clocked_in_entity.dart';
 import 'package:quanta_hris/src/features/home/domain/entities/operational_hour_entity.dart';
 import 'package:quanta_hris/src/features/home/domain/entities/today_leaves_entity.dart';
 import 'package:quanta_hris/src/features/home/domain/repositories/home_repository.dart';
@@ -50,6 +51,19 @@ class HomeRepositoryImpl implements HomeRepository {
             )
             .toList(),
       );
+    } on ApiException {
+      rethrow;
+    } catch (_) {
+      throw ApiException('An unexpected error occurred in the repository.');
+    }
+  }
+
+  @override
+  Future<IsClockedInEntity> getIsClockedIn() async {
+    try {
+      final response = await _remoteDataSource.getIsClockedIn();
+      final data = response.data;
+      return IsClockedInEntity(isClockedIn: data.isClockedIn);
     } on ApiException {
       rethrow;
     } catch (_) {

@@ -7,6 +7,7 @@ import 'package:quanta_hris/src/core/bloc/session_bloc.dart';
 import 'package:quanta_hris/src/core/bloc/session_state.dart';
 import 'package:quanta_hris/src/core/constants/app_strings.dart';
 import 'package:quanta_hris/src/core/di/injector.dart';
+import 'package:quanta_hris/src/core/storage/session_storage_repository.dart';
 import 'package:quanta_hris/src/core/utils/date_formatter.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_state.dart';
@@ -43,11 +44,45 @@ class _HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<_HomeView> {
   bool isCheckedIn = false;
+  final SessionStorageRepository _sessionStorageRepository =
+      getIt<SessionStorageRepository>();
+  bool _hasFaceEmbedding = false;
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting('id');
+    _loadSessionUser();
+  }
+
+  Future<void> _loadSessionUser() async {
+    try {
+      final user = await _sessionStorageRepository.getUser();
+      if (!mounted) return;
+
+      setState(() {
+        _hasFaceEmbedding = _isValidFaceEmbedding(user?.faceEmbedding);
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _hasFaceEmbedding = false;
+      });
+    }
+  }
+
+  bool _isValidFaceEmbedding(String? faceEmbedding) {
+    if (faceEmbedding == null) return false;
+    final trimmed = faceEmbedding.trim();
+    if (trimmed.isEmpty) return false;
+    if (trimmed.toLowerCase() == 'null') return false;
+    return true;
+  }
+
+  Future<void> _handleMainButtonTap(BuildContext context) async {
+    final targetRoute = _hasFaceEmbedding ? '/attendance' : '/face-recognition';
+    await context.push(targetRoute);
+    await _loadSessionUser();
   }
 
   String formatDateRange(String start, String end) {
@@ -256,9 +291,7 @@ class _HomeViewState extends State<_HomeView> {
                     elevation: 4,
                     borderRadius: BorderRadius.circular(AppRadius.xl),
                     child: InkWell(
-                      onTap: () {
-                        context.push('/face-recognition');
-                      },
+                      onTap: () async => _handleMainButtonTap(context),
                       borderRadius: BorderRadius.circular(AppRadius.xl),
                       child: Container(
                         width: double.infinity,
@@ -267,7 +300,7 @@ class _HomeViewState extends State<_HomeView> {
                         ),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: isCheckedIn
+                            colors: _hasFaceEmbedding && isCheckedIn
                                 ? [AppColors.warning, AppColors.warningLight]
                                 : [AppColors.primary, AppColors.primary200],
                           ),
@@ -276,13 +309,19 @@ class _HomeViewState extends State<_HomeView> {
                         child: Column(
                           children: [
                             Icon(
-                              isCheckedIn ? Icons.logout : Icons.fingerprint,
+                              !_hasFaceEmbedding
+                                  ? Icons.person_add_alt_1
+                                  : isCheckedIn
+                                  ? Icons.logout
+                                  : Icons.fingerprint,
                               size: AppSizes.iconHuge,
                               color: AppColors.white,
                             ),
                             const SizedBox(height: AppSpacing.xs),
                             Text(
-                              isCheckedIn
+                              !_hasFaceEmbedding
+                                  ? AppStrings.home.registerFaceButtonText
+                                  : isCheckedIn
                                   ? AppStrings.home.checkOutButtonText
                                   : AppStrings.home.checkInButtonText,
                               style: AppTypography.buttonLarge.copyWith(
@@ -291,7 +330,9 @@ class _HomeViewState extends State<_HomeView> {
                             ),
                             const SizedBox(height: AppSpacing.xs),
                             Text(
-                              isCheckedIn
+                              !_hasFaceEmbedding
+                                  ? AppStrings.home.registerFaceSubtitle
+                                  : isCheckedIn
                                   ? AppStrings.home.checkOutSubtitle
                                   : AppStrings.home.checkInSubtitle,
                               style: AppTypography.bodySmall.copyWith(

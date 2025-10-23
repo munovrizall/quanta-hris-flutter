@@ -23,6 +23,7 @@ import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_b
 import 'package:quanta_hris/src/features/home/data/datasources/home_remote_data_source.dart';
 import 'package:quanta_hris/src/features/home/data/repositories/home_repository_impl.dart';
 import 'package:quanta_hris/src/features/home/domain/repositories/home_repository.dart';
+import 'package:quanta_hris/src/features/home/domain/usecases/get_is_clocked_in_usecase.dart';
 import 'package:quanta_hris/src/features/home/domain/usecases/get_operational_hour_usecase.dart';
 import 'package:quanta_hris/src/features/home/domain/usecases/get_today_leaves_usecase.dart';
 import 'package:quanta_hris/src/features/home/presentation/bloc/home_bloc.dart';
@@ -194,12 +195,13 @@ void _registerHome() {
     () => GetOperationalHourUseCase(getIt<HomeRepository>()),
   );
   getIt.registerFactory(() => GetTodayLeavesUseCase(getIt<HomeRepository>()));
-
+  getIt.registerFactory(() => GetIsClockedInUsecase(getIt<HomeRepository>()));
   // BLoC
   getIt.registerFactory(
     () => HomeBloc(
       getOperationalHoursUseCase: getIt<GetOperationalHourUseCase>(),
       getTodayLeavesUseCase: getIt<GetTodayLeavesUseCase>(),
+      getIsClockedInUsecase: getIt<GetIsClockedInUsecase>(),
     ),
   );
 }
