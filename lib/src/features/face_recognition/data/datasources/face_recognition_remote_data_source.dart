@@ -4,9 +4,11 @@ import 'package:quanta_hris/src/core/error/error_handler.dart';
 import 'package:quanta_hris/src/core/network/api_response_model.dart';
 import 'package:quanta_hris/src/core/utils/app_logger.dart';
 import 'package:quanta_hris/src/features/authentication/data/models/user_model.dart';
+import 'package:quanta_hris/src/features/face_recognition/data/models/get_company_branches_response.dart';
 import 'package:quanta_hris/src/features/face_recognition/data/models/update_profile_request.dart';
 
 abstract class FaceRecognitionRemoteDataSource {
+  Future<ApiResponseModel<GetCompanyBranchesResponse>> getCompanyBranches();
   Future<ApiResponseModel<UserModel>> postUpdateProfile({
     required UpdateProfileRequest requestModel,
   });
@@ -17,6 +19,37 @@ class FaceRecognitionRemoteDataSourceImpl
   final Dio _dio;
 
   FaceRecognitionRemoteDataSourceImpl(this._dio);
+
+  @override
+  Future<ApiResponseModel<GetCompanyBranchesResponse>>
+  getCompanyBranches() async {
+    try {
+      AppLogger.d(
+        '🌐 RemoteDataSource: Fetching from ${ApiEndpoints.profile.getCompanyBranches}',
+      );
+
+      final response = await _dio.get(ApiEndpoints.profile.getCompanyBranches);
+
+      AppLogger.d(
+        '✅ RemoteDataSource: Got response with status ${response.statusCode}',
+      );
+      AppLogger.d('📥 Raw response data: ${response.data}');
+
+      final responseMap = Map<String, dynamic>.from(
+        response.data as Map<String, dynamic>,
+      );
+
+      return ApiResponseModel.fromJson(
+        responseMap,
+        (json) =>
+            GetCompanyBranchesResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } catch (error, stackTrace) {
+      AppLogger.d('❌ RemoteDataSource error: $error');
+      AppLogger.d('📍 StackTrace: $stackTrace');
+      throw ErrorHandler.handle(error);
+    }
+  }
 
   @override
   Future<ApiResponseModel<UserModel>> postUpdateProfile({

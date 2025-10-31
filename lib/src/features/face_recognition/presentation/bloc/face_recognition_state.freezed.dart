@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$FaceRecognitionState {
 
- UserEntity? get registeredFaceData; bool get isRegisterFaceLoading; String? get registerFaceError;
+ CompanyBranchesEntity? get companyBranches; bool get isCompanyBranchesLoading; String? get companyBranchesError; UserEntity? get registeredFaceData; bool get isRegisterFaceLoading; String? get registerFaceError;
 /// Create a copy of FaceRecognitionState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $FaceRecognitionStateCopyWith<FaceRecognitionState> get copyWith => _$FaceRecogn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FaceRecognitionState&&(identical(other.registeredFaceData, registeredFaceData) || other.registeredFaceData == registeredFaceData)&&(identical(other.isRegisterFaceLoading, isRegisterFaceLoading) || other.isRegisterFaceLoading == isRegisterFaceLoading)&&(identical(other.registerFaceError, registerFaceError) || other.registerFaceError == registerFaceError));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FaceRecognitionState&&(identical(other.companyBranches, companyBranches) || other.companyBranches == companyBranches)&&(identical(other.isCompanyBranchesLoading, isCompanyBranchesLoading) || other.isCompanyBranchesLoading == isCompanyBranchesLoading)&&(identical(other.companyBranchesError, companyBranchesError) || other.companyBranchesError == companyBranchesError)&&(identical(other.registeredFaceData, registeredFaceData) || other.registeredFaceData == registeredFaceData)&&(identical(other.isRegisterFaceLoading, isRegisterFaceLoading) || other.isRegisterFaceLoading == isRegisterFaceLoading)&&(identical(other.registerFaceError, registerFaceError) || other.registerFaceError == registerFaceError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,registeredFaceData,isRegisterFaceLoading,registerFaceError);
+int get hashCode => Object.hash(runtimeType,companyBranches,isCompanyBranchesLoading,companyBranchesError,registeredFaceData,isRegisterFaceLoading,registerFaceError);
 
 @override
 String toString() {
-  return 'FaceRecognitionState(registeredFaceData: $registeredFaceData, isRegisterFaceLoading: $isRegisterFaceLoading, registerFaceError: $registerFaceError)';
+  return 'FaceRecognitionState(companyBranches: $companyBranches, isCompanyBranchesLoading: $isCompanyBranchesLoading, companyBranchesError: $companyBranchesError, registeredFaceData: $registeredFaceData, isRegisterFaceLoading: $isRegisterFaceLoading, registerFaceError: $registerFaceError)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $FaceRecognitionStateCopyWith<$Res>  {
   factory $FaceRecognitionStateCopyWith(FaceRecognitionState value, $Res Function(FaceRecognitionState) _then) = _$FaceRecognitionStateCopyWithImpl;
 @useResult
 $Res call({
- UserEntity? registeredFaceData, bool isRegisterFaceLoading, String? registerFaceError
+ CompanyBranchesEntity? companyBranches, bool isCompanyBranchesLoading, String? companyBranchesError, UserEntity? registeredFaceData, bool isRegisterFaceLoading, String? registerFaceError
 });
 
 
-$UserEntityCopyWith<$Res>? get registeredFaceData;
+$CompanyBranchesEntityCopyWith<$Res>? get companyBranches;$UserEntityCopyWith<$Res>? get registeredFaceData;
 
 }
 /// @nodoc
@@ -62,15 +62,30 @@ class _$FaceRecognitionStateCopyWithImpl<$Res>
 
 /// Create a copy of FaceRecognitionState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? registeredFaceData = freezed,Object? isRegisterFaceLoading = null,Object? registerFaceError = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? companyBranches = freezed,Object? isCompanyBranchesLoading = null,Object? companyBranchesError = freezed,Object? registeredFaceData = freezed,Object? isRegisterFaceLoading = null,Object? registerFaceError = freezed,}) {
   return _then(_self.copyWith(
-registeredFaceData: freezed == registeredFaceData ? _self.registeredFaceData : registeredFaceData // ignore: cast_nullable_to_non_nullable
+companyBranches: freezed == companyBranches ? _self.companyBranches : companyBranches // ignore: cast_nullable_to_non_nullable
+as CompanyBranchesEntity?,isCompanyBranchesLoading: null == isCompanyBranchesLoading ? _self.isCompanyBranchesLoading : isCompanyBranchesLoading // ignore: cast_nullable_to_non_nullable
+as bool,companyBranchesError: freezed == companyBranchesError ? _self.companyBranchesError : companyBranchesError // ignore: cast_nullable_to_non_nullable
+as String?,registeredFaceData: freezed == registeredFaceData ? _self.registeredFaceData : registeredFaceData // ignore: cast_nullable_to_non_nullable
 as UserEntity?,isRegisterFaceLoading: null == isRegisterFaceLoading ? _self.isRegisterFaceLoading : isRegisterFaceLoading // ignore: cast_nullable_to_non_nullable
 as bool,registerFaceError: freezed == registerFaceError ? _self.registerFaceError : registerFaceError // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
 /// Create a copy of FaceRecognitionState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CompanyBranchesEntityCopyWith<$Res>? get companyBranches {
+    if (_self.companyBranches == null) {
+    return null;
+  }
+
+  return $CompanyBranchesEntityCopyWith<$Res>(_self.companyBranches!, (value) {
+    return _then(_self.copyWith(companyBranches: value));
+  });
+}/// Create a copy of FaceRecognitionState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -164,10 +179,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CompanyBranchesEntity? companyBranches,  bool isCompanyBranchesLoading,  String? companyBranchesError,  UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FaceRecognitionState() when $default != null:
-return $default(_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError);case _:
+return $default(_that.companyBranches,_that.isCompanyBranchesLoading,_that.companyBranchesError,_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError);case _:
   return orElse();
 
 }
@@ -185,10 +200,10 @@ return $default(_that.registeredFaceData,_that.isRegisterFaceLoading,_that.regis
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CompanyBranchesEntity? companyBranches,  bool isCompanyBranchesLoading,  String? companyBranchesError,  UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError)  $default,) {final _that = this;
 switch (_that) {
 case _FaceRecognitionState():
-return $default(_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError);case _:
+return $default(_that.companyBranches,_that.isCompanyBranchesLoading,_that.companyBranchesError,_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -205,10 +220,10 @@ return $default(_that.registeredFaceData,_that.isRegisterFaceLoading,_that.regis
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CompanyBranchesEntity? companyBranches,  bool isCompanyBranchesLoading,  String? companyBranchesError,  UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError)?  $default,) {final _that = this;
 switch (_that) {
 case _FaceRecognitionState() when $default != null:
-return $default(_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError);case _:
+return $default(_that.companyBranches,_that.isCompanyBranchesLoading,_that.companyBranchesError,_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError);case _:
   return null;
 
 }
@@ -220,9 +235,12 @@ return $default(_that.registeredFaceData,_that.isRegisterFaceLoading,_that.regis
 
 
 class _FaceRecognitionState extends FaceRecognitionState {
-  const _FaceRecognitionState({this.registeredFaceData = null, this.isRegisterFaceLoading = false, this.registerFaceError = null}): super._();
+  const _FaceRecognitionState({this.companyBranches = null, this.isCompanyBranchesLoading = false, this.companyBranchesError = null, this.registeredFaceData = null, this.isRegisterFaceLoading = false, this.registerFaceError = null}): super._();
   
 
+@override@JsonKey() final  CompanyBranchesEntity? companyBranches;
+@override@JsonKey() final  bool isCompanyBranchesLoading;
+@override@JsonKey() final  String? companyBranchesError;
 @override@JsonKey() final  UserEntity? registeredFaceData;
 @override@JsonKey() final  bool isRegisterFaceLoading;
 @override@JsonKey() final  String? registerFaceError;
@@ -237,16 +255,16 @@ _$FaceRecognitionStateCopyWith<_FaceRecognitionState> get copyWith => __$FaceRec
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FaceRecognitionState&&(identical(other.registeredFaceData, registeredFaceData) || other.registeredFaceData == registeredFaceData)&&(identical(other.isRegisterFaceLoading, isRegisterFaceLoading) || other.isRegisterFaceLoading == isRegisterFaceLoading)&&(identical(other.registerFaceError, registerFaceError) || other.registerFaceError == registerFaceError));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FaceRecognitionState&&(identical(other.companyBranches, companyBranches) || other.companyBranches == companyBranches)&&(identical(other.isCompanyBranchesLoading, isCompanyBranchesLoading) || other.isCompanyBranchesLoading == isCompanyBranchesLoading)&&(identical(other.companyBranchesError, companyBranchesError) || other.companyBranchesError == companyBranchesError)&&(identical(other.registeredFaceData, registeredFaceData) || other.registeredFaceData == registeredFaceData)&&(identical(other.isRegisterFaceLoading, isRegisterFaceLoading) || other.isRegisterFaceLoading == isRegisterFaceLoading)&&(identical(other.registerFaceError, registerFaceError) || other.registerFaceError == registerFaceError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,registeredFaceData,isRegisterFaceLoading,registerFaceError);
+int get hashCode => Object.hash(runtimeType,companyBranches,isCompanyBranchesLoading,companyBranchesError,registeredFaceData,isRegisterFaceLoading,registerFaceError);
 
 @override
 String toString() {
-  return 'FaceRecognitionState(registeredFaceData: $registeredFaceData, isRegisterFaceLoading: $isRegisterFaceLoading, registerFaceError: $registerFaceError)';
+  return 'FaceRecognitionState(companyBranches: $companyBranches, isCompanyBranchesLoading: $isCompanyBranchesLoading, companyBranchesError: $companyBranchesError, registeredFaceData: $registeredFaceData, isRegisterFaceLoading: $isRegisterFaceLoading, registerFaceError: $registerFaceError)';
 }
 
 
@@ -257,11 +275,11 @@ abstract mixin class _$FaceRecognitionStateCopyWith<$Res> implements $FaceRecogn
   factory _$FaceRecognitionStateCopyWith(_FaceRecognitionState value, $Res Function(_FaceRecognitionState) _then) = __$FaceRecognitionStateCopyWithImpl;
 @override @useResult
 $Res call({
- UserEntity? registeredFaceData, bool isRegisterFaceLoading, String? registerFaceError
+ CompanyBranchesEntity? companyBranches, bool isCompanyBranchesLoading, String? companyBranchesError, UserEntity? registeredFaceData, bool isRegisterFaceLoading, String? registerFaceError
 });
 
 
-@override $UserEntityCopyWith<$Res>? get registeredFaceData;
+@override $CompanyBranchesEntityCopyWith<$Res>? get companyBranches;@override $UserEntityCopyWith<$Res>? get registeredFaceData;
 
 }
 /// @nodoc
@@ -274,9 +292,12 @@ class __$FaceRecognitionStateCopyWithImpl<$Res>
 
 /// Create a copy of FaceRecognitionState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? registeredFaceData = freezed,Object? isRegisterFaceLoading = null,Object? registerFaceError = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? companyBranches = freezed,Object? isCompanyBranchesLoading = null,Object? companyBranchesError = freezed,Object? registeredFaceData = freezed,Object? isRegisterFaceLoading = null,Object? registerFaceError = freezed,}) {
   return _then(_FaceRecognitionState(
-registeredFaceData: freezed == registeredFaceData ? _self.registeredFaceData : registeredFaceData // ignore: cast_nullable_to_non_nullable
+companyBranches: freezed == companyBranches ? _self.companyBranches : companyBranches // ignore: cast_nullable_to_non_nullable
+as CompanyBranchesEntity?,isCompanyBranchesLoading: null == isCompanyBranchesLoading ? _self.isCompanyBranchesLoading : isCompanyBranchesLoading // ignore: cast_nullable_to_non_nullable
+as bool,companyBranchesError: freezed == companyBranchesError ? _self.companyBranchesError : companyBranchesError // ignore: cast_nullable_to_non_nullable
+as String?,registeredFaceData: freezed == registeredFaceData ? _self.registeredFaceData : registeredFaceData // ignore: cast_nullable_to_non_nullable
 as UserEntity?,isRegisterFaceLoading: null == isRegisterFaceLoading ? _self.isRegisterFaceLoading : isRegisterFaceLoading // ignore: cast_nullable_to_non_nullable
 as bool,registerFaceError: freezed == registerFaceError ? _self.registerFaceError : registerFaceError // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -284,6 +305,18 @@ as String?,
 }
 
 /// Create a copy of FaceRecognitionState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CompanyBranchesEntityCopyWith<$Res>? get companyBranches {
+    if (_self.companyBranches == null) {
+    return null;
+  }
+
+  return $CompanyBranchesEntityCopyWith<$Res>(_self.companyBranches!, (value) {
+    return _then(_self.copyWith(companyBranches: value));
+  });
+}/// Create a copy of FaceRecognitionState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')

@@ -5,6 +5,8 @@ part 'face_recognition_event.freezed.dart';
 
 @freezed
 abstract class FaceRecognitionEvent with _$FaceRecognitionEvent {
+  const factory FaceRecognitionEvent.fetchCompanyBranches() =
+      _FetchCompanyBranches;
   const factory FaceRecognitionEvent.updateProfileRegisterFace(
     String embedding,
     XFile? image,

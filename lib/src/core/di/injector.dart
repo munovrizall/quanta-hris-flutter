@@ -31,6 +31,7 @@ import 'package:quanta_hris/src/features/splash/domain/usecases/check_session_us
 import 'package:quanta_hris/src/features/face_recognition/data/datasources/face_recognition_remote_data_source.dart';
 import 'package:quanta_hris/src/features/face_recognition/data/repositories/face_recognition_repository_impl.dart';
 import 'package:quanta_hris/src/features/face_recognition/domain/repositories/face_recognition_repository.dart';
+import 'package:quanta_hris/src/features/face_recognition/domain/usecases/get_company_branches_usecase.dart';
 import 'package:quanta_hris/src/features/face_recognition/domain/usecases/update_profile_usecase.dart';
 import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_bloc.dart';
 
@@ -219,6 +220,10 @@ void _registerFaceRecognition() {
   );
 
   getIt.registerFactory(
+    () => GetCompanyBranchesUseCase(getIt<FaceRecognitionRepository>()),
+  );
+
+  getIt.registerFactory(
     () => UpdateProfileUseCase(
       getIt<FaceRecognitionRepository>(),
       getIt<SessionStorageRepository>(),
@@ -228,6 +233,7 @@ void _registerFaceRecognition() {
   getIt.registerFactory(
     () => FaceRecognitionBloc(
       updateProfileUseCase: getIt<UpdateProfileUseCase>(),
+      getCompanyBranchesUseCase: getIt<GetCompanyBranchesUseCase>(),
     ),
   );
 }

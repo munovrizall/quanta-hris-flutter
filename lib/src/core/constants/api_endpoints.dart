@@ -7,7 +7,7 @@ class ApiEndpoints {
   static const HomeEndpoints home = HomeEndpoints();
 
   // Grup untuk semua endpoint terkait Pengguna
-  static const ProfileEndpoints profile = ProfileEndpoints();
+  static const FaceRecognitionEndpoints profile = FaceRecognitionEndpoints();
 }
 
 // Class khusus untuk endpoint Autentikasi
@@ -29,7 +29,8 @@ class HomeEndpoints {
   final String getIsClockedIn = '/attendance/is-clocked-in';
 }
 
-class ProfileEndpoints {
-  const ProfileEndpoints();
+class FaceRecognitionEndpoints {
+  const FaceRecognitionEndpoints();
 
+  final String getCompanyBranches = '/company/branches';
 }

@@ -14,62 +14,30 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$FaceRecognitionEvent {
 
- String get embedding; XFile? get image;
-/// Create a copy of FaceRecognitionEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$FaceRecognitionEventCopyWith<FaceRecognitionEvent> get copyWith => _$FaceRecognitionEventCopyWithImpl<FaceRecognitionEvent>(this as FaceRecognitionEvent, _$identity);
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FaceRecognitionEvent&&(identical(other.embedding, embedding) || other.embedding == embedding)&&(identical(other.image, image) || other.image == image));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FaceRecognitionEvent);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,embedding,image);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'FaceRecognitionEvent(embedding: $embedding, image: $image)';
+  return 'FaceRecognitionEvent()';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $FaceRecognitionEventCopyWith<$Res>  {
-  factory $FaceRecognitionEventCopyWith(FaceRecognitionEvent value, $Res Function(FaceRecognitionEvent) _then) = _$FaceRecognitionEventCopyWithImpl;
-@useResult
-$Res call({
- String embedding, XFile? image
-});
-
-
-
-
-}
-/// @nodoc
-class _$FaceRecognitionEventCopyWithImpl<$Res>
-    implements $FaceRecognitionEventCopyWith<$Res> {
-  _$FaceRecognitionEventCopyWithImpl(this._self, this._then);
-
-  final FaceRecognitionEvent _self;
-  final $Res Function(FaceRecognitionEvent) _then;
-
-/// Create a copy of FaceRecognitionEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? embedding = null,Object? image = freezed,}) {
-  return _then(_self.copyWith(
-embedding: null == embedding ? _self.embedding : embedding // ignore: cast_nullable_to_non_nullable
-as String,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
-as XFile?,
-  ));
-}
-
+class $FaceRecognitionEventCopyWith<$Res>  {
+$FaceRecognitionEventCopyWith(FaceRecognitionEvent _, $Res Function(FaceRecognitionEvent) __);
 }
 
 
@@ -87,10 +55,11 @@ extension FaceRecognitionEventPatterns on FaceRecognitionEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchCompanyBranches value)?  fetchCompanyBranches,TResult Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
+case _FetchCompanyBranches() when fetchCompanyBranches != null:
+return fetchCompanyBranches(_that);case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
 return updateProfileRegisterFace(_that);case _:
   return orElse();
 
@@ -109,10 +78,11 @@ return updateProfileRegisterFace(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _UpdateProfileRegisterFace value)  updateProfileRegisterFace,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchCompanyBranches value)  fetchCompanyBranches,required TResult Function( _UpdateProfileRegisterFace value)  updateProfileRegisterFace,}){
 final _that = this;
 switch (_that) {
-case _UpdateProfileRegisterFace():
+case _FetchCompanyBranches():
+return fetchCompanyBranches(_that);case _UpdateProfileRegisterFace():
 return updateProfileRegisterFace(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -130,10 +100,11 @@ return updateProfileRegisterFace(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchCompanyBranches value)?  fetchCompanyBranches,TResult? Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,}){
 final _that = this;
 switch (_that) {
-case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
+case _FetchCompanyBranches() when fetchCompanyBranches != null:
+return fetchCompanyBranches(_that);case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
 return updateProfileRegisterFace(_that);case _:
   return null;
 
@@ -151,9 +122,10 @@ return updateProfileRegisterFace(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String embedding,  XFile? image)?  updateProfileRegisterFace,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchCompanyBranches,TResult Function( String embedding,  XFile? image)?  updateProfileRegisterFace,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
+case _FetchCompanyBranches() when fetchCompanyBranches != null:
+return fetchCompanyBranches();case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
 return updateProfileRegisterFace(_that.embedding,_that.image);case _:
   return orElse();
 
@@ -172,9 +144,10 @@ return updateProfileRegisterFace(_that.embedding,_that.image);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String embedding,  XFile? image)  updateProfileRegisterFace,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchCompanyBranches,required TResult Function( String embedding,  XFile? image)  updateProfileRegisterFace,}) {final _that = this;
 switch (_that) {
-case _UpdateProfileRegisterFace():
+case _FetchCompanyBranches():
+return fetchCompanyBranches();case _UpdateProfileRegisterFace():
 return updateProfileRegisterFace(_that.embedding,_that.image);case _:
   throw StateError('Unexpected subclass');
 
@@ -192,9 +165,10 @@ return updateProfileRegisterFace(_that.embedding,_that.image);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String embedding,  XFile? image)?  updateProfileRegisterFace,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchCompanyBranches,TResult? Function( String embedding,  XFile? image)?  updateProfileRegisterFace,}) {final _that = this;
 switch (_that) {
-case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
+case _FetchCompanyBranches() when fetchCompanyBranches != null:
+return fetchCompanyBranches();case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
 return updateProfileRegisterFace(_that.embedding,_that.image);case _:
   return null;
 
@@ -206,16 +180,48 @@ return updateProfileRegisterFace(_that.embedding,_that.image);case _:
 /// @nodoc
 
 
+class _FetchCompanyBranches implements FaceRecognitionEvent {
+  const _FetchCompanyBranches();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchCompanyBranches);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'FaceRecognitionEvent.fetchCompanyBranches()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
 class _UpdateProfileRegisterFace implements FaceRecognitionEvent {
   const _UpdateProfileRegisterFace(this.embedding, this.image);
   
 
-@override final  String embedding;
-@override final  XFile? image;
+ final  String embedding;
+ final  XFile? image;
 
 /// Create a copy of FaceRecognitionEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
+@JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 _$UpdateProfileRegisterFaceCopyWith<_UpdateProfileRegisterFace> get copyWith => __$UpdateProfileRegisterFaceCopyWithImpl<_UpdateProfileRegisterFace>(this, _$identity);
 
@@ -241,7 +247,7 @@ String toString() {
 /// @nodoc
 abstract mixin class _$UpdateProfileRegisterFaceCopyWith<$Res> implements $FaceRecognitionEventCopyWith<$Res> {
   factory _$UpdateProfileRegisterFaceCopyWith(_UpdateProfileRegisterFace value, $Res Function(_UpdateProfileRegisterFace) _then) = __$UpdateProfileRegisterFaceCopyWithImpl;
-@override @useResult
+@useResult
 $Res call({
  String embedding, XFile? image
 });
@@ -260,7 +266,7 @@ class __$UpdateProfileRegisterFaceCopyWithImpl<$Res>
 
 /// Create a copy of FaceRecognitionEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? embedding = null,Object? image = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? embedding = null,Object? image = freezed,}) {
   return _then(_UpdateProfileRegisterFace(
 null == embedding ? _self.embedding : embedding // ignore: cast_nullable_to_non_nullable
 as String,freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
