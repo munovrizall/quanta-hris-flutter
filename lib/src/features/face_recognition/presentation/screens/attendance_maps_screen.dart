@@ -13,6 +13,7 @@ import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face
 import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_state.dart';
 import 'package:quanta_hris/src/shared/styles/app_colors.dart';
 import 'package:quanta_hris/src/shared/styles/app_typography.dart';
+import 'package:quanta_hris/src/shared/widgets/primary_button.dart';
 
 class AttendanceMapsScreen extends StatefulWidget {
   const AttendanceMapsScreen({super.key});
@@ -24,10 +25,12 @@ class AttendanceMapsScreen extends StatefulWidget {
 class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
   late final FaceRecognitionBloc _bloc;
   final MapController _mapController = MapController();
+  final Distance _distance = const Distance();
 
   LatLng? _userLocation;
   bool _isFetchingLocation = true;
   String? _locationError;
+  BranchEntity? _selectedBranch;
 
   @override
   void initState() {
@@ -120,10 +123,73 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
     }
   }
 
+  bool get _isWithinSelectedBranchRadius {
+    final user = _userLocation;
+    final branch = _selectedBranch;
+    if (user == null || branch == null) return false;
+
+    final distanceInMeters = _distance(
+      user,
+      LatLng(branch.latitude, branch.longitude),
+    );
+    return distanceInMeters <= branch.radiusLocation;
+  }
+
+  void _handleConfirmPresence() {
+    final branch = _selectedBranch;
+    if (branch == null) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Berhasil memilih cabang ${branch.branchName}.')),
+    );
+  }
+
   @override
   void dispose() {
     _bloc.close();
     super.dispose();
+  }
+
+  BranchEntity? _findBranchWithinRadius(List<BranchEntity> branches) {
+    final user = _userLocation;
+    if (user == null) return null;
+
+    BranchEntity? closestBranch;
+    double? closestDistance;
+
+    for (final branch in branches) {
+      final distance = _distance(
+        user,
+        LatLng(branch.latitude, branch.longitude),
+      );
+      if (distance <= branch.radiusLocation) {
+        if (closestDistance == null || distance < closestDistance) {
+          closestBranch = branch;
+          closestDistance = distance;
+        }
+      }
+    }
+
+    return closestBranch;
+  }
+
+  void _syncBranchSelection(List<BranchEntity> branches) {
+    final insideBranch = _findBranchWithinRadius(branches);
+    if (insideBranch != null && insideBranch != _selectedBranch) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        setState(() {
+          _selectedBranch = insideBranch;
+        });
+      });
+    } else if (insideBranch == null && _selectedBranch != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        setState(() {
+          _selectedBranch = null;
+        });
+      });
+    }
   }
 
   @override
@@ -164,6 +230,8 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
               );
             }
 
+            _syncBranchSelection(branches.branches);
+
             final effectiveCenter =
                 _userLocation ??
                 (branches.branches.isNotEmpty
@@ -200,7 +268,9 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
                                   ),
                                   radius: branch.radiusLocation.toDouble(),
                                   useRadiusInMeter: true,
-                                  color: AppColors.primary.withOpacity(0.15),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.15,
+                                  ),
                                   borderColor: AppColors.primary,
                                   borderStrokeWidth: 2,
                                 ),
@@ -221,7 +291,9 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
                               point: LatLng(branch.latitude, branch.longitude),
                               width: 40,
                               height: 40,
-                              child: const _BranchMarker(),
+                              child: _BranchMarker(
+                                isSelected: _selectedBranch == branch,
+                              ),
                             ),
                           ),
                         ],
@@ -237,115 +309,95 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
                     ],
                   ),
                 ),
-                _BranchSummary(branches: branches),
+                _BranchInfoPanel(
+                  selectedBranch: _selectedBranch,
+                  hasLocation: _userLocation != null,
+                  isWithinRadius: _isWithinSelectedBranchRadius,
+                  onConfirm: _isWithinSelectedBranchRadius
+                      ? _handleConfirmPresence
+                      : null,
+                  onLocateMe: _userLocation != null
+                      ? () => _moveTo(_userLocation!)
+                      : null,
+                ),
               ],
             );
           },
         ),
-        floatingActionButton: _userLocation != null
-            ? FloatingActionButton.extended(
-                onPressed: () {
-                  final user = _userLocation;
-                  if (user != null) {
-                    _moveTo(user);
-                  }
-                },
-                icon: const Icon(Icons.my_location),
-                label: const Text('Lokasi Saya'),
-              )
-            : null,
       ),
     );
   }
 }
 
-class _BranchSummary extends StatelessWidget {
-  final CompanyBranchesEntity branches;
+class _BranchInfoPanel extends StatelessWidget {
+  final BranchEntity? selectedBranch;
+  final bool hasLocation;
+  final bool isWithinRadius;
+  final VoidCallback? onConfirm;
+  final VoidCallback? onLocateMe;
 
-  const _BranchSummary({required this.branches});
+  const _BranchInfoPanel({
+    required this.selectedBranch,
+    required this.hasLocation,
+    required this.isWithinRadius,
+    required this.onConfirm,
+    required this.onLocateMe,
+  });
 
   @override
   Widget build(BuildContext context) {
-    if (branches.branches.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
     return Container(
       width: double.infinity,
-      color: AppColors.surface,
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        color: AppColors.surface,
+        border: Border(top: BorderSide(color: AppColors.border)),
+      ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            branches.company.companyName,
-            style: AppTypography.heading3.copyWith(fontWeight: FontWeight.bold),
+          PrimaryButton(
+            text: 'Lokasi Saya',
+            onPressed: onLocateMe,
+            variant: PrimaryButtonVariant.outline,
+            size: PrimaryButtonSize.medium,
           ),
-          const SizedBox(height: 8),
-          SizedBox(
-            height: 140,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                final branch = branches.branches[index];
-                return Container(
-                  width: 240,
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppColors.border),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.black.withOpacity(0.05),
-                        offset: const Offset(0, 4),
-                        blurRadius: 8,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        branch.branchName,
-                        style: AppTypography.bodyLarge.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Expanded(
-                        child: Text(
-                          branch.address,
-                          style: AppTypography.bodySmall.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.radar,
-                            size: 16,
-                            color: AppColors.primary,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            'Radius ${branch.radiusLocation} m',
-                            style: AppTypography.bodySmall,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              },
-              separatorBuilder: (context, _) => const SizedBox(width: 12),
-              itemCount: branches.branches.length,
+          const SizedBox(height: 16),
+          if (selectedBranch != null) ...[
+            Text(
+              selectedBranch!.branchName,
+              style: AppTypography.heading3.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
+            const SizedBox(height: 4),
+            Text(
+              'Radius ${selectedBranch!.radiusLocation} meter',
+              style: AppTypography.bodySmall,
+            ),
+            const SizedBox(height: 8),
+            if (!hasLocation)
+              Text(
+                'Lokasi Anda belum tersedia.',
+                style: AppTypography.bodySmall.copyWith(
+                  color: AppColors.warning,
+                ),
+              )
+            else if (!isWithinRadius)
+              Text(
+                'Anda berada di luar radius cabang ini.',
+                style: AppTypography.bodySmall.copyWith(color: AppColors.error),
+              ),
+          ] else if (hasLocation)
+            Text(
+              'Anda berada di luar radius cabang mana pun.',
+              style: AppTypography.bodyLarge,
+            )
+          else
+            Text('Menunggu lokasi Anda...', style: AppTypography.bodyLarge),
+          const SizedBox(height: 16),
+          PrimaryButton(text: 'Absen Sekarang', onPressed: onConfirm),
         ],
       ),
     );
@@ -373,13 +425,15 @@ class _UserLocationMarker extends StatelessWidget {
 }
 
 class _BranchMarker extends StatelessWidget {
-  const _BranchMarker();
+  final bool isSelected;
+
+  const _BranchMarker({required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: isSelected ? AppColors.warning : AppColors.primary,
         shape: BoxShape.circle,
         border: Border.all(color: AppColors.white, width: 3),
       ),
