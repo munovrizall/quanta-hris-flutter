@@ -1,14 +1,14 @@
 import 'package:quanta_hris/src/core/error/app_exception.dart';
 import 'package:quanta_hris/src/features/authentication/domain/entities/auth_entity.dart';
-import 'package:quanta_hris/src/features/face_recognition/data/datasources/face_recognition_remote_data_source.dart';
+import 'package:quanta_hris/src/features/attendance/data/datasources/attendance_remote_data_source.dart';
 import 'package:quanta_hris/src/features/face_recognition/data/models/update_profile_request.dart';
 import 'package:quanta_hris/src/features/face_recognition/domain/entities/company_branches_entity.dart';
-import 'package:quanta_hris/src/features/face_recognition/domain/repositories/face_recognition_repository.dart';
+import 'package:quanta_hris/src/features/attendance/domain/repositories/attendance_repository.dart';
 
-class FaceRecognitionRepositoryImpl implements FaceRecognitionRepository {
-  final FaceRecognitionRemoteDataSource _remoteDataSource;
+class AttendanceRepositoryImpl implements AttendanceRepository {
+  final AttendanceRemoteDataSource _remoteDataSource;
 
-  FaceRecognitionRepositoryImpl(this._remoteDataSource);
+  AttendanceRepositoryImpl(this._remoteDataSource);
 
   @override
   Future<CompanyBranchesEntity> getCompanyBranches() async {

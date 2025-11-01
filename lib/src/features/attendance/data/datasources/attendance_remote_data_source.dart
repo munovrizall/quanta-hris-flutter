@@ -7,28 +7,25 @@ import 'package:quanta_hris/src/features/authentication/data/models/user_model.d
 import 'package:quanta_hris/src/features/face_recognition/data/models/get_company_branches_response.dart';
 import 'package:quanta_hris/src/features/face_recognition/data/models/update_profile_request.dart';
 
-abstract class FaceRecognitionRemoteDataSource {
+abstract class AttendanceRemoteDataSource {
   Future<ApiResponseModel<GetCompanyBranchesResponse>> getCompanyBranches();
   Future<ApiResponseModel<UserModel>> postUpdateProfile({
     required UpdateProfileRequest requestModel,
   });
 }
 
-class FaceRecognitionRemoteDataSourceImpl
-    implements FaceRecognitionRemoteDataSource {
+class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
   final Dio _dio;
 
-  FaceRecognitionRemoteDataSourceImpl(this._dio);
+  AttendanceRemoteDataSourceImpl(this._dio);
 
   @override
   Future<ApiResponseModel<GetCompanyBranchesResponse>>
   getCompanyBranches() async {
     try {
-      AppLogger.d(
-        '🌐 RemoteDataSource: Fetching from ${ApiEndpoints.profile.getCompanyBranches}',
-      );
+      AppLogger.d('🌐 RemoteDataSource: Fetching from ${ApiEndpoints.attendance.getCompanyBranches}');
 
-      final response = await _dio.get(ApiEndpoints.profile.getCompanyBranches);
+      final response = await _dio.get(ApiEndpoints.attendance.getCompanyBranches);
 
       AppLogger.d(
         '✅ RemoteDataSource: Got response with status ${response.statusCode}',

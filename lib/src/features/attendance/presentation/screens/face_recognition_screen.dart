@@ -10,7 +10,7 @@ import 'package:image/image.dart' as img;
 import 'package:quanta_hris/src/core/di/injector.dart';
 import 'package:quanta_hris/src/core/ml/recognition_embedding.dart';
 import 'package:quanta_hris/src/core/ml/recognizer.dart';
-import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_bloc.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/bloc/face_recognition_bloc.dart';
 import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_event.dart';
 import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_state.dart';
 import 'package:quanta_hris/src/features/face_recognition/presentation/widgets/face_detector_painter.dart';

@@ -3,24 +3,22 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quanta_hris/src/core/error/app_exception.dart';
 import 'package:quanta_hris/src/core/utils/app_logger.dart';
-import 'package:quanta_hris/src/features/face_recognition/domain/usecases/get_company_branches_usecase.dart';
-import 'package:quanta_hris/src/features/face_recognition/domain/usecases/update_profile_usecase.dart';
+import 'package:quanta_hris/src/features/attendance/domain/usecases/get_company_branches_usecase.dart';
+import 'package:quanta_hris/src/features/attendance/domain/usecases/update_profile_usecase.dart';
 
-import 'face_recognition_event.dart';
-import 'face_recognition_state.dart';
+import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_event.dart';
+import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_state.dart';
 
-class FaceRecognitionBloc
-    extends Bloc<FaceRecognitionEvent, FaceRecognitionState> {
+class FaceRecognitionBloc extends Bloc<FaceRecognitionEvent, FaceRecognitionState> {
   final GetCompanyBranchesUseCase _getCompanyBranchesUseCase;
   final UpdateProfileUseCase _updateProfileUseCase;
 
   FaceRecognitionBloc({
     required UpdateProfileUseCase updateProfileUseCase,
     required GetCompanyBranchesUseCase getCompanyBranchesUseCase,
-  }) : _updateProfileUseCase = updateProfileUseCase,
-       _getCompanyBranchesUseCase = getCompanyBranchesUseCase,
-       super(const FaceRecognitionState()) {
-    // Register event handlers
+  })  : _updateProfileUseCase = updateProfileUseCase,
+        _getCompanyBranchesUseCase = getCompanyBranchesUseCase,
+        super(const FaceRecognitionState()) {
     on<FaceRecognitionEvent>((event, emit) async {
       await event.when(
         fetchCompanyBranches: () => _onFetchCompanyBranches(emit),
