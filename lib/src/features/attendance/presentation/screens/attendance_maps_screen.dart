@@ -183,7 +183,7 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
       SnackBar(content: Text('Berhasil memilih cabang ${branch.branchName}.')),
     );
 
-    context.go(
+    context.push(
       '/clock-in',
       extra: {
         'latitude': _userLocation!.latitude,

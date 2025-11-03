@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostClockOutResponse {
 
- String get absensiId; String get karyawanId; String get tanggal; String get waktuMasuk; String get statusMasuk; String get statusAbsensi; String get durasiTelat; String get fotoMasuk; ClockInBranchResponse get cabang; String get distanceFromBranch;
+ String? get absensiId; String? get karyawanId; String? get tanggal; String? get waktuMasuk; String? get statusMasuk; String? get statusAbsensi; String? get durasiTelat; String? get fotoMasuk; ClockOutBranchResponse? get cabang; String? get distanceFromBranch;
 /// Create a copy of PostClockOutResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,11 +48,11 @@ abstract mixin class $PostClockOutResponseCopyWith<$Res>  {
   factory $PostClockOutResponseCopyWith(PostClockOutResponse value, $Res Function(PostClockOutResponse) _then) = _$PostClockOutResponseCopyWithImpl;
 @useResult
 $Res call({
- String absensiId, String karyawanId, String tanggal, String waktuMasuk, String statusMasuk, String statusAbsensi, String durasiTelat, String fotoMasuk, ClockInBranchResponse cabang, String distanceFromBranch
+ String? absensiId, String? karyawanId, String? tanggal, String? waktuMasuk, String? statusMasuk, String? statusAbsensi, String? durasiTelat, String? fotoMasuk, ClockOutBranchResponse? cabang, String? distanceFromBranch
 });
 
 
-$ClockInBranchResponseCopyWith<$Res> get cabang;
+$ClockOutBranchResponseCopyWith<$Res>? get cabang;
 
 }
 /// @nodoc
@@ -65,28 +65,31 @@ class _$PostClockOutResponseCopyWithImpl<$Res>
 
 /// Create a copy of PostClockOutResponse
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? absensiId = null,Object? karyawanId = null,Object? tanggal = null,Object? waktuMasuk = null,Object? statusMasuk = null,Object? statusAbsensi = null,Object? durasiTelat = null,Object? fotoMasuk = null,Object? cabang = null,Object? distanceFromBranch = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? absensiId = freezed,Object? karyawanId = freezed,Object? tanggal = freezed,Object? waktuMasuk = freezed,Object? statusMasuk = freezed,Object? statusAbsensi = freezed,Object? durasiTelat = freezed,Object? fotoMasuk = freezed,Object? cabang = freezed,Object? distanceFromBranch = freezed,}) {
   return _then(_self.copyWith(
-absensiId: null == absensiId ? _self.absensiId : absensiId // ignore: cast_nullable_to_non_nullable
-as String,karyawanId: null == karyawanId ? _self.karyawanId : karyawanId // ignore: cast_nullable_to_non_nullable
-as String,tanggal: null == tanggal ? _self.tanggal : tanggal // ignore: cast_nullable_to_non_nullable
-as String,waktuMasuk: null == waktuMasuk ? _self.waktuMasuk : waktuMasuk // ignore: cast_nullable_to_non_nullable
-as String,statusMasuk: null == statusMasuk ? _self.statusMasuk : statusMasuk // ignore: cast_nullable_to_non_nullable
-as String,statusAbsensi: null == statusAbsensi ? _self.statusAbsensi : statusAbsensi // ignore: cast_nullable_to_non_nullable
-as String,durasiTelat: null == durasiTelat ? _self.durasiTelat : durasiTelat // ignore: cast_nullable_to_non_nullable
-as String,fotoMasuk: null == fotoMasuk ? _self.fotoMasuk : fotoMasuk // ignore: cast_nullable_to_non_nullable
-as String,cabang: null == cabang ? _self.cabang : cabang // ignore: cast_nullable_to_non_nullable
-as ClockInBranchResponse,distanceFromBranch: null == distanceFromBranch ? _self.distanceFromBranch : distanceFromBranch // ignore: cast_nullable_to_non_nullable
-as String,
+absensiId: freezed == absensiId ? _self.absensiId : absensiId // ignore: cast_nullable_to_non_nullable
+as String?,karyawanId: freezed == karyawanId ? _self.karyawanId : karyawanId // ignore: cast_nullable_to_non_nullable
+as String?,tanggal: freezed == tanggal ? _self.tanggal : tanggal // ignore: cast_nullable_to_non_nullable
+as String?,waktuMasuk: freezed == waktuMasuk ? _self.waktuMasuk : waktuMasuk // ignore: cast_nullable_to_non_nullable
+as String?,statusMasuk: freezed == statusMasuk ? _self.statusMasuk : statusMasuk // ignore: cast_nullable_to_non_nullable
+as String?,statusAbsensi: freezed == statusAbsensi ? _self.statusAbsensi : statusAbsensi // ignore: cast_nullable_to_non_nullable
+as String?,durasiTelat: freezed == durasiTelat ? _self.durasiTelat : durasiTelat // ignore: cast_nullable_to_non_nullable
+as String?,fotoMasuk: freezed == fotoMasuk ? _self.fotoMasuk : fotoMasuk // ignore: cast_nullable_to_non_nullable
+as String?,cabang: freezed == cabang ? _self.cabang : cabang // ignore: cast_nullable_to_non_nullable
+as ClockOutBranchResponse?,distanceFromBranch: freezed == distanceFromBranch ? _self.distanceFromBranch : distanceFromBranch // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of PostClockOutResponse
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$ClockInBranchResponseCopyWith<$Res> get cabang {
-  
-  return $ClockInBranchResponseCopyWith<$Res>(_self.cabang, (value) {
+$ClockOutBranchResponseCopyWith<$Res>? get cabang {
+    if (_self.cabang == null) {
+    return null;
+  }
+
+  return $ClockOutBranchResponseCopyWith<$Res>(_self.cabang!, (value) {
     return _then(_self.copyWith(cabang: value));
   });
 }
@@ -171,7 +174,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String absensiId,  String karyawanId,  String tanggal,  String waktuMasuk,  String statusMasuk,  String statusAbsensi,  String durasiTelat,  String fotoMasuk,  ClockInBranchResponse cabang,  String distanceFromBranch)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? absensiId,  String? karyawanId,  String? tanggal,  String? waktuMasuk,  String? statusMasuk,  String? statusAbsensi,  String? durasiTelat,  String? fotoMasuk,  ClockOutBranchResponse? cabang,  String? distanceFromBranch)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostClockOutResponse() when $default != null:
 return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuMasuk,_that.statusMasuk,_that.statusAbsensi,_that.durasiTelat,_that.fotoMasuk,_that.cabang,_that.distanceFromBranch);case _:
@@ -192,7 +195,7 @@ return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuMasuk,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String absensiId,  String karyawanId,  String tanggal,  String waktuMasuk,  String statusMasuk,  String statusAbsensi,  String durasiTelat,  String fotoMasuk,  ClockInBranchResponse cabang,  String distanceFromBranch)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? absensiId,  String? karyawanId,  String? tanggal,  String? waktuMasuk,  String? statusMasuk,  String? statusAbsensi,  String? durasiTelat,  String? fotoMasuk,  ClockOutBranchResponse? cabang,  String? distanceFromBranch)  $default,) {final _that = this;
 switch (_that) {
 case _PostClockOutResponse():
 return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuMasuk,_that.statusMasuk,_that.statusAbsensi,_that.durasiTelat,_that.fotoMasuk,_that.cabang,_that.distanceFromBranch);case _:
@@ -212,7 +215,7 @@ return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuMasuk,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String absensiId,  String karyawanId,  String tanggal,  String waktuMasuk,  String statusMasuk,  String statusAbsensi,  String durasiTelat,  String fotoMasuk,  ClockInBranchResponse cabang,  String distanceFromBranch)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? absensiId,  String? karyawanId,  String? tanggal,  String? waktuMasuk,  String? statusMasuk,  String? statusAbsensi,  String? durasiTelat,  String? fotoMasuk,  ClockOutBranchResponse? cabang,  String? distanceFromBranch)?  $default,) {final _that = this;
 switch (_that) {
 case _PostClockOutResponse() when $default != null:
 return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuMasuk,_that.statusMasuk,_that.statusAbsensi,_that.durasiTelat,_that.fotoMasuk,_that.cabang,_that.distanceFromBranch);case _:
@@ -227,19 +230,19 @@ return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuMasuk,
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _PostClockOutResponse implements PostClockOutResponse {
-  const _PostClockOutResponse({required this.absensiId, required this.karyawanId, required this.tanggal, required this.waktuMasuk, required this.statusMasuk, required this.statusAbsensi, required this.durasiTelat, required this.fotoMasuk, required this.cabang, required this.distanceFromBranch});
+  const _PostClockOutResponse({this.absensiId, this.karyawanId, this.tanggal, this.waktuMasuk, this.statusMasuk, this.statusAbsensi, this.durasiTelat, this.fotoMasuk, this.cabang, this.distanceFromBranch});
   factory _PostClockOutResponse.fromJson(Map<String, dynamic> json) => _$PostClockOutResponseFromJson(json);
 
-@override final  String absensiId;
-@override final  String karyawanId;
-@override final  String tanggal;
-@override final  String waktuMasuk;
-@override final  String statusMasuk;
-@override final  String statusAbsensi;
-@override final  String durasiTelat;
-@override final  String fotoMasuk;
-@override final  ClockInBranchResponse cabang;
-@override final  String distanceFromBranch;
+@override final  String? absensiId;
+@override final  String? karyawanId;
+@override final  String? tanggal;
+@override final  String? waktuMasuk;
+@override final  String? statusMasuk;
+@override final  String? statusAbsensi;
+@override final  String? durasiTelat;
+@override final  String? fotoMasuk;
+@override final  ClockOutBranchResponse? cabang;
+@override final  String? distanceFromBranch;
 
 /// Create a copy of PostClockOutResponse
 /// with the given fields replaced by the non-null parameter values.
@@ -274,11 +277,11 @@ abstract mixin class _$PostClockOutResponseCopyWith<$Res> implements $PostClockO
   factory _$PostClockOutResponseCopyWith(_PostClockOutResponse value, $Res Function(_PostClockOutResponse) _then) = __$PostClockOutResponseCopyWithImpl;
 @override @useResult
 $Res call({
- String absensiId, String karyawanId, String tanggal, String waktuMasuk, String statusMasuk, String statusAbsensi, String durasiTelat, String fotoMasuk, ClockInBranchResponse cabang, String distanceFromBranch
+ String? absensiId, String? karyawanId, String? tanggal, String? waktuMasuk, String? statusMasuk, String? statusAbsensi, String? durasiTelat, String? fotoMasuk, ClockOutBranchResponse? cabang, String? distanceFromBranch
 });
 
 
-@override $ClockInBranchResponseCopyWith<$Res> get cabang;
+@override $ClockOutBranchResponseCopyWith<$Res>? get cabang;
 
 }
 /// @nodoc
@@ -291,19 +294,19 @@ class __$PostClockOutResponseCopyWithImpl<$Res>
 
 /// Create a copy of PostClockOutResponse
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? absensiId = null,Object? karyawanId = null,Object? tanggal = null,Object? waktuMasuk = null,Object? statusMasuk = null,Object? statusAbsensi = null,Object? durasiTelat = null,Object? fotoMasuk = null,Object? cabang = null,Object? distanceFromBranch = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? absensiId = freezed,Object? karyawanId = freezed,Object? tanggal = freezed,Object? waktuMasuk = freezed,Object? statusMasuk = freezed,Object? statusAbsensi = freezed,Object? durasiTelat = freezed,Object? fotoMasuk = freezed,Object? cabang = freezed,Object? distanceFromBranch = freezed,}) {
   return _then(_PostClockOutResponse(
-absensiId: null == absensiId ? _self.absensiId : absensiId // ignore: cast_nullable_to_non_nullable
-as String,karyawanId: null == karyawanId ? _self.karyawanId : karyawanId // ignore: cast_nullable_to_non_nullable
-as String,tanggal: null == tanggal ? _self.tanggal : tanggal // ignore: cast_nullable_to_non_nullable
-as String,waktuMasuk: null == waktuMasuk ? _self.waktuMasuk : waktuMasuk // ignore: cast_nullable_to_non_nullable
-as String,statusMasuk: null == statusMasuk ? _self.statusMasuk : statusMasuk // ignore: cast_nullable_to_non_nullable
-as String,statusAbsensi: null == statusAbsensi ? _self.statusAbsensi : statusAbsensi // ignore: cast_nullable_to_non_nullable
-as String,durasiTelat: null == durasiTelat ? _self.durasiTelat : durasiTelat // ignore: cast_nullable_to_non_nullable
-as String,fotoMasuk: null == fotoMasuk ? _self.fotoMasuk : fotoMasuk // ignore: cast_nullable_to_non_nullable
-as String,cabang: null == cabang ? _self.cabang : cabang // ignore: cast_nullable_to_non_nullable
-as ClockInBranchResponse,distanceFromBranch: null == distanceFromBranch ? _self.distanceFromBranch : distanceFromBranch // ignore: cast_nullable_to_non_nullable
-as String,
+absensiId: freezed == absensiId ? _self.absensiId : absensiId // ignore: cast_nullable_to_non_nullable
+as String?,karyawanId: freezed == karyawanId ? _self.karyawanId : karyawanId // ignore: cast_nullable_to_non_nullable
+as String?,tanggal: freezed == tanggal ? _self.tanggal : tanggal // ignore: cast_nullable_to_non_nullable
+as String?,waktuMasuk: freezed == waktuMasuk ? _self.waktuMasuk : waktuMasuk // ignore: cast_nullable_to_non_nullable
+as String?,statusMasuk: freezed == statusMasuk ? _self.statusMasuk : statusMasuk // ignore: cast_nullable_to_non_nullable
+as String?,statusAbsensi: freezed == statusAbsensi ? _self.statusAbsensi : statusAbsensi // ignore: cast_nullable_to_non_nullable
+as String?,durasiTelat: freezed == durasiTelat ? _self.durasiTelat : durasiTelat // ignore: cast_nullable_to_non_nullable
+as String?,fotoMasuk: freezed == fotoMasuk ? _self.fotoMasuk : fotoMasuk // ignore: cast_nullable_to_non_nullable
+as String?,cabang: freezed == cabang ? _self.cabang : cabang // ignore: cast_nullable_to_non_nullable
+as ClockOutBranchResponse?,distanceFromBranch: freezed == distanceFromBranch ? _self.distanceFromBranch : distanceFromBranch // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -311,9 +314,12 @@ as String,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$ClockInBranchResponseCopyWith<$Res> get cabang {
-  
-  return $ClockInBranchResponseCopyWith<$Res>(_self.cabang, (value) {
+$ClockOutBranchResponseCopyWith<$Res>? get cabang {
+    if (_self.cabang == null) {
+    return null;
+  }
+
+  return $ClockOutBranchResponseCopyWith<$Res>(_self.cabang!, (value) {
     return _then(_self.copyWith(cabang: value));
   });
 }
@@ -321,22 +327,22 @@ $ClockInBranchResponseCopyWith<$Res> get cabang {
 
 
 /// @nodoc
-mixin _$ClockInBranchResponse {
+mixin _$ClockOutBranchResponse {
 
- String get cabangId; String get namaCabang; String get alamat;
-/// Create a copy of ClockInBranchResponse
+ String? get cabangId; String? get namaCabang; String? get alamat;
+/// Create a copy of ClockOutBranchResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$ClockInBranchResponseCopyWith<ClockInBranchResponse> get copyWith => _$ClockInBranchResponseCopyWithImpl<ClockInBranchResponse>(this as ClockInBranchResponse, _$identity);
+$ClockOutBranchResponseCopyWith<ClockOutBranchResponse> get copyWith => _$ClockOutBranchResponseCopyWithImpl<ClockOutBranchResponse>(this as ClockOutBranchResponse, _$identity);
 
-  /// Serializes this ClockInBranchResponse to a JSON map.
+  /// Serializes this ClockOutBranchResponse to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClockInBranchResponse&&(identical(other.cabangId, cabangId) || other.cabangId == cabangId)&&(identical(other.namaCabang, namaCabang) || other.namaCabang == namaCabang)&&(identical(other.alamat, alamat) || other.alamat == alamat));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClockOutBranchResponse&&(identical(other.cabangId, cabangId) || other.cabangId == cabangId)&&(identical(other.namaCabang, namaCabang) || other.namaCabang == namaCabang)&&(identical(other.alamat, alamat) || other.alamat == alamat));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -345,18 +351,18 @@ int get hashCode => Object.hash(runtimeType,cabangId,namaCabang,alamat);
 
 @override
 String toString() {
-  return 'ClockInBranchResponse(cabangId: $cabangId, namaCabang: $namaCabang, alamat: $alamat)';
+  return 'ClockOutBranchResponse(cabangId: $cabangId, namaCabang: $namaCabang, alamat: $alamat)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $ClockInBranchResponseCopyWith<$Res>  {
-  factory $ClockInBranchResponseCopyWith(ClockInBranchResponse value, $Res Function(ClockInBranchResponse) _then) = _$ClockInBranchResponseCopyWithImpl;
+abstract mixin class $ClockOutBranchResponseCopyWith<$Res>  {
+  factory $ClockOutBranchResponseCopyWith(ClockOutBranchResponse value, $Res Function(ClockOutBranchResponse) _then) = _$ClockOutBranchResponseCopyWithImpl;
 @useResult
 $Res call({
- String cabangId, String namaCabang, String alamat
+ String? cabangId, String? namaCabang, String? alamat
 });
 
 
@@ -364,29 +370,29 @@ $Res call({
 
 }
 /// @nodoc
-class _$ClockInBranchResponseCopyWithImpl<$Res>
-    implements $ClockInBranchResponseCopyWith<$Res> {
-  _$ClockInBranchResponseCopyWithImpl(this._self, this._then);
+class _$ClockOutBranchResponseCopyWithImpl<$Res>
+    implements $ClockOutBranchResponseCopyWith<$Res> {
+  _$ClockOutBranchResponseCopyWithImpl(this._self, this._then);
 
-  final ClockInBranchResponse _self;
-  final $Res Function(ClockInBranchResponse) _then;
+  final ClockOutBranchResponse _self;
+  final $Res Function(ClockOutBranchResponse) _then;
 
-/// Create a copy of ClockInBranchResponse
+/// Create a copy of ClockOutBranchResponse
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? cabangId = null,Object? namaCabang = null,Object? alamat = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? cabangId = freezed,Object? namaCabang = freezed,Object? alamat = freezed,}) {
   return _then(_self.copyWith(
-cabangId: null == cabangId ? _self.cabangId : cabangId // ignore: cast_nullable_to_non_nullable
-as String,namaCabang: null == namaCabang ? _self.namaCabang : namaCabang // ignore: cast_nullable_to_non_nullable
-as String,alamat: null == alamat ? _self.alamat : alamat // ignore: cast_nullable_to_non_nullable
-as String,
+cabangId: freezed == cabangId ? _self.cabangId : cabangId // ignore: cast_nullable_to_non_nullable
+as String?,namaCabang: freezed == namaCabang ? _self.namaCabang : namaCabang // ignore: cast_nullable_to_non_nullable
+as String?,alamat: freezed == alamat ? _self.alamat : alamat // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
 }
 
 
-/// Adds pattern-matching-related methods to [ClockInBranchResponse].
-extension ClockInBranchResponsePatterns on ClockInBranchResponse {
+/// Adds pattern-matching-related methods to [ClockOutBranchResponse].
+extension ClockOutBranchResponsePatterns on ClockOutBranchResponse {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -399,10 +405,10 @@ extension ClockInBranchResponsePatterns on ClockInBranchResponse {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ClockInBranchResponse value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ClockOutBranchResponse value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _ClockInBranchResponse() when $default != null:
+case _ClockOutBranchResponse() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -421,10 +427,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ClockInBranchResponse value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ClockOutBranchResponse value)  $default,){
 final _that = this;
 switch (_that) {
-case _ClockInBranchResponse():
+case _ClockOutBranchResponse():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -442,10 +448,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ClockInBranchResponse value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ClockOutBranchResponse value)?  $default,){
 final _that = this;
 switch (_that) {
-case _ClockInBranchResponse() when $default != null:
+case _ClockOutBranchResponse() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -463,9 +469,9 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String cabangId,  String namaCabang,  String alamat)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? cabangId,  String? namaCabang,  String? alamat)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _ClockInBranchResponse() when $default != null:
+case _ClockOutBranchResponse() when $default != null:
 return $default(_that.cabangId,_that.namaCabang,_that.alamat);case _:
   return orElse();
 
@@ -484,9 +490,9 @@ return $default(_that.cabangId,_that.namaCabang,_that.alamat);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String cabangId,  String namaCabang,  String alamat)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? cabangId,  String? namaCabang,  String? alamat)  $default,) {final _that = this;
 switch (_that) {
-case _ClockInBranchResponse():
+case _ClockOutBranchResponse():
 return $default(_that.cabangId,_that.namaCabang,_that.alamat);case _:
   throw StateError('Unexpected subclass');
 
@@ -504,9 +510,9 @@ return $default(_that.cabangId,_that.namaCabang,_that.alamat);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String cabangId,  String namaCabang,  String alamat)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? cabangId,  String? namaCabang,  String? alamat)?  $default,) {final _that = this;
 switch (_that) {
-case _ClockInBranchResponse() when $default != null:
+case _ClockOutBranchResponse() when $default != null:
 return $default(_that.cabangId,_that.namaCabang,_that.alamat);case _:
   return null;
 
@@ -518,28 +524,28 @@ return $default(_that.cabangId,_that.namaCabang,_that.alamat);case _:
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _ClockInBranchResponse implements ClockInBranchResponse {
-  const _ClockInBranchResponse({required this.cabangId, required this.namaCabang, required this.alamat});
-  factory _ClockInBranchResponse.fromJson(Map<String, dynamic> json) => _$ClockInBranchResponseFromJson(json);
+class _ClockOutBranchResponse implements ClockOutBranchResponse {
+  const _ClockOutBranchResponse({this.cabangId, this.namaCabang, this.alamat});
+  factory _ClockOutBranchResponse.fromJson(Map<String, dynamic> json) => _$ClockOutBranchResponseFromJson(json);
 
-@override final  String cabangId;
-@override final  String namaCabang;
-@override final  String alamat;
+@override final  String? cabangId;
+@override final  String? namaCabang;
+@override final  String? alamat;
 
-/// Create a copy of ClockInBranchResponse
+/// Create a copy of ClockOutBranchResponse
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ClockInBranchResponseCopyWith<_ClockInBranchResponse> get copyWith => __$ClockInBranchResponseCopyWithImpl<_ClockInBranchResponse>(this, _$identity);
+_$ClockOutBranchResponseCopyWith<_ClockOutBranchResponse> get copyWith => __$ClockOutBranchResponseCopyWithImpl<_ClockOutBranchResponse>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$ClockInBranchResponseToJson(this, );
+  return _$ClockOutBranchResponseToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ClockInBranchResponse&&(identical(other.cabangId, cabangId) || other.cabangId == cabangId)&&(identical(other.namaCabang, namaCabang) || other.namaCabang == namaCabang)&&(identical(other.alamat, alamat) || other.alamat == alamat));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ClockOutBranchResponse&&(identical(other.cabangId, cabangId) || other.cabangId == cabangId)&&(identical(other.namaCabang, namaCabang) || other.namaCabang == namaCabang)&&(identical(other.alamat, alamat) || other.alamat == alamat));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -548,18 +554,18 @@ int get hashCode => Object.hash(runtimeType,cabangId,namaCabang,alamat);
 
 @override
 String toString() {
-  return 'ClockInBranchResponse(cabangId: $cabangId, namaCabang: $namaCabang, alamat: $alamat)';
+  return 'ClockOutBranchResponse(cabangId: $cabangId, namaCabang: $namaCabang, alamat: $alamat)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ClockInBranchResponseCopyWith<$Res> implements $ClockInBranchResponseCopyWith<$Res> {
-  factory _$ClockInBranchResponseCopyWith(_ClockInBranchResponse value, $Res Function(_ClockInBranchResponse) _then) = __$ClockInBranchResponseCopyWithImpl;
+abstract mixin class _$ClockOutBranchResponseCopyWith<$Res> implements $ClockOutBranchResponseCopyWith<$Res> {
+  factory _$ClockOutBranchResponseCopyWith(_ClockOutBranchResponse value, $Res Function(_ClockOutBranchResponse) _then) = __$ClockOutBranchResponseCopyWithImpl;
 @override @useResult
 $Res call({
- String cabangId, String namaCabang, String alamat
+ String? cabangId, String? namaCabang, String? alamat
 });
 
 
@@ -567,21 +573,21 @@ $Res call({
 
 }
 /// @nodoc
-class __$ClockInBranchResponseCopyWithImpl<$Res>
-    implements _$ClockInBranchResponseCopyWith<$Res> {
-  __$ClockInBranchResponseCopyWithImpl(this._self, this._then);
+class __$ClockOutBranchResponseCopyWithImpl<$Res>
+    implements _$ClockOutBranchResponseCopyWith<$Res> {
+  __$ClockOutBranchResponseCopyWithImpl(this._self, this._then);
 
-  final _ClockInBranchResponse _self;
-  final $Res Function(_ClockInBranchResponse) _then;
+  final _ClockOutBranchResponse _self;
+  final $Res Function(_ClockOutBranchResponse) _then;
 
-/// Create a copy of ClockInBranchResponse
+/// Create a copy of ClockOutBranchResponse
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? cabangId = null,Object? namaCabang = null,Object? alamat = null,}) {
-  return _then(_ClockInBranchResponse(
-cabangId: null == cabangId ? _self.cabangId : cabangId // ignore: cast_nullable_to_non_nullable
-as String,namaCabang: null == namaCabang ? _self.namaCabang : namaCabang // ignore: cast_nullable_to_non_nullable
-as String,alamat: null == alamat ? _self.alamat : alamat // ignore: cast_nullable_to_non_nullable
-as String,
+@override @pragma('vm:prefer-inline') $Res call({Object? cabangId = freezed,Object? namaCabang = freezed,Object? alamat = freezed,}) {
+  return _then(_ClockOutBranchResponse(
+cabangId: freezed == cabangId ? _self.cabangId : cabangId // ignore: cast_nullable_to_non_nullable
+as String?,namaCabang: freezed == namaCabang ? _self.namaCabang : namaCabang // ignore: cast_nullable_to_non_nullable
+as String?,alamat: freezed == alamat ? _self.alamat : alamat // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

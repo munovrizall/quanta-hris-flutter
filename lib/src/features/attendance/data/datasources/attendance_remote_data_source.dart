@@ -139,17 +139,17 @@ class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
       // Add foto_masuk as multipart file if available
       if (request.fotoMasuk != null && request.fotoMasuk!.isNotEmpty) {
         AppLogger.d('� Adding foto_masuk to FormData');
-        
+
         // Convert base64 to bytes
         final bytes = base64Decode(request.fotoMasuk!);
-        
+
         // Create MultipartFile from bytes
         final multipartFile = MultipartFile.fromBytes(
           bytes,
           filename: 'foto_masuk_${DateTime.now().millisecondsSinceEpoch}.jpg',
           contentType: MediaType('image', 'jpeg'),
         );
-        
+
         formData.files.add(MapEntry('foto_masuk', multipartFile));
         AppLogger.d('✅ Photo added to FormData (${bytes.length} bytes)');
       }
@@ -199,17 +199,17 @@ class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
       // Add foto_pulang as multipart file if available
       if (request.fotoPulang != null && request.fotoPulang!.isNotEmpty) {
         AppLogger.d('� Adding foto_pulang to FormData');
-        
+
         // Convert base64 to bytes
         final bytes = base64Decode(request.fotoPulang!);
-        
+
         // Create MultipartFile from bytes
         final multipartFile = MultipartFile.fromBytes(
           bytes,
           filename: 'foto_pulang_${DateTime.now().millisecondsSinceEpoch}.jpg',
           contentType: MediaType('image', 'jpeg'),
         );
-        
+
         formData.files.add(MapEntry('foto_pulang', multipartFile));
         AppLogger.d('✅ Photo added to FormData (${bytes.length} bytes)');
       }

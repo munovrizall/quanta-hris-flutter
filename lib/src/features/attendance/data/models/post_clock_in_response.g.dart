@@ -8,18 +8,20 @@ part of 'post_clock_in_response.dart';
 
 _PostClockInResponse _$PostClockInResponseFromJson(Map<String, dynamic> json) =>
     _PostClockInResponse(
-      absensiId: json['absensi_id'] as String,
-      karyawanId: json['karyawan_id'] as String,
-      tanggal: json['tanggal'] as String,
-      waktuMasuk: json['waktu_masuk'] as String,
-      statusMasuk: json['status_masuk'] as String,
-      statusAbsensi: json['status_absensi'] as String,
-      durasiTelat: json['durasi_telat'] as String,
-      fotoMasuk: json['foto_masuk'] as String,
-      cabang: ClockInBranchResponse.fromJson(
-        json['cabang'] as Map<String, dynamic>,
-      ),
-      distanceFromBranch: json['distance_from_branch'] as String,
+      absensiId: json['absensi_id'] as String?,
+      karyawanId: json['karyawan_id'] as String?,
+      tanggal: json['tanggal'] as String?,
+      waktuMasuk: json['waktu_masuk'] as String?,
+      statusMasuk: json['status_masuk'] as String?,
+      statusAbsensi: json['status_absensi'] as String?,
+      durasiTelat: json['durasi_telat'] as String?,
+      fotoMasuk: json['foto_masuk'] as String?,
+      cabang: json['cabang'] == null
+          ? null
+          : ClockInBranchResponse.fromJson(
+              json['cabang'] as Map<String, dynamic>,
+            ),
+      distanceFromBranch: json['distance_from_branch'] as String?,
     );
 
 Map<String, dynamic> _$PostClockInResponseToJson(
@@ -40,9 +42,9 @@ Map<String, dynamic> _$PostClockInResponseToJson(
 _ClockInBranchResponse _$ClockInBranchResponseFromJson(
   Map<String, dynamic> json,
 ) => _ClockInBranchResponse(
-  cabangId: json['cabang_id'] as String,
-  namaCabang: json['nama_cabang'] as String,
-  alamat: json['alamat'] as String,
+  cabangId: json['cabang_id'] as String?,
+  namaCabang: json['nama_cabang'] as String?,
+  alamat: json['alamat'] as String?,
 );
 
 Map<String, dynamic> _$ClockInBranchResponseToJson(

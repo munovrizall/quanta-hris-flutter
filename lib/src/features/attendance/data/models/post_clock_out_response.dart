@@ -7,16 +7,16 @@ part 'post_clock_out_response.g.dart';
 abstract class PostClockOutResponse with _$PostClockOutResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory PostClockOutResponse({
-    required String absensiId,
-    required String karyawanId,
-    required String tanggal,
-    required String waktuMasuk,
-    required String statusMasuk,
-    required String statusAbsensi,
-    required String durasiTelat,
-    required String fotoMasuk,
-    required ClockInBranchResponse cabang,
-    required String distanceFromBranch,
+    String? absensiId,
+    String? karyawanId,
+    String? tanggal,
+    String? waktuMasuk,
+    String? statusMasuk,
+    String? statusAbsensi,
+    String? durasiTelat,
+    String? fotoMasuk,
+    ClockOutBranchResponse? cabang,
+    String? distanceFromBranch,
   }) = _PostClockOutResponse;
 
   factory PostClockOutResponse.fromJson(Map<String, dynamic> json) =>
@@ -24,14 +24,14 @@ abstract class PostClockOutResponse with _$PostClockOutResponse {
 }
 
 @freezed
-abstract class ClockInBranchResponse with _$ClockInBranchResponse {
+abstract class ClockOutBranchResponse with _$ClockOutBranchResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory ClockInBranchResponse({
-    required String cabangId,
-    required String namaCabang,
-    required String alamat,
-  }) = _ClockInBranchResponse;
+  const factory ClockOutBranchResponse({
+    String? cabangId,
+    String? namaCabang,
+    String? alamat,
+  }) = _ClockOutBranchResponse;
 
-  factory ClockInBranchResponse.fromJson(Map<String, dynamic> json) =>
-      _$ClockInBranchResponseFromJson(json);
+  factory ClockOutBranchResponse.fromJson(Map<String, dynamic> json) =>
+      _$ClockOutBranchResponseFromJson(json);
 }

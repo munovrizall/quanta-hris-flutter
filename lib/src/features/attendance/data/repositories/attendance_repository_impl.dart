@@ -99,19 +99,19 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
       final data = responseModel.data;
 
       final clockIn = ClockInEntity(
-        absensiId: data.absensiId,
-        karyawanId: data.karyawanId,
-        tanggal: data.tanggal,
-        waktuMasuk: data.waktuMasuk,
-        statusMasuk: data.statusMasuk,
-        statusAbsensi: data.statusAbsensi,
-        durasiTelat: data.durasiTelat,
-        fotoMasuk: data.fotoMasuk,
-        distanceFromBranch: data.distanceFromBranch,
+        absensiId: data.absensiId ?? '',
+        karyawanId: data.karyawanId ?? '',
+        tanggal: data.tanggal ?? '',
+        waktuMasuk: data.waktuMasuk ?? '',
+        statusMasuk: data.statusMasuk ?? '',
+        statusAbsensi: data.statusAbsensi ?? '',
+        durasiTelat: data.durasiTelat ?? '00:00:00',
+        fotoMasuk: data.fotoMasuk ?? '',
+        distanceFromBranch: data.distanceFromBranch ?? '0m',
         cabang: ClockInBranchEntity(
-          cabangId: data.cabang.cabangId,
-          namaCabang: data.cabang.namaCabang,
-          alamat: data.cabang.alamat,
+          cabangId: data.cabang?.cabangId ?? '',
+          namaCabang: data.cabang?.namaCabang ?? '',
+          alamat: data.cabang?.alamat ?? '',
         ),
       );
 
@@ -146,19 +146,19 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
       final data = responseModel.data;
 
       final clockOut = ClockOutEntity(
-        absensiId: data.absensiId,
-        karyawanId: data.karyawanId,
-        tanggal: data.tanggal,
-        waktuPulang: data.waktuMasuk,
-        statusPulang: data.statusMasuk,
-        statusAbsensi: data.statusAbsensi,
-        durasiPulangCepat: data.durasiTelat,
-        fotoPulang: data.fotoMasuk,
-        distanceFromBranch: data.distanceFromBranch,
+        absensiId: data.absensiId ?? '',
+        karyawanId: data.karyawanId ?? '',
+        tanggal: data.tanggal ?? '',
+        waktuPulang: data.waktuMasuk ?? '',
+        statusPulang: data.statusMasuk ?? '',
+        statusAbsensi: data.statusAbsensi ?? '',
+        durasiPulangCepat: data.durasiTelat ?? '00:00:00',
+        fotoPulang: data.fotoMasuk ?? '',
+        distanceFromBranch: data.distanceFromBranch ?? '0m',
         cabang: ClockOutBranchEntity(
-          cabangId: data.cabang.cabangId,
-          namaCabang: data.cabang.namaCabang,
-          alamat: data.cabang.alamat,
+          cabangId: data.cabang?.cabangId ?? '',
+          namaCabang: data.cabang?.namaCabang ?? '',
+          alamat: data.cabang?.alamat ?? '',
         ),
       );
 
