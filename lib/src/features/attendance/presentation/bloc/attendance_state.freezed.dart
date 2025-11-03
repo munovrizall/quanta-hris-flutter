@@ -17,7 +17,8 @@ mixin _$AttendanceState {
 // Company branches
  CompanyBranchesEntity? get companyBranches; bool get isCompanyBranchesLoading; String? get companyBranchesError;// Face registration
  UserEntity? get registeredFaceData; bool get isRegisterFaceLoading; String? get registerFaceError;// Clock-in
- ClockInEntity? get clockInData; bool get isClockInLoading; String? get clockInError; String? get clockInSuccessMessage;
+ ClockInEntity? get clockInData; bool get isClockInLoading; String? get clockInError; String? get clockInSuccessMessage;// Clock-out
+ ClockOutEntity? get clockOutData; bool get isClockOutLoading; String? get clockOutError; String? get clockOutSuccessMessage;
 /// Create a copy of AttendanceState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +29,16 @@ $AttendanceStateCopyWith<AttendanceState> get copyWith => _$AttendanceStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AttendanceState&&(identical(other.companyBranches, companyBranches) || other.companyBranches == companyBranches)&&(identical(other.isCompanyBranchesLoading, isCompanyBranchesLoading) || other.isCompanyBranchesLoading == isCompanyBranchesLoading)&&(identical(other.companyBranchesError, companyBranchesError) || other.companyBranchesError == companyBranchesError)&&(identical(other.registeredFaceData, registeredFaceData) || other.registeredFaceData == registeredFaceData)&&(identical(other.isRegisterFaceLoading, isRegisterFaceLoading) || other.isRegisterFaceLoading == isRegisterFaceLoading)&&(identical(other.registerFaceError, registerFaceError) || other.registerFaceError == registerFaceError)&&(identical(other.clockInData, clockInData) || other.clockInData == clockInData)&&(identical(other.isClockInLoading, isClockInLoading) || other.isClockInLoading == isClockInLoading)&&(identical(other.clockInError, clockInError) || other.clockInError == clockInError)&&(identical(other.clockInSuccessMessage, clockInSuccessMessage) || other.clockInSuccessMessage == clockInSuccessMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AttendanceState&&(identical(other.companyBranches, companyBranches) || other.companyBranches == companyBranches)&&(identical(other.isCompanyBranchesLoading, isCompanyBranchesLoading) || other.isCompanyBranchesLoading == isCompanyBranchesLoading)&&(identical(other.companyBranchesError, companyBranchesError) || other.companyBranchesError == companyBranchesError)&&(identical(other.registeredFaceData, registeredFaceData) || other.registeredFaceData == registeredFaceData)&&(identical(other.isRegisterFaceLoading, isRegisterFaceLoading) || other.isRegisterFaceLoading == isRegisterFaceLoading)&&(identical(other.registerFaceError, registerFaceError) || other.registerFaceError == registerFaceError)&&(identical(other.clockInData, clockInData) || other.clockInData == clockInData)&&(identical(other.isClockInLoading, isClockInLoading) || other.isClockInLoading == isClockInLoading)&&(identical(other.clockInError, clockInError) || other.clockInError == clockInError)&&(identical(other.clockInSuccessMessage, clockInSuccessMessage) || other.clockInSuccessMessage == clockInSuccessMessage)&&(identical(other.clockOutData, clockOutData) || other.clockOutData == clockOutData)&&(identical(other.isClockOutLoading, isClockOutLoading) || other.isClockOutLoading == isClockOutLoading)&&(identical(other.clockOutError, clockOutError) || other.clockOutError == clockOutError)&&(identical(other.clockOutSuccessMessage, clockOutSuccessMessage) || other.clockOutSuccessMessage == clockOutSuccessMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,companyBranches,isCompanyBranchesLoading,companyBranchesError,registeredFaceData,isRegisterFaceLoading,registerFaceError,clockInData,isClockInLoading,clockInError,clockInSuccessMessage);
+int get hashCode => Object.hash(runtimeType,companyBranches,isCompanyBranchesLoading,companyBranchesError,registeredFaceData,isRegisterFaceLoading,registerFaceError,clockInData,isClockInLoading,clockInError,clockInSuccessMessage,clockOutData,isClockOutLoading,clockOutError,clockOutSuccessMessage);
 
 @override
 String toString() {
-  return 'AttendanceState(companyBranches: $companyBranches, isCompanyBranchesLoading: $isCompanyBranchesLoading, companyBranchesError: $companyBranchesError, registeredFaceData: $registeredFaceData, isRegisterFaceLoading: $isRegisterFaceLoading, registerFaceError: $registerFaceError, clockInData: $clockInData, isClockInLoading: $isClockInLoading, clockInError: $clockInError, clockInSuccessMessage: $clockInSuccessMessage)';
+  return 'AttendanceState(companyBranches: $companyBranches, isCompanyBranchesLoading: $isCompanyBranchesLoading, companyBranchesError: $companyBranchesError, registeredFaceData: $registeredFaceData, isRegisterFaceLoading: $isRegisterFaceLoading, registerFaceError: $registerFaceError, clockInData: $clockInData, isClockInLoading: $isClockInLoading, clockInError: $clockInError, clockInSuccessMessage: $clockInSuccessMessage, clockOutData: $clockOutData, isClockOutLoading: $isClockOutLoading, clockOutError: $clockOutError, clockOutSuccessMessage: $clockOutSuccessMessage)';
 }
 
 
@@ -48,11 +49,11 @@ abstract mixin class $AttendanceStateCopyWith<$Res>  {
   factory $AttendanceStateCopyWith(AttendanceState value, $Res Function(AttendanceState) _then) = _$AttendanceStateCopyWithImpl;
 @useResult
 $Res call({
- CompanyBranchesEntity? companyBranches, bool isCompanyBranchesLoading, String? companyBranchesError, UserEntity? registeredFaceData, bool isRegisterFaceLoading, String? registerFaceError, ClockInEntity? clockInData, bool isClockInLoading, String? clockInError, String? clockInSuccessMessage
+ CompanyBranchesEntity? companyBranches, bool isCompanyBranchesLoading, String? companyBranchesError, UserEntity? registeredFaceData, bool isRegisterFaceLoading, String? registerFaceError, ClockInEntity? clockInData, bool isClockInLoading, String? clockInError, String? clockInSuccessMessage, ClockOutEntity? clockOutData, bool isClockOutLoading, String? clockOutError, String? clockOutSuccessMessage
 });
 
 
-$CompanyBranchesEntityCopyWith<$Res>? get companyBranches;$UserEntityCopyWith<$Res>? get registeredFaceData;$ClockInEntityCopyWith<$Res>? get clockInData;
+$CompanyBranchesEntityCopyWith<$Res>? get companyBranches;$UserEntityCopyWith<$Res>? get registeredFaceData;$ClockInEntityCopyWith<$Res>? get clockInData;$ClockOutEntityCopyWith<$Res>? get clockOutData;
 
 }
 /// @nodoc
@@ -65,7 +66,7 @@ class _$AttendanceStateCopyWithImpl<$Res>
 
 /// Create a copy of AttendanceState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? companyBranches = freezed,Object? isCompanyBranchesLoading = null,Object? companyBranchesError = freezed,Object? registeredFaceData = freezed,Object? isRegisterFaceLoading = null,Object? registerFaceError = freezed,Object? clockInData = freezed,Object? isClockInLoading = null,Object? clockInError = freezed,Object? clockInSuccessMessage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? companyBranches = freezed,Object? isCompanyBranchesLoading = null,Object? companyBranchesError = freezed,Object? registeredFaceData = freezed,Object? isRegisterFaceLoading = null,Object? registerFaceError = freezed,Object? clockInData = freezed,Object? isClockInLoading = null,Object? clockInError = freezed,Object? clockInSuccessMessage = freezed,Object? clockOutData = freezed,Object? isClockOutLoading = null,Object? clockOutError = freezed,Object? clockOutSuccessMessage = freezed,}) {
   return _then(_self.copyWith(
 companyBranches: freezed == companyBranches ? _self.companyBranches : companyBranches // ignore: cast_nullable_to_non_nullable
 as CompanyBranchesEntity?,isCompanyBranchesLoading: null == isCompanyBranchesLoading ? _self.isCompanyBranchesLoading : isCompanyBranchesLoading // ignore: cast_nullable_to_non_nullable
@@ -77,6 +78,10 @@ as String?,clockInData: freezed == clockInData ? _self.clockInData : clockInData
 as ClockInEntity?,isClockInLoading: null == isClockInLoading ? _self.isClockInLoading : isClockInLoading // ignore: cast_nullable_to_non_nullable
 as bool,clockInError: freezed == clockInError ? _self.clockInError : clockInError // ignore: cast_nullable_to_non_nullable
 as String?,clockInSuccessMessage: freezed == clockInSuccessMessage ? _self.clockInSuccessMessage : clockInSuccessMessage // ignore: cast_nullable_to_non_nullable
+as String?,clockOutData: freezed == clockOutData ? _self.clockOutData : clockOutData // ignore: cast_nullable_to_non_nullable
+as ClockOutEntity?,isClockOutLoading: null == isClockOutLoading ? _self.isClockOutLoading : isClockOutLoading // ignore: cast_nullable_to_non_nullable
+as bool,clockOutError: freezed == clockOutError ? _self.clockOutError : clockOutError // ignore: cast_nullable_to_non_nullable
+as String?,clockOutSuccessMessage: freezed == clockOutSuccessMessage ? _self.clockOutSuccessMessage : clockOutSuccessMessage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -115,6 +120,18 @@ $ClockInEntityCopyWith<$Res>? get clockInData {
 
   return $ClockInEntityCopyWith<$Res>(_self.clockInData!, (value) {
     return _then(_self.copyWith(clockInData: value));
+  });
+}/// Create a copy of AttendanceState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ClockOutEntityCopyWith<$Res>? get clockOutData {
+    if (_self.clockOutData == null) {
+    return null;
+  }
+
+  return $ClockOutEntityCopyWith<$Res>(_self.clockOutData!, (value) {
+    return _then(_self.copyWith(clockOutData: value));
   });
 }
 }
@@ -198,10 +215,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CompanyBranchesEntity? companyBranches,  bool isCompanyBranchesLoading,  String? companyBranchesError,  UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError,  ClockInEntity? clockInData,  bool isClockInLoading,  String? clockInError,  String? clockInSuccessMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CompanyBranchesEntity? companyBranches,  bool isCompanyBranchesLoading,  String? companyBranchesError,  UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError,  ClockInEntity? clockInData,  bool isClockInLoading,  String? clockInError,  String? clockInSuccessMessage,  ClockOutEntity? clockOutData,  bool isClockOutLoading,  String? clockOutError,  String? clockOutSuccessMessage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AttendanceState() when $default != null:
-return $default(_that.companyBranches,_that.isCompanyBranchesLoading,_that.companyBranchesError,_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError,_that.clockInData,_that.isClockInLoading,_that.clockInError,_that.clockInSuccessMessage);case _:
+return $default(_that.companyBranches,_that.isCompanyBranchesLoading,_that.companyBranchesError,_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError,_that.clockInData,_that.isClockInLoading,_that.clockInError,_that.clockInSuccessMessage,_that.clockOutData,_that.isClockOutLoading,_that.clockOutError,_that.clockOutSuccessMessage);case _:
   return orElse();
 
 }
@@ -219,10 +236,10 @@ return $default(_that.companyBranches,_that.isCompanyBranchesLoading,_that.compa
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CompanyBranchesEntity? companyBranches,  bool isCompanyBranchesLoading,  String? companyBranchesError,  UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError,  ClockInEntity? clockInData,  bool isClockInLoading,  String? clockInError,  String? clockInSuccessMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CompanyBranchesEntity? companyBranches,  bool isCompanyBranchesLoading,  String? companyBranchesError,  UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError,  ClockInEntity? clockInData,  bool isClockInLoading,  String? clockInError,  String? clockInSuccessMessage,  ClockOutEntity? clockOutData,  bool isClockOutLoading,  String? clockOutError,  String? clockOutSuccessMessage)  $default,) {final _that = this;
 switch (_that) {
 case _AttendanceState():
-return $default(_that.companyBranches,_that.isCompanyBranchesLoading,_that.companyBranchesError,_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError,_that.clockInData,_that.isClockInLoading,_that.clockInError,_that.clockInSuccessMessage);case _:
+return $default(_that.companyBranches,_that.isCompanyBranchesLoading,_that.companyBranchesError,_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError,_that.clockInData,_that.isClockInLoading,_that.clockInError,_that.clockInSuccessMessage,_that.clockOutData,_that.isClockOutLoading,_that.clockOutError,_that.clockOutSuccessMessage);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -239,10 +256,10 @@ return $default(_that.companyBranches,_that.isCompanyBranchesLoading,_that.compa
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CompanyBranchesEntity? companyBranches,  bool isCompanyBranchesLoading,  String? companyBranchesError,  UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError,  ClockInEntity? clockInData,  bool isClockInLoading,  String? clockInError,  String? clockInSuccessMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CompanyBranchesEntity? companyBranches,  bool isCompanyBranchesLoading,  String? companyBranchesError,  UserEntity? registeredFaceData,  bool isRegisterFaceLoading,  String? registerFaceError,  ClockInEntity? clockInData,  bool isClockInLoading,  String? clockInError,  String? clockInSuccessMessage,  ClockOutEntity? clockOutData,  bool isClockOutLoading,  String? clockOutError,  String? clockOutSuccessMessage)?  $default,) {final _that = this;
 switch (_that) {
 case _AttendanceState() when $default != null:
-return $default(_that.companyBranches,_that.isCompanyBranchesLoading,_that.companyBranchesError,_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError,_that.clockInData,_that.isClockInLoading,_that.clockInError,_that.clockInSuccessMessage);case _:
+return $default(_that.companyBranches,_that.isCompanyBranchesLoading,_that.companyBranchesError,_that.registeredFaceData,_that.isRegisterFaceLoading,_that.registerFaceError,_that.clockInData,_that.isClockInLoading,_that.clockInError,_that.clockInSuccessMessage,_that.clockOutData,_that.isClockOutLoading,_that.clockOutError,_that.clockOutSuccessMessage);case _:
   return null;
 
 }
@@ -254,7 +271,7 @@ return $default(_that.companyBranches,_that.isCompanyBranchesLoading,_that.compa
 
 
 class _AttendanceState extends AttendanceState {
-  const _AttendanceState({this.companyBranches = null, this.isCompanyBranchesLoading = false, this.companyBranchesError = null, this.registeredFaceData = null, this.isRegisterFaceLoading = false, this.registerFaceError = null, this.clockInData = null, this.isClockInLoading = false, this.clockInError = null, this.clockInSuccessMessage = null}): super._();
+  const _AttendanceState({this.companyBranches = null, this.isCompanyBranchesLoading = false, this.companyBranchesError = null, this.registeredFaceData = null, this.isRegisterFaceLoading = false, this.registerFaceError = null, this.clockInData = null, this.isClockInLoading = false, this.clockInError = null, this.clockInSuccessMessage = null, this.clockOutData = null, this.isClockOutLoading = false, this.clockOutError = null, this.clockOutSuccessMessage = null}): super._();
   
 
 // Company branches
@@ -270,6 +287,11 @@ class _AttendanceState extends AttendanceState {
 @override@JsonKey() final  bool isClockInLoading;
 @override@JsonKey() final  String? clockInError;
 @override@JsonKey() final  String? clockInSuccessMessage;
+// Clock-out
+@override@JsonKey() final  ClockOutEntity? clockOutData;
+@override@JsonKey() final  bool isClockOutLoading;
+@override@JsonKey() final  String? clockOutError;
+@override@JsonKey() final  String? clockOutSuccessMessage;
 
 /// Create a copy of AttendanceState
 /// with the given fields replaced by the non-null parameter values.
@@ -281,16 +303,16 @@ _$AttendanceStateCopyWith<_AttendanceState> get copyWith => __$AttendanceStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AttendanceState&&(identical(other.companyBranches, companyBranches) || other.companyBranches == companyBranches)&&(identical(other.isCompanyBranchesLoading, isCompanyBranchesLoading) || other.isCompanyBranchesLoading == isCompanyBranchesLoading)&&(identical(other.companyBranchesError, companyBranchesError) || other.companyBranchesError == companyBranchesError)&&(identical(other.registeredFaceData, registeredFaceData) || other.registeredFaceData == registeredFaceData)&&(identical(other.isRegisterFaceLoading, isRegisterFaceLoading) || other.isRegisterFaceLoading == isRegisterFaceLoading)&&(identical(other.registerFaceError, registerFaceError) || other.registerFaceError == registerFaceError)&&(identical(other.clockInData, clockInData) || other.clockInData == clockInData)&&(identical(other.isClockInLoading, isClockInLoading) || other.isClockInLoading == isClockInLoading)&&(identical(other.clockInError, clockInError) || other.clockInError == clockInError)&&(identical(other.clockInSuccessMessage, clockInSuccessMessage) || other.clockInSuccessMessage == clockInSuccessMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AttendanceState&&(identical(other.companyBranches, companyBranches) || other.companyBranches == companyBranches)&&(identical(other.isCompanyBranchesLoading, isCompanyBranchesLoading) || other.isCompanyBranchesLoading == isCompanyBranchesLoading)&&(identical(other.companyBranchesError, companyBranchesError) || other.companyBranchesError == companyBranchesError)&&(identical(other.registeredFaceData, registeredFaceData) || other.registeredFaceData == registeredFaceData)&&(identical(other.isRegisterFaceLoading, isRegisterFaceLoading) || other.isRegisterFaceLoading == isRegisterFaceLoading)&&(identical(other.registerFaceError, registerFaceError) || other.registerFaceError == registerFaceError)&&(identical(other.clockInData, clockInData) || other.clockInData == clockInData)&&(identical(other.isClockInLoading, isClockInLoading) || other.isClockInLoading == isClockInLoading)&&(identical(other.clockInError, clockInError) || other.clockInError == clockInError)&&(identical(other.clockInSuccessMessage, clockInSuccessMessage) || other.clockInSuccessMessage == clockInSuccessMessage)&&(identical(other.clockOutData, clockOutData) || other.clockOutData == clockOutData)&&(identical(other.isClockOutLoading, isClockOutLoading) || other.isClockOutLoading == isClockOutLoading)&&(identical(other.clockOutError, clockOutError) || other.clockOutError == clockOutError)&&(identical(other.clockOutSuccessMessage, clockOutSuccessMessage) || other.clockOutSuccessMessage == clockOutSuccessMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,companyBranches,isCompanyBranchesLoading,companyBranchesError,registeredFaceData,isRegisterFaceLoading,registerFaceError,clockInData,isClockInLoading,clockInError,clockInSuccessMessage);
+int get hashCode => Object.hash(runtimeType,companyBranches,isCompanyBranchesLoading,companyBranchesError,registeredFaceData,isRegisterFaceLoading,registerFaceError,clockInData,isClockInLoading,clockInError,clockInSuccessMessage,clockOutData,isClockOutLoading,clockOutError,clockOutSuccessMessage);
 
 @override
 String toString() {
-  return 'AttendanceState(companyBranches: $companyBranches, isCompanyBranchesLoading: $isCompanyBranchesLoading, companyBranchesError: $companyBranchesError, registeredFaceData: $registeredFaceData, isRegisterFaceLoading: $isRegisterFaceLoading, registerFaceError: $registerFaceError, clockInData: $clockInData, isClockInLoading: $isClockInLoading, clockInError: $clockInError, clockInSuccessMessage: $clockInSuccessMessage)';
+  return 'AttendanceState(companyBranches: $companyBranches, isCompanyBranchesLoading: $isCompanyBranchesLoading, companyBranchesError: $companyBranchesError, registeredFaceData: $registeredFaceData, isRegisterFaceLoading: $isRegisterFaceLoading, registerFaceError: $registerFaceError, clockInData: $clockInData, isClockInLoading: $isClockInLoading, clockInError: $clockInError, clockInSuccessMessage: $clockInSuccessMessage, clockOutData: $clockOutData, isClockOutLoading: $isClockOutLoading, clockOutError: $clockOutError, clockOutSuccessMessage: $clockOutSuccessMessage)';
 }
 
 
@@ -301,11 +323,11 @@ abstract mixin class _$AttendanceStateCopyWith<$Res> implements $AttendanceState
   factory _$AttendanceStateCopyWith(_AttendanceState value, $Res Function(_AttendanceState) _then) = __$AttendanceStateCopyWithImpl;
 @override @useResult
 $Res call({
- CompanyBranchesEntity? companyBranches, bool isCompanyBranchesLoading, String? companyBranchesError, UserEntity? registeredFaceData, bool isRegisterFaceLoading, String? registerFaceError, ClockInEntity? clockInData, bool isClockInLoading, String? clockInError, String? clockInSuccessMessage
+ CompanyBranchesEntity? companyBranches, bool isCompanyBranchesLoading, String? companyBranchesError, UserEntity? registeredFaceData, bool isRegisterFaceLoading, String? registerFaceError, ClockInEntity? clockInData, bool isClockInLoading, String? clockInError, String? clockInSuccessMessage, ClockOutEntity? clockOutData, bool isClockOutLoading, String? clockOutError, String? clockOutSuccessMessage
 });
 
 
-@override $CompanyBranchesEntityCopyWith<$Res>? get companyBranches;@override $UserEntityCopyWith<$Res>? get registeredFaceData;@override $ClockInEntityCopyWith<$Res>? get clockInData;
+@override $CompanyBranchesEntityCopyWith<$Res>? get companyBranches;@override $UserEntityCopyWith<$Res>? get registeredFaceData;@override $ClockInEntityCopyWith<$Res>? get clockInData;@override $ClockOutEntityCopyWith<$Res>? get clockOutData;
 
 }
 /// @nodoc
@@ -318,7 +340,7 @@ class __$AttendanceStateCopyWithImpl<$Res>
 
 /// Create a copy of AttendanceState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? companyBranches = freezed,Object? isCompanyBranchesLoading = null,Object? companyBranchesError = freezed,Object? registeredFaceData = freezed,Object? isRegisterFaceLoading = null,Object? registerFaceError = freezed,Object? clockInData = freezed,Object? isClockInLoading = null,Object? clockInError = freezed,Object? clockInSuccessMessage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? companyBranches = freezed,Object? isCompanyBranchesLoading = null,Object? companyBranchesError = freezed,Object? registeredFaceData = freezed,Object? isRegisterFaceLoading = null,Object? registerFaceError = freezed,Object? clockInData = freezed,Object? isClockInLoading = null,Object? clockInError = freezed,Object? clockInSuccessMessage = freezed,Object? clockOutData = freezed,Object? isClockOutLoading = null,Object? clockOutError = freezed,Object? clockOutSuccessMessage = freezed,}) {
   return _then(_AttendanceState(
 companyBranches: freezed == companyBranches ? _self.companyBranches : companyBranches // ignore: cast_nullable_to_non_nullable
 as CompanyBranchesEntity?,isCompanyBranchesLoading: null == isCompanyBranchesLoading ? _self.isCompanyBranchesLoading : isCompanyBranchesLoading // ignore: cast_nullable_to_non_nullable
@@ -330,6 +352,10 @@ as String?,clockInData: freezed == clockInData ? _self.clockInData : clockInData
 as ClockInEntity?,isClockInLoading: null == isClockInLoading ? _self.isClockInLoading : isClockInLoading // ignore: cast_nullable_to_non_nullable
 as bool,clockInError: freezed == clockInError ? _self.clockInError : clockInError // ignore: cast_nullable_to_non_nullable
 as String?,clockInSuccessMessage: freezed == clockInSuccessMessage ? _self.clockInSuccessMessage : clockInSuccessMessage // ignore: cast_nullable_to_non_nullable
+as String?,clockOutData: freezed == clockOutData ? _self.clockOutData : clockOutData // ignore: cast_nullable_to_non_nullable
+as ClockOutEntity?,isClockOutLoading: null == isClockOutLoading ? _self.isClockOutLoading : isClockOutLoading // ignore: cast_nullable_to_non_nullable
+as bool,clockOutError: freezed == clockOutError ? _self.clockOutError : clockOutError // ignore: cast_nullable_to_non_nullable
+as String?,clockOutSuccessMessage: freezed == clockOutSuccessMessage ? _self.clockOutSuccessMessage : clockOutSuccessMessage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -369,6 +395,18 @@ $ClockInEntityCopyWith<$Res>? get clockInData {
 
   return $ClockInEntityCopyWith<$Res>(_self.clockInData!, (value) {
     return _then(_self.copyWith(clockInData: value));
+  });
+}/// Create a copy of AttendanceState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ClockOutEntityCopyWith<$Res>? get clockOutData {
+    if (_self.clockOutData == null) {
+    return null;
+  }
+
+  return $ClockOutEntityCopyWith<$Res>(_self.clockOutData!, (value) {
+    return _then(_self.copyWith(clockOutData: value));
   });
 }
 }

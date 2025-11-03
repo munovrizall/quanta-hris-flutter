@@ -2,6 +2,7 @@ import 'package:alice/alice.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quanta_hris/src/core/di/injector.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/screens/clock_in_screen.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/screens/login_screen.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/screens/attendance_maps_screen.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/screens/face_recognition_screen.dart';
@@ -51,6 +52,13 @@ final GoRouter appRouter = GoRouter(
       path: '/attendance',
       builder: (BuildContext context, GoRouterState state) {
         return const AttendanceMapsScreen();
+      },
+    ),
+    GoRoute(
+      name: 'clock-in',
+      path: '/clock-in',
+      builder: (BuildContext context, GoRouterState state) {
+        return const ClockInScreen();
       },
     ),
   ],

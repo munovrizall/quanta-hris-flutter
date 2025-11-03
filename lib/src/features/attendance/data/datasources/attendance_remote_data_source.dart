@@ -7,6 +7,8 @@ import 'package:quanta_hris/src/features/authentication/data/models/user_model.d
 import 'package:quanta_hris/src/features/attendance/data/models/get_company_branches_response.dart';
 import 'package:quanta_hris/src/features/attendance/data/models/post_clock_in_request.dart';
 import 'package:quanta_hris/src/features/attendance/data/models/post_clock_in_response.dart';
+import 'package:quanta_hris/src/features/attendance/data/models/post_clock_out_request.dart';
+import 'package:quanta_hris/src/features/attendance/data/models/post_clock_out_response.dart';
 import 'package:quanta_hris/src/features/attendance/data/models/update_profile_request.dart';
 
 abstract class AttendanceRemoteDataSource {
@@ -16,6 +18,9 @@ abstract class AttendanceRemoteDataSource {
   });
   Future<ApiResponseModel<PostClockInResponse>> postClockIn({
     required PostClockInRequest request,
+  });
+  Future<ApiResponseModel<PostClockOutResponse>> postClockOut({
+    required PostClockOutRequest request,
   });
 }
 
@@ -143,6 +148,41 @@ class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
       );
     } catch (error, stackTrace) {
       AppLogger.d('❌ RemoteDataSource clock-in error: $error');
+      AppLogger.d('📍 StackTrace: $stackTrace');
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @override
+  Future<ApiResponseModel<PostClockOutResponse>> postClockOut({
+    required PostClockOutRequest request,
+  }) async {
+    try {
+      AppLogger.d(
+        '🌐 RemoteDataSource: Posting clock-out to ${ApiEndpoints.attendance.postClockOut}',
+      );
+      AppLogger.d('📤 Clock-out request data: ${request.toJson()}');
+
+      final response = await _dio.post(
+        ApiEndpoints.attendance.postClockOut,
+        data: request.toJson(),
+      );
+
+      AppLogger.d(
+        '✅ RemoteDataSource: Clock-out response status ${response.statusCode}',
+      );
+      AppLogger.d('📥 Clock-out raw response: ${response.data}');
+
+      final responseMap = Map<String, dynamic>.from(
+        response.data as Map<String, dynamic>,
+      );
+
+      return ApiResponseModel.fromJson(
+        responseMap,
+        (json) => PostClockOutResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } catch (error, stackTrace) {
+      AppLogger.d('❌ RemoteDataSource clock-out error: $error');
       AppLogger.d('📍 StackTrace: $stackTrace');
       throw ErrorHandler.handle(error);
     }

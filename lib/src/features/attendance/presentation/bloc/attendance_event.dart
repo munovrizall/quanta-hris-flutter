@@ -17,4 +17,11 @@ class AttendanceEvent with _$AttendanceEvent {
     required double longitude,
     String? fotoMasuk,
   }) = _PostClockIn;
+
+  /// Perintah untuk melakukan clock-out manual
+  const factory AttendanceEvent.postClockOut({
+    required double latitude,
+    required double longitude,
+    String? fotoPulang,
+  }) = _PostClockOut;
 }

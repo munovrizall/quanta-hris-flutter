@@ -36,6 +36,7 @@ class AttendanceEndpoints {
 
   final String getCompanyBranches = '/company/branches';
   final String postClockIn = '/attendance/clock-in';
+  final String postClockOut = '/attendance/clock-out';
 }
 
 class LeaveEndpoints {

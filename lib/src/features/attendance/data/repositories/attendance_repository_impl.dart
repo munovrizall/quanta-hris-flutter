@@ -1,8 +1,10 @@
 import 'package:quanta_hris/src/core/error/app_exception.dart';
 import 'package:quanta_hris/src/features/attendance/data/datasources/attendance_remote_data_source.dart';
 import 'package:quanta_hris/src/features/attendance/data/models/post_clock_in_request.dart';
+import 'package:quanta_hris/src/features/attendance/data/models/post_clock_out_request.dart';
 import 'package:quanta_hris/src/features/attendance/data/models/update_profile_request.dart';
 import 'package:quanta_hris/src/features/attendance/domain/entities/clock_in_entity.dart';
+import 'package:quanta_hris/src/features/attendance/domain/entities/clock_out_entity.dart';
 import 'package:quanta_hris/src/features/attendance/domain/entities/company_branches_entity.dart';
 import 'package:quanta_hris/src/features/attendance/domain/repositories/attendance_repository.dart';
 import 'package:quanta_hris/src/features/authentication/domain/entities/auth_entity.dart';
@@ -115,6 +117,53 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
 
       return ClockInSubmissionEntity(
         clockIn: clockIn,
+        message: responseModel.message,
+      );
+    } on ApiException {
+      rethrow;
+    } catch (_) {
+      throw ApiException('An unexpected error occurred in the repository.');
+    }
+  }
+
+  @override
+  Future<ClockOutSubmissionEntity> postClockOut({
+    required double latitude,
+    required double longitude,
+    String? fotoPulang,
+  }) async {
+    try {
+      final request = PostClockOutRequest(
+        latitude: latitude,
+        longitude: longitude,
+        fotoPulang: fotoPulang,
+      );
+
+      final responseModel = await _remoteDataSource.postClockOut(
+        request: request,
+      );
+
+      final data = responseModel.data;
+
+      final clockOut = ClockOutEntity(
+        absensiId: data.absensiId,
+        karyawanId: data.karyawanId,
+        tanggal: data.tanggal,
+        waktuPulang: data.waktuMasuk,
+        statusPulang: data.statusMasuk,
+        statusAbsensi: data.statusAbsensi,
+        durasiPulangCepat: data.durasiTelat,
+        fotoPulang: data.fotoMasuk,
+        distanceFromBranch: data.distanceFromBranch,
+        cabang: ClockOutBranchEntity(
+          cabangId: data.cabang.cabangId,
+          namaCabang: data.cabang.namaCabang,
+          alamat: data.cabang.alamat,
+        ),
+      );
+
+      return ClockOutSubmissionEntity(
+        clockOut: clockOut,
         message: responseModel.message,
       );
     } on ApiException {

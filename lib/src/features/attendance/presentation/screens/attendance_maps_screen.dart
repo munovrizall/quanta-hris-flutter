@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:quanta_hris/src/core/di/injector.dart';
 import 'package:quanta_hris/src/core/utils/app_logger.dart';
@@ -180,6 +181,14 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Berhasil memilih cabang ${branch.branchName}.')),
+    );
+
+    context.go(
+      '/clock-in',
+      extra: {
+        'latitude': _userLocation!.latitude,
+        'longitude': _userLocation!.longitude,
+      },
     );
   }
 

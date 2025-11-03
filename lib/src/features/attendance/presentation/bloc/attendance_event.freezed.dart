@@ -55,13 +55,14 @@ extension AttendanceEventPatterns on AttendanceEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchCompanyBranches value)?  fetchCompanyBranches,TResult Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,TResult Function( _PostClockIn value)?  postClockIn,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchCompanyBranches value)?  fetchCompanyBranches,TResult Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,TResult Function( _PostClockIn value)?  postClockIn,TResult Function( _PostClockOut value)?  postClockOut,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _FetchCompanyBranches() when fetchCompanyBranches != null:
 return fetchCompanyBranches(_that);case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
 return updateProfileRegisterFace(_that);case _PostClockIn() when postClockIn != null:
-return postClockIn(_that);case _:
+return postClockIn(_that);case _PostClockOut() when postClockOut != null:
+return postClockOut(_that);case _:
   return orElse();
 
 }
@@ -79,13 +80,14 @@ return postClockIn(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchCompanyBranches value)  fetchCompanyBranches,required TResult Function( _UpdateProfileRegisterFace value)  updateProfileRegisterFace,required TResult Function( _PostClockIn value)  postClockIn,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchCompanyBranches value)  fetchCompanyBranches,required TResult Function( _UpdateProfileRegisterFace value)  updateProfileRegisterFace,required TResult Function( _PostClockIn value)  postClockIn,required TResult Function( _PostClockOut value)  postClockOut,}){
 final _that = this;
 switch (_that) {
 case _FetchCompanyBranches():
 return fetchCompanyBranches(_that);case _UpdateProfileRegisterFace():
 return updateProfileRegisterFace(_that);case _PostClockIn():
-return postClockIn(_that);case _:
+return postClockIn(_that);case _PostClockOut():
+return postClockOut(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -102,13 +104,14 @@ return postClockIn(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchCompanyBranches value)?  fetchCompanyBranches,TResult? Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,TResult? Function( _PostClockIn value)?  postClockIn,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchCompanyBranches value)?  fetchCompanyBranches,TResult? Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,TResult? Function( _PostClockIn value)?  postClockIn,TResult? Function( _PostClockOut value)?  postClockOut,}){
 final _that = this;
 switch (_that) {
 case _FetchCompanyBranches() when fetchCompanyBranches != null:
 return fetchCompanyBranches(_that);case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
 return updateProfileRegisterFace(_that);case _PostClockIn() when postClockIn != null:
-return postClockIn(_that);case _:
+return postClockIn(_that);case _PostClockOut() when postClockOut != null:
+return postClockOut(_that);case _:
   return null;
 
 }
@@ -125,12 +128,13 @@ return postClockIn(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchCompanyBranches,TResult Function( String embedding,  XFile? image)?  updateProfileRegisterFace,TResult Function( double latitude,  double longitude,  String? fotoMasuk)?  postClockIn,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchCompanyBranches,TResult Function( String embedding,  XFile? image)?  updateProfileRegisterFace,TResult Function( double latitude,  double longitude,  String? fotoMasuk)?  postClockIn,TResult Function( double latitude,  double longitude,  String? fotoPulang)?  postClockOut,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FetchCompanyBranches() when fetchCompanyBranches != null:
 return fetchCompanyBranches();case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
 return updateProfileRegisterFace(_that.embedding,_that.image);case _PostClockIn() when postClockIn != null:
-return postClockIn(_that.latitude,_that.longitude,_that.fotoMasuk);case _:
+return postClockIn(_that.latitude,_that.longitude,_that.fotoMasuk);case _PostClockOut() when postClockOut != null:
+return postClockOut(_that.latitude,_that.longitude,_that.fotoPulang);case _:
   return orElse();
 
 }
@@ -148,12 +152,13 @@ return postClockIn(_that.latitude,_that.longitude,_that.fotoMasuk);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchCompanyBranches,required TResult Function( String embedding,  XFile? image)  updateProfileRegisterFace,required TResult Function( double latitude,  double longitude,  String? fotoMasuk)  postClockIn,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchCompanyBranches,required TResult Function( String embedding,  XFile? image)  updateProfileRegisterFace,required TResult Function( double latitude,  double longitude,  String? fotoMasuk)  postClockIn,required TResult Function( double latitude,  double longitude,  String? fotoPulang)  postClockOut,}) {final _that = this;
 switch (_that) {
 case _FetchCompanyBranches():
 return fetchCompanyBranches();case _UpdateProfileRegisterFace():
 return updateProfileRegisterFace(_that.embedding,_that.image);case _PostClockIn():
-return postClockIn(_that.latitude,_that.longitude,_that.fotoMasuk);case _:
+return postClockIn(_that.latitude,_that.longitude,_that.fotoMasuk);case _PostClockOut():
+return postClockOut(_that.latitude,_that.longitude,_that.fotoPulang);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -170,12 +175,13 @@ return postClockIn(_that.latitude,_that.longitude,_that.fotoMasuk);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchCompanyBranches,TResult? Function( String embedding,  XFile? image)?  updateProfileRegisterFace,TResult? Function( double latitude,  double longitude,  String? fotoMasuk)?  postClockIn,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchCompanyBranches,TResult? Function( String embedding,  XFile? image)?  updateProfileRegisterFace,TResult? Function( double latitude,  double longitude,  String? fotoMasuk)?  postClockIn,TResult? Function( double latitude,  double longitude,  String? fotoPulang)?  postClockOut,}) {final _that = this;
 switch (_that) {
 case _FetchCompanyBranches() when fetchCompanyBranches != null:
 return fetchCompanyBranches();case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
 return updateProfileRegisterFace(_that.embedding,_that.image);case _PostClockIn() when postClockIn != null:
-return postClockIn(_that.latitude,_that.longitude,_that.fotoMasuk);case _:
+return postClockIn(_that.latitude,_that.longitude,_that.fotoMasuk);case _PostClockOut() when postClockOut != null:
+return postClockOut(_that.latitude,_that.longitude,_that.fotoPulang);case _:
   return null;
 
 }
@@ -346,6 +352,76 @@ class __$PostClockInCopyWithImpl<$Res>
 latitude: null == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
 as double,longitude: null == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
 as double,fotoMasuk: freezed == fotoMasuk ? _self.fotoMasuk : fotoMasuk // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _PostClockOut implements AttendanceEvent {
+  const _PostClockOut({required this.latitude, required this.longitude, this.fotoPulang});
+  
+
+ final  double latitude;
+ final  double longitude;
+ final  String? fotoPulang;
+
+/// Create a copy of AttendanceEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$PostClockOutCopyWith<_PostClockOut> get copyWith => __$PostClockOutCopyWithImpl<_PostClockOut>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostClockOut&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.fotoPulang, fotoPulang) || other.fotoPulang == fotoPulang));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,latitude,longitude,fotoPulang);
+
+@override
+String toString() {
+  return 'AttendanceEvent.postClockOut(latitude: $latitude, longitude: $longitude, fotoPulang: $fotoPulang)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$PostClockOutCopyWith<$Res> implements $AttendanceEventCopyWith<$Res> {
+  factory _$PostClockOutCopyWith(_PostClockOut value, $Res Function(_PostClockOut) _then) = __$PostClockOutCopyWithImpl;
+@useResult
+$Res call({
+ double latitude, double longitude, String? fotoPulang
+});
+
+
+
+
+}
+/// @nodoc
+class __$PostClockOutCopyWithImpl<$Res>
+    implements _$PostClockOutCopyWith<$Res> {
+  __$PostClockOutCopyWithImpl(this._self, this._then);
+
+  final _PostClockOut _self;
+  final $Res Function(_PostClockOut) _then;
+
+/// Create a copy of AttendanceEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? latitude = null,Object? longitude = null,Object? fotoPulang = freezed,}) {
+  return _then(_PostClockOut(
+latitude: null == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
+as double,longitude: null == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
+as double,fotoPulang: freezed == fotoPulang ? _self.fotoPulang : fotoPulang // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
