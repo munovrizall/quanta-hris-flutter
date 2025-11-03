@@ -98,27 +98,28 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
       distanceFilter: 5, // Update only when user moves 5 meters
     );
 
-    _positionStreamSubscription = Geolocator.getPositionStream(
-      locationSettings: locationSettings,
-    ).listen(
-      (Position position) {
-        final newLocation = LatLng(position.latitude, position.longitude);
-        
-        AppLogger.d('📍 Live location update: ${position.latitude}, ${position.longitude}');
-        
-        setState(() {
-          _userLocation = newLocation;
-        });
+    _positionStreamSubscription =
+        Geolocator.getPositionStream(locationSettings: locationSettings).listen(
+          (Position position) {
+            final newLocation = LatLng(position.latitude, position.longitude);
 
-        // Auto-center map on first location update after initial load
-        if (_isFirstLocation) {
-          _isFirstLocation = false;
-        }
-      },
-      onError: (error) {
-        AppLogger.d('❌ Location stream error: $error');
-      },
-    );
+            AppLogger.d(
+              '📍 Live location update: ${position.latitude}, ${position.longitude}',
+            );
+
+            setState(() {
+              _userLocation = newLocation;
+            });
+
+            // Auto-center map on first location update after initial load
+            if (_isFirstLocation) {
+              _isFirstLocation = false;
+            }
+          },
+          onError: (error) {
+            AppLogger.d('❌ Location stream error: $error');
+          },
+        );
   }
 
   Future<bool> _ensurePermission() async {
@@ -256,9 +257,8 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
                 state.companyBranches == null) {
               return _ErrorMessage(
                 message: state.companyBranchesError!,
-                onRetry: () => _bloc.add(
-                  const AttendanceEvent.fetchCompanyBranches(),
-                ),
+                onRetry: () =>
+                    _bloc.add(const AttendanceEvent.fetchCompanyBranches()),
               );
             }
 
@@ -421,10 +421,7 @@ class _BranchInfoPanel extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppColors.success.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: AppColors.success,
-                      width: 1,
-                    ),
+                    border: Border.all(color: AppColors.success, width: 1),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,

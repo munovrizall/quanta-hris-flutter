@@ -34,6 +34,11 @@ import 'package:quanta_hris/src/features/home/domain/usecases/get_operational_ho
 import 'package:quanta_hris/src/features/home/domain/usecases/get_today_leaves_usecase.dart';
 import 'package:quanta_hris/src/features/home/presentation/bloc/home_bloc.dart';
 import 'package:quanta_hris/src/features/splash/domain/usecases/check_session_usecase.dart';
+import 'package:quanta_hris/src/features/leave/data/datasources/leave_remote_data_source.dart';
+import 'package:quanta_hris/src/features/leave/data/repositories/leave_repository_impl.dart';
+import 'package:quanta_hris/src/features/leave/domain/repositories/leave_repository.dart';
+import 'package:quanta_hris/src/features/leave/domain/usecases/submit_leave_usecase.dart';
+import 'package:quanta_hris/src/features/leave/presentation/bloc/leave_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -44,6 +49,7 @@ void configureDependencies(FlavorConfig config) {
   _registerAuth();
   _registerHome();
   _registerAttendance();
+  _registerLeave();
   _configureDioInterceptors();
 }
 
@@ -237,6 +243,24 @@ void _registerAttendance() {
   );
 }
 
+void _registerLeave() {
+  AppLogger.i('🗓️ Registering leave dependencies...');
+
+  getIt.registerLazySingleton<LeaveRemoteDataSource>(
+    () => LeaveRemoteDataSourceImpl(getIt<Dio>()),
+  );
+
+  getIt.registerLazySingleton<LeaveRepository>(
+    () => LeaveRepositoryImpl(getIt<LeaveRemoteDataSource>()),
+  );
+
+  getIt.registerFactory(() => SubmitLeaveUseCase(getIt<LeaveRepository>()));
+
+  getIt.registerFactory(
+    () => LeaveBloc(submitLeaveUseCase: getIt<SubmitLeaveUseCase>()),
+  );
+}
+
 /// Configure Dio interceptors after all dependencies are registered
 void _configureDioInterceptors() {
   AppLogger.i('🔧 Configuring Dio interceptors...');
@@ -296,6 +320,7 @@ void validateDependencies() {
     AuthRepository,
     SessionBloc,
     HomeRepository,
+    LeaveRepository,
   ];
 
   for (final dep in dependencies) {

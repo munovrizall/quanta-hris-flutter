@@ -14,8 +14,7 @@ abstract class AttendanceRemoteDataSource {
   });
 }
 
-class AttendanceRemoteDataSourceImpl
-    implements AttendanceRemoteDataSource {
+class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
   final Dio _dio;
 
   AttendanceRemoteDataSourceImpl(this._dio);
@@ -25,10 +24,12 @@ class AttendanceRemoteDataSourceImpl
   getCompanyBranches() async {
     try {
       AppLogger.d(
-        '🌐 RemoteDataSource: Fetching from ${ApiEndpoints.profile.getCompanyBranches}',
+        '🌐 RemoteDataSource: Fetching from ${ApiEndpoints.attendance.getCompanyBranches}',
       );
 
-      final response = await _dio.get(ApiEndpoints.profile.getCompanyBranches);
+      final response = await _dio.get(
+        ApiEndpoints.attendance.getCompanyBranches,
+      );
 
       AppLogger.d(
         '✅ RemoteDataSource: Got response with status ${response.statusCode}',
