@@ -5,12 +5,17 @@ import 'package:quanta_hris/src/core/network/api_response_model.dart';
 import 'package:quanta_hris/src/core/utils/app_logger.dart';
 import 'package:quanta_hris/src/features/authentication/data/models/user_model.dart';
 import 'package:quanta_hris/src/features/attendance/data/models/get_company_branches_response.dart';
+import 'package:quanta_hris/src/features/attendance/data/models/post_clock_in_request.dart';
+import 'package:quanta_hris/src/features/attendance/data/models/post_clock_in_response.dart';
 import 'package:quanta_hris/src/features/attendance/data/models/update_profile_request.dart';
 
 abstract class AttendanceRemoteDataSource {
   Future<ApiResponseModel<GetCompanyBranchesResponse>> getCompanyBranches();
   Future<ApiResponseModel<UserModel>> postUpdateProfile({
     required UpdateProfileRequest requestModel,
+  });
+  Future<ApiResponseModel<PostClockInResponse>> postClockIn({
+    required PostClockInRequest request,
   });
 }
 
@@ -103,6 +108,41 @@ class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
       return apiResponse;
     } catch (error, stackTrace) {
       AppLogger.d('❌ RemoteDataSource error: $error');
+      AppLogger.d('📍 StackTrace: $stackTrace');
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @override
+  Future<ApiResponseModel<PostClockInResponse>> postClockIn({
+    required PostClockInRequest request,
+  }) async {
+    try {
+      AppLogger.d(
+        '🌐 RemoteDataSource: Posting clock-in to ${ApiEndpoints.attendance.postClockIn}',
+      );
+      AppLogger.d('📤 Request data: ${request.toJson()}');
+
+      final response = await _dio.post(
+        ApiEndpoints.attendance.postClockIn,
+        data: request.toJson(),
+      );
+
+      AppLogger.d(
+        '✅ RemoteDataSource: Clock-in response status ${response.statusCode}',
+      );
+      AppLogger.d('📥 Raw response data: ${response.data}');
+
+      final responseMap = Map<String, dynamic>.from(
+        response.data as Map<String, dynamic>,
+      );
+
+      return ApiResponseModel.fromJson(
+        responseMap,
+        (json) => PostClockInResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } catch (error, stackTrace) {
+      AppLogger.d('❌ RemoteDataSource clock-in error: $error');
       AppLogger.d('📍 StackTrace: $stackTrace');
       throw ErrorHandler.handle(error);
     }

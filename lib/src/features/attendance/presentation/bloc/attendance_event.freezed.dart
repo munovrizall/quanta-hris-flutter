@@ -55,12 +55,13 @@ extension AttendanceEventPatterns on AttendanceEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchCompanyBranches value)?  fetchCompanyBranches,TResult Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchCompanyBranches value)?  fetchCompanyBranches,TResult Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,TResult Function( _PostClockIn value)?  postClockIn,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _FetchCompanyBranches() when fetchCompanyBranches != null:
 return fetchCompanyBranches(_that);case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
-return updateProfileRegisterFace(_that);case _:
+return updateProfileRegisterFace(_that);case _PostClockIn() when postClockIn != null:
+return postClockIn(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return updateProfileRegisterFace(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchCompanyBranches value)  fetchCompanyBranches,required TResult Function( _UpdateProfileRegisterFace value)  updateProfileRegisterFace,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchCompanyBranches value)  fetchCompanyBranches,required TResult Function( _UpdateProfileRegisterFace value)  updateProfileRegisterFace,required TResult Function( _PostClockIn value)  postClockIn,}){
 final _that = this;
 switch (_that) {
 case _FetchCompanyBranches():
 return fetchCompanyBranches(_that);case _UpdateProfileRegisterFace():
-return updateProfileRegisterFace(_that);case _:
+return updateProfileRegisterFace(_that);case _PostClockIn():
+return postClockIn(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return updateProfileRegisterFace(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchCompanyBranches value)?  fetchCompanyBranches,TResult? Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchCompanyBranches value)?  fetchCompanyBranches,TResult? Function( _UpdateProfileRegisterFace value)?  updateProfileRegisterFace,TResult? Function( _PostClockIn value)?  postClockIn,}){
 final _that = this;
 switch (_that) {
 case _FetchCompanyBranches() when fetchCompanyBranches != null:
 return fetchCompanyBranches(_that);case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
-return updateProfileRegisterFace(_that);case _:
+return updateProfileRegisterFace(_that);case _PostClockIn() when postClockIn != null:
+return postClockIn(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return updateProfileRegisterFace(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchCompanyBranches,TResult Function( String embedding,  XFile? image)?  updateProfileRegisterFace,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchCompanyBranches,TResult Function( String embedding,  XFile? image)?  updateProfileRegisterFace,TResult Function( double latitude,  double longitude,  String? fotoMasuk)?  postClockIn,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FetchCompanyBranches() when fetchCompanyBranches != null:
 return fetchCompanyBranches();case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
-return updateProfileRegisterFace(_that.embedding,_that.image);case _:
+return updateProfileRegisterFace(_that.embedding,_that.image);case _PostClockIn() when postClockIn != null:
+return postClockIn(_that.latitude,_that.longitude,_that.fotoMasuk);case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return updateProfileRegisterFace(_that.embedding,_that.image);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchCompanyBranches,required TResult Function( String embedding,  XFile? image)  updateProfileRegisterFace,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchCompanyBranches,required TResult Function( String embedding,  XFile? image)  updateProfileRegisterFace,required TResult Function( double latitude,  double longitude,  String? fotoMasuk)  postClockIn,}) {final _that = this;
 switch (_that) {
 case _FetchCompanyBranches():
 return fetchCompanyBranches();case _UpdateProfileRegisterFace():
-return updateProfileRegisterFace(_that.embedding,_that.image);case _:
+return updateProfileRegisterFace(_that.embedding,_that.image);case _PostClockIn():
+return postClockIn(_that.latitude,_that.longitude,_that.fotoMasuk);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return updateProfileRegisterFace(_that.embedding,_that.image);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchCompanyBranches,TResult? Function( String embedding,  XFile? image)?  updateProfileRegisterFace,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchCompanyBranches,TResult? Function( String embedding,  XFile? image)?  updateProfileRegisterFace,TResult? Function( double latitude,  double longitude,  String? fotoMasuk)?  postClockIn,}) {final _that = this;
 switch (_that) {
 case _FetchCompanyBranches() when fetchCompanyBranches != null:
 return fetchCompanyBranches();case _UpdateProfileRegisterFace() when updateProfileRegisterFace != null:
-return updateProfileRegisterFace(_that.embedding,_that.image);case _:
+return updateProfileRegisterFace(_that.embedding,_that.image);case _PostClockIn() when postClockIn != null:
+return postClockIn(_that.latitude,_that.longitude,_that.fotoMasuk);case _:
   return null;
 
 }
@@ -271,6 +277,76 @@ class __$UpdateProfileRegisterFaceCopyWithImpl<$Res>
 null == embedding ? _self.embedding : embedding // ignore: cast_nullable_to_non_nullable
 as String,freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as XFile?,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _PostClockIn implements AttendanceEvent {
+  const _PostClockIn({required this.latitude, required this.longitude, this.fotoMasuk});
+  
+
+ final  double latitude;
+ final  double longitude;
+ final  String? fotoMasuk;
+
+/// Create a copy of AttendanceEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$PostClockInCopyWith<_PostClockIn> get copyWith => __$PostClockInCopyWithImpl<_PostClockIn>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostClockIn&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.fotoMasuk, fotoMasuk) || other.fotoMasuk == fotoMasuk));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,latitude,longitude,fotoMasuk);
+
+@override
+String toString() {
+  return 'AttendanceEvent.postClockIn(latitude: $latitude, longitude: $longitude, fotoMasuk: $fotoMasuk)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$PostClockInCopyWith<$Res> implements $AttendanceEventCopyWith<$Res> {
+  factory _$PostClockInCopyWith(_PostClockIn value, $Res Function(_PostClockIn) _then) = __$PostClockInCopyWithImpl;
+@useResult
+$Res call({
+ double latitude, double longitude, String? fotoMasuk
+});
+
+
+
+
+}
+/// @nodoc
+class __$PostClockInCopyWithImpl<$Res>
+    implements _$PostClockInCopyWith<$Res> {
+  __$PostClockInCopyWithImpl(this._self, this._then);
+
+  final _PostClockIn _self;
+  final $Res Function(_PostClockIn) _then;
+
+/// Create a copy of AttendanceEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? latitude = null,Object? longitude = null,Object? fotoMasuk = freezed,}) {
+  return _then(_PostClockIn(
+latitude: null == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
+as double,longitude: null == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
+as double,fotoMasuk: freezed == fotoMasuk ? _self.fotoMasuk : fotoMasuk // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

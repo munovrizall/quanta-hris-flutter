@@ -17,6 +17,7 @@ import 'package:quanta_hris/src/features/attendance/data/datasources/attendance_
 import 'package:quanta_hris/src/features/attendance/data/repositories/attendance_repository_impl.dart';
 import 'package:quanta_hris/src/features/attendance/domain/repositories/attendance_repository.dart';
 import 'package:quanta_hris/src/features/attendance/domain/usecases/get_company_branches_usecase.dart';
+import 'package:quanta_hris/src/features/attendance/domain/usecases/post_clock_in_usecase.dart';
 import 'package:quanta_hris/src/features/attendance/domain/usecases/update_profile_usecase.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_bloc.dart';
 import 'package:quanta_hris/src/features/authentication/data/datasources/auth_remote_data_source.dart';
@@ -236,9 +237,14 @@ void _registerAttendance() {
   );
 
   getIt.registerFactory(
+    () => PostClockInUseCase(getIt<AttendanceRepository>()),
+  );
+
+  getIt.registerFactory(
     () => AttendanceBloc(
       updateProfileUseCase: getIt<UpdateProfileUseCase>(),
       getCompanyBranchesUseCase: getIt<GetCompanyBranchesUseCase>(),
+      postClockInUseCase: getIt<PostClockInUseCase>(),
     ),
   );
 }

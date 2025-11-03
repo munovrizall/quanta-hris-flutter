@@ -35,6 +35,7 @@ class AttendanceEndpoints {
   const AttendanceEndpoints();
 
   final String getCompanyBranches = '/company/branches';
+  final String postClockIn = '/attendance/clock-in';
 }
 
 class LeaveEndpoints {

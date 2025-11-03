@@ -14,7 +14,10 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LeaveState {
 
- bool get isSubmitLoading; LeaveApplicationEntity? get submittedLeave; String? get submitError; String? get submitSuccessMessage;
+// Loading indicators
+ bool get isSubmitLoading;// Data hasil submit
+ LeaveApplicationEntity? get submittedLeave;// Error / success message
+ String? get submitError; String? get submitSuccessMessage;
 /// Create a copy of LeaveState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -224,8 +227,11 @@ class _LeaveState extends LeaveState {
   const _LeaveState({this.isSubmitLoading = false, this.submittedLeave, this.submitError, this.submitSuccessMessage}): super._();
   
 
+// Loading indicators
 @override@JsonKey() final  bool isSubmitLoading;
+// Data hasil submit
 @override final  LeaveApplicationEntity? submittedLeave;
+// Error / success message
 @override final  String? submitError;
 @override final  String? submitSuccessMessage;
 

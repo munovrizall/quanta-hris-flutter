@@ -1,6 +1,8 @@
 import 'package:quanta_hris/src/core/error/app_exception.dart';
 import 'package:quanta_hris/src/features/attendance/data/datasources/attendance_remote_data_source.dart';
+import 'package:quanta_hris/src/features/attendance/data/models/post_clock_in_request.dart';
 import 'package:quanta_hris/src/features/attendance/data/models/update_profile_request.dart';
+import 'package:quanta_hris/src/features/attendance/domain/entities/clock_in_entity.dart';
 import 'package:quanta_hris/src/features/attendance/domain/entities/company_branches_entity.dart';
 import 'package:quanta_hris/src/features/attendance/domain/repositories/attendance_repository.dart';
 import 'package:quanta_hris/src/features/authentication/domain/entities/auth_entity.dart';
@@ -71,6 +73,53 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
     } on ApiException {
       rethrow;
     } catch (error) {
+      throw ApiException('An unexpected error occurred in the repository.');
+    }
+  }
+
+  @override
+  Future<ClockInSubmissionEntity> postClockIn({
+    required double latitude,
+    required double longitude,
+    String? fotoMasuk,
+  }) async {
+    try {
+      final request = PostClockInRequest(
+        latitude: latitude,
+        longitude: longitude,
+        fotoMasuk: fotoMasuk,
+      );
+
+      final responseModel = await _remoteDataSource.postClockIn(
+        request: request,
+      );
+
+      final data = responseModel.data;
+
+      final clockIn = ClockInEntity(
+        absensiId: data.absensiId,
+        karyawanId: data.karyawanId,
+        tanggal: data.tanggal,
+        waktuMasuk: data.waktuMasuk,
+        statusMasuk: data.statusMasuk,
+        statusAbsensi: data.statusAbsensi,
+        durasiTelat: data.durasiTelat,
+        fotoMasuk: data.fotoMasuk,
+        distanceFromBranch: data.distanceFromBranch,
+        cabang: ClockInBranchEntity(
+          cabangId: data.cabang.cabangId,
+          namaCabang: data.cabang.namaCabang,
+          alamat: data.cabang.alamat,
+        ),
+      );
+
+      return ClockInSubmissionEntity(
+        clockIn: clockIn,
+        message: responseModel.message,
+      );
+    } on ApiException {
+      rethrow;
+    } catch (_) {
       throw ApiException('An unexpected error occurred in the repository.');
     }
   }
