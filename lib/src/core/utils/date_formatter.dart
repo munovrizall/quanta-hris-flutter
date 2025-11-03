@@ -35,11 +35,12 @@ class DateFormatter {
     return months[month - 1];
   }
 
-  /// Format current time as HH:mm
+  /// Format current time as HH:mm:ss
   static String getCurrentTime() {
     final now = DateTime.now();
-    return '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
+    return '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}';
   }
+
 
   /// Format current date in Indonesian format
   static String getCurrentDateIndonesian() {

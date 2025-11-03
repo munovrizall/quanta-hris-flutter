@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:image/image.dart' as img;
 import 'package:quanta_hris/src/core/di/injector.dart';
@@ -15,6 +16,7 @@ import 'package:quanta_hris/src/core/ml/recognizer.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_bloc.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_event.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_state.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/widgets/attendance_success_dialog.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/widgets/face_detector_painter.dart';
 import 'package:quanta_hris/src/shared/styles/app_colors.dart';
 
@@ -647,6 +649,43 @@ class _ClockInScreenState extends State<ClockInScreen> {
     await _initializeCamera();
   }
 
+  /// Show success dialog with attendance details and auto-dismiss after 4 seconds
+  Future<void> _showSuccessDialog(
+    BuildContext context,
+    AttendanceState state,
+  ) async {
+    final clockInData = state.clockInData!;
+
+    // Show dialog
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => AttendanceSuccessDialog(
+        title: 'Absensi Berhasil!',
+        message: state.clockInSuccessMessage ?? 'Absensi masuk berhasil dicatat',
+        waktuAbsensi: clockInData.waktuMasuk,
+        statusTerlambat: clockInData.statusMasuk,
+        durasiTerlambat: clockInData.durasiTelat,
+        jarak: clockInData.distanceFromBranch,
+        icon: Icons.check_circle,
+        iconColor: clockInData.statusMasuk == 'Tepat Waktu'
+            ? AppColors.success
+            : AppColors.warning,
+      ),
+    );
+
+    // Wait for 4 seconds
+    await Future.delayed(const Duration(seconds: 4));
+
+    // Close dialog
+    if (!mounted) return;
+    Navigator.of(context).pop(); // Close dialog
+
+    // Navigate to home
+    if (!mounted) return;
+    context.go('/home');
+  }
+
   @override
   void dispose() {
     _disposeCamera();
@@ -849,15 +888,8 @@ class _ClockInScreenState extends State<ClockInScreen> {
                                   _isProcessing = false;
                                 });
 
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(state.clockInSuccessMessage!),
-                                    backgroundColor: AppColors.success,
-                                  ),
-                                );
-
-                                // Navigate back or to success screen
-                                Navigator.of(context).pop();
+                                // Show success dialog with attendance details
+                                _showSuccessDialog(context, state);
                               }
                             },
                             builder: (context, state) {

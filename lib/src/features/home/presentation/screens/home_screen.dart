@@ -43,7 +43,6 @@ class _HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<_HomeView> {
-  bool isCheckedIn = false;
   final SessionStorageRepository _sessionStorageRepository =
       getIt<SessionStorageRepository>();
   bool _hasFaceEmbedding = false;
@@ -82,6 +81,10 @@ class _HomeViewState extends State<_HomeView> {
   Future<void> _handleMainButtonTap(BuildContext context) async {
     final targetRoute = _hasFaceEmbedding ? '/attendance' : '/face-recognition';
     await context.push(targetRoute);
+    
+    // Refetch clock-in status after returning from attendance screen
+    if (!mounted) return;
+    context.read<HomeBloc>().add(const HomeEvent.fetchIsClockedInData());
     await _loadSessionUser();
   }
 
@@ -115,16 +118,17 @@ class _HomeViewState extends State<_HomeView> {
           (bloc) => bloc.state.operationalHourData,
         );
 
-    final isLoadingOperationalHour = context.select<HomeBloc, bool>(
-      (bloc) => bloc.state.isLoadingOperationalHour,
-    );
-
     final todayLeavesData = context.select<HomeBloc, TodayLeavesEntity?>(
       (bloc) => bloc.state.todayLeavesData,
     );
 
     final isLoadingTodayLeaves = context.select<HomeBloc, bool>(
       (bloc) => bloc.state.isLoadingTodayLeaves,
+    );
+
+    // Get clock-in status from HomeBloc
+    final isClockedIn = context.select<HomeBloc, bool>(
+      (bloc) => bloc.state.isClockedIn?.isClockedIn ?? false,
     );
 
     final currentTime = DateFormatter.getCurrentTime();
@@ -315,7 +319,7 @@ class _HomeViewState extends State<_HomeView> {
                         ),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: _hasFaceEmbedding && isCheckedIn
+                            colors: _hasFaceEmbedding && isClockedIn
                                 ? [AppColors.warning, AppColors.warningLight]
                                 : [AppColors.primary, AppColors.primary200],
                           ),
@@ -326,7 +330,7 @@ class _HomeViewState extends State<_HomeView> {
                             Icon(
                               !_hasFaceEmbedding
                                   ? Icons.person_add_alt_1
-                                  : isCheckedIn
+                                  : isClockedIn
                                   ? Icons.logout
                                   : Icons.fingerprint,
                               size: AppSizes.iconHuge,
@@ -336,7 +340,7 @@ class _HomeViewState extends State<_HomeView> {
                             Text(
                               !_hasFaceEmbedding
                                   ? AppStrings.home.registerFaceButtonText
-                                  : isCheckedIn
+                                  : isClockedIn
                                   ? AppStrings.home.checkOutButtonText
                                   : AppStrings.home.checkInButtonText,
                               style: AppTypography.buttonLarge.copyWith(
@@ -347,7 +351,7 @@ class _HomeViewState extends State<_HomeView> {
                             Text(
                               !_hasFaceEmbedding
                                   ? AppStrings.home.registerFaceSubtitle
-                                  : isCheckedIn
+                                  : isClockedIn
                                   ? AppStrings.home.checkOutSubtitle
                                   : AppStrings.home.checkInSubtitle,
                               style: AppTypography.bodySmall.copyWith(
