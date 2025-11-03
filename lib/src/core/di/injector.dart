@@ -13,6 +13,12 @@ import 'package:quanta_hris/src/core/routes/app_router.dart';
 import 'package:quanta_hris/src/core/storage/session_storage_repository.dart';
 import 'package:quanta_hris/src/core/storage/session_storage_repository_impl.dart';
 import 'package:quanta_hris/src/core/utils/app_logger.dart';
+import 'package:quanta_hris/src/features/attendance/data/datasources/attendance_remote_data_source.dart';
+import 'package:quanta_hris/src/features/attendance/data/repositories/attendance_repository_impl.dart';
+import 'package:quanta_hris/src/features/attendance/domain/repositories/attendance_repository.dart';
+import 'package:quanta_hris/src/features/attendance/domain/usecases/get_company_branches_usecase.dart';
+import 'package:quanta_hris/src/features/attendance/domain/usecases/update_profile_usecase.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_bloc.dart';
 import 'package:quanta_hris/src/features/authentication/data/datasources/auth_remote_data_source.dart';
 import 'package:quanta_hris/src/features/authentication/data/repositories/auth_repository_impl.dart';
 import 'package:quanta_hris/src/features/authentication/domain/repositories/auth_repository.dart';
@@ -28,12 +34,6 @@ import 'package:quanta_hris/src/features/home/domain/usecases/get_operational_ho
 import 'package:quanta_hris/src/features/home/domain/usecases/get_today_leaves_usecase.dart';
 import 'package:quanta_hris/src/features/home/presentation/bloc/home_bloc.dart';
 import 'package:quanta_hris/src/features/splash/domain/usecases/check_session_usecase.dart';
-import 'package:quanta_hris/src/features/face_recognition/data/datasources/face_recognition_remote_data_source.dart';
-import 'package:quanta_hris/src/features/face_recognition/data/repositories/face_recognition_repository_impl.dart';
-import 'package:quanta_hris/src/features/face_recognition/domain/repositories/face_recognition_repository.dart';
-import 'package:quanta_hris/src/features/face_recognition/domain/usecases/get_company_branches_usecase.dart';
-import 'package:quanta_hris/src/features/face_recognition/domain/usecases/update_profile_usecase.dart';
-import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -43,7 +43,7 @@ void configureDependencies(FlavorConfig config) {
   _registerRouting();
   _registerAuth();
   _registerHome();
-  _registerFaceRecognition();
+  _registerAttendance();
   _configureDioInterceptors();
 }
 
@@ -207,31 +207,30 @@ void _registerHome() {
   );
 }
 
-void _registerFaceRecognition() {
+void _registerAttendance() {
   AppLogger.i('🧠 Registering face recognition dependencies...');
 
-  getIt.registerLazySingleton<FaceRecognitionRemoteDataSource>(
-    () => FaceRecognitionRemoteDataSourceImpl(getIt<Dio>()),
+  getIt.registerLazySingleton<AttendanceRemoteDataSource>(
+    () => AttendanceRemoteDataSourceImpl(getIt<Dio>()),
   );
 
-  getIt.registerLazySingleton<FaceRecognitionRepository>(
-    () =>
-        FaceRecognitionRepositoryImpl(getIt<FaceRecognitionRemoteDataSource>()),
+  getIt.registerLazySingleton<AttendanceRepository>(
+    () => AttendanceRepositoryImpl(getIt<AttendanceRemoteDataSource>()),
   );
 
   getIt.registerFactory(
-    () => GetCompanyBranchesUseCase(getIt<FaceRecognitionRepository>()),
+    () => GetCompanyBranchesUseCase(getIt<AttendanceRepository>()),
   );
 
   getIt.registerFactory(
     () => UpdateProfileUseCase(
-      getIt<FaceRecognitionRepository>(),
+      getIt<AttendanceRepository>(),
       getIt<SessionStorageRepository>(),
     ),
   );
 
   getIt.registerFactory(
-    () => FaceRecognitionBloc(
+    () => AttendanceBloc(
       updateProfileUseCase: getIt<UpdateProfileUseCase>(),
       getCompanyBranchesUseCase: getIt<GetCompanyBranchesUseCase>(),
     ),

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quanta_hris/src/core/di/injector.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/screens/login_screen.dart';
-import 'package:quanta_hris/src/features/face_recognition/presentation/screens/attendance_maps_screen.dart';
-import 'package:quanta_hris/src/features/face_recognition/presentation/screens/face_recognition_screen.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/screens/attendance_maps_screen.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/screens/face_recognition_screen.dart';
 import 'package:quanta_hris/src/features/home/presentation/screens/home_screen.dart'; // Akan kita buat
 import 'package:quanta_hris/src/features/splash/presentation/screens/splash_screen.dart'; // Akan kita buat
 

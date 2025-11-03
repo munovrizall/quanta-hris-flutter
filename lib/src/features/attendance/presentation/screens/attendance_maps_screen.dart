@@ -7,10 +7,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:quanta_hris/src/core/di/injector.dart';
 import 'package:quanta_hris/src/core/utils/app_logger.dart';
-import 'package:quanta_hris/src/features/face_recognition/domain/entities/company_branches_entity.dart';
-import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_bloc.dart';
-import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_event.dart';
-import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_state.dart';
+import 'package:quanta_hris/src/features/attendance/domain/entities/company_branches_entity.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_bloc.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_event.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_state.dart';
 import 'package:quanta_hris/src/shared/styles/app_colors.dart';
 import 'package:quanta_hris/src/shared/styles/app_typography.dart';
 import 'package:quanta_hris/src/shared/widgets/primary_button.dart';
@@ -23,7 +23,7 @@ class AttendanceMapsScreen extends StatefulWidget {
 }
 
 class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
-  late final FaceRecognitionBloc _bloc;
+  late final AttendanceBloc _bloc;
   final MapController _mapController = MapController();
   final Distance _distance = const Distance();
 
@@ -35,8 +35,8 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
   @override
   void initState() {
     super.initState();
-    _bloc = getIt<FaceRecognitionBloc>();
-    _bloc.add(const FaceRecognitionEvent.fetchCompanyBranches());
+    _bloc = getIt<AttendanceBloc>();
+    _bloc.add(const AttendanceEvent.fetchCompanyBranches());
     _initLocation();
   }
 
@@ -198,7 +198,7 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
       value: _bloc,
       child: Scaffold(
         appBar: AppBar(title: const Text('Peta Kehadiran')),
-        body: BlocBuilder<FaceRecognitionBloc, FaceRecognitionState>(
+        body: BlocBuilder<AttendanceBloc, AttendanceState>(
           builder: (context, state) {
             if (_locationError != null) {
               return _ErrorMessage(
@@ -218,7 +218,7 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
               return _ErrorMessage(
                 message: state.companyBranchesError!,
                 onRetry: () => _bloc.add(
-                  const FaceRecognitionEvent.fetchCompanyBranches(),
+                  const AttendanceEvent.fetchCompanyBranches(),
                 ),
               );
             }

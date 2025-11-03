@@ -3,25 +3,24 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quanta_hris/src/core/error/app_exception.dart';
 import 'package:quanta_hris/src/core/utils/app_logger.dart';
-import 'package:quanta_hris/src/features/face_recognition/domain/usecases/get_company_branches_usecase.dart';
-import 'package:quanta_hris/src/features/face_recognition/domain/usecases/update_profile_usecase.dart';
+import 'package:quanta_hris/src/features/attendance/domain/usecases/get_company_branches_usecase.dart';
+import 'package:quanta_hris/src/features/attendance/domain/usecases/update_profile_usecase.dart';
 
-import 'face_recognition_event.dart';
-import 'face_recognition_state.dart';
+import 'attendance_event.dart';
+import 'attendance_state.dart';
 
-class FaceRecognitionBloc
-    extends Bloc<FaceRecognitionEvent, FaceRecognitionState> {
+class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
   final GetCompanyBranchesUseCase _getCompanyBranchesUseCase;
   final UpdateProfileUseCase _updateProfileUseCase;
 
-  FaceRecognitionBloc({
+  AttendanceBloc({
     required UpdateProfileUseCase updateProfileUseCase,
     required GetCompanyBranchesUseCase getCompanyBranchesUseCase,
   }) : _updateProfileUseCase = updateProfileUseCase,
        _getCompanyBranchesUseCase = getCompanyBranchesUseCase,
-       super(const FaceRecognitionState()) {
+       super(const AttendanceState()) {
     // Register event handlers
-    on<FaceRecognitionEvent>((event, emit) async {
+    on<AttendanceEvent>((event, emit) async {
       await event.when(
         fetchCompanyBranches: () => _onFetchCompanyBranches(emit),
         updateProfileRegisterFace: (embedding, image) =>
@@ -31,7 +30,7 @@ class FaceRecognitionBloc
   }
 
   Future<void> _onFetchCompanyBranches(
-    Emitter<FaceRecognitionState> emit,
+    Emitter<AttendanceState> emit,
   ) async {
     AppLogger.d('🎯 Bloc: Fetching company branches');
 
@@ -77,7 +76,7 @@ class FaceRecognitionBloc
 
   Future<void> _onUpdateProfileRegisterFace(
     String embedding,
-    Emitter<FaceRecognitionState> emit,
+    Emitter<AttendanceState> emit,
   ) async {
     AppLogger.d('🎯 Bloc: Starting face registration');
     AppLogger.d('📊 Embedding length: ${embedding.length}');

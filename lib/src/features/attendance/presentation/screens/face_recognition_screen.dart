@@ -10,10 +10,10 @@ import 'package:image/image.dart' as img;
 import 'package:quanta_hris/src/core/di/injector.dart';
 import 'package:quanta_hris/src/core/ml/recognition_embedding.dart';
 import 'package:quanta_hris/src/core/ml/recognizer.dart';
-import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_bloc.dart';
-import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_event.dart';
-import 'package:quanta_hris/src/features/face_recognition/presentation/bloc/face_recognition_state.dart';
-import 'package:quanta_hris/src/features/face_recognition/presentation/widgets/face_detector_painter.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_bloc.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_event.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_state.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/widgets/face_detector_painter.dart';
 import 'package:quanta_hris/src/shared/styles/app_colors.dart';
 import 'package:quanta_hris/src/shared/widgets/primary_button.dart';
 
@@ -44,12 +44,12 @@ class _FaceRecognitionScreenState extends State<FaceRecognitionScreen> {
 
   bool isBusy = false;
 
-  late final FaceRecognitionBloc _registerFaceBloc;
+  late final AttendanceBloc _registerFaceBloc;
 
   @override
   void initState() {
     super.initState();
-    _registerFaceBloc = getIt<FaceRecognitionBloc>();
+    _registerFaceBloc = getIt<AttendanceBloc>();
 
     detector = FaceDetector(
       options: FaceDetectorOptions(performanceMode: FaceDetectorMode.fast),
@@ -479,7 +479,7 @@ class _FaceRecognitionScreenState extends State<FaceRecognitionScreen> {
                   height: 200,
                 ),
                 const SizedBox(height: 20),
-                BlocConsumer<FaceRecognitionBloc, FaceRecognitionState>(
+                BlocConsumer<AttendanceBloc, AttendanceState>(
                   listener: (context, state) {
                     debugPrint(
                       '📊 RegisterFaceBloc state: loading=${state.isRegisterFaceLoading}, error=${state.registerFaceError}',
@@ -520,7 +520,7 @@ class _FaceRecognitionScreenState extends State<FaceRecognitionScreen> {
                           onPressed: () {
                             debugPrint('🚀 Registering face');
                             _registerFaceBloc.add(
-                              FaceRecognitionEvent.updateProfileRegisterFace(
+                              AttendanceEvent.updateProfileRegisterFace(
                                 recognition.embedding.join(','),
                                 null,
                               ),

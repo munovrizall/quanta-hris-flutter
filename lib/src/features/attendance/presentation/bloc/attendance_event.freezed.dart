@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'face_recognition_event.dart';
+part of 'attendance_event.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,7 +12,7 @@ part of 'face_recognition_event.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$FaceRecognitionEvent {
+mixin _$AttendanceEvent {
 
 
 
@@ -20,7 +20,7 @@ mixin _$FaceRecognitionEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FaceRecognitionEvent);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AttendanceEvent);
 }
 
 
@@ -29,20 +29,20 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'FaceRecognitionEvent()';
+  return 'AttendanceEvent()';
 }
 
 
 }
 
 /// @nodoc
-class $FaceRecognitionEventCopyWith<$Res>  {
-$FaceRecognitionEventCopyWith(FaceRecognitionEvent _, $Res Function(FaceRecognitionEvent) __);
+class $AttendanceEventCopyWith<$Res>  {
+$AttendanceEventCopyWith(AttendanceEvent _, $Res Function(AttendanceEvent) __);
 }
 
 
-/// Adds pattern-matching-related methods to [FaceRecognitionEvent].
-extension FaceRecognitionEventPatterns on FaceRecognitionEvent {
+/// Adds pattern-matching-related methods to [AttendanceEvent].
+extension AttendanceEventPatterns on AttendanceEvent {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -180,7 +180,7 @@ return updateProfileRegisterFace(_that.embedding,_that.image);case _:
 /// @nodoc
 
 
-class _FetchCompanyBranches implements FaceRecognitionEvent {
+class _FetchCompanyBranches implements AttendanceEvent {
   const _FetchCompanyBranches();
   
 
@@ -200,7 +200,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'FaceRecognitionEvent.fetchCompanyBranches()';
+  return 'AttendanceEvent.fetchCompanyBranches()';
 }
 
 
@@ -212,14 +212,14 @@ String toString() {
 /// @nodoc
 
 
-class _UpdateProfileRegisterFace implements FaceRecognitionEvent {
+class _UpdateProfileRegisterFace implements AttendanceEvent {
   const _UpdateProfileRegisterFace(this.embedding, this.image);
   
 
  final  String embedding;
  final  XFile? image;
 
-/// Create a copy of FaceRecognitionEvent
+/// Create a copy of AttendanceEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -238,14 +238,14 @@ int get hashCode => Object.hash(runtimeType,embedding,image);
 
 @override
 String toString() {
-  return 'FaceRecognitionEvent.updateProfileRegisterFace(embedding: $embedding, image: $image)';
+  return 'AttendanceEvent.updateProfileRegisterFace(embedding: $embedding, image: $image)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$UpdateProfileRegisterFaceCopyWith<$Res> implements $FaceRecognitionEventCopyWith<$Res> {
+abstract mixin class _$UpdateProfileRegisterFaceCopyWith<$Res> implements $AttendanceEventCopyWith<$Res> {
   factory _$UpdateProfileRegisterFaceCopyWith(_UpdateProfileRegisterFace value, $Res Function(_UpdateProfileRegisterFace) _then) = __$UpdateProfileRegisterFaceCopyWithImpl;
 @useResult
 $Res call({
@@ -264,7 +264,7 @@ class __$UpdateProfileRegisterFaceCopyWithImpl<$Res>
   final _UpdateProfileRegisterFace _self;
   final $Res Function(_UpdateProfileRegisterFace) _then;
 
-/// Create a copy of FaceRecognitionEvent
+/// Create a copy of AttendanceEvent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? embedding = null,Object? image = freezed,}) {
   return _then(_UpdateProfileRegisterFace(
