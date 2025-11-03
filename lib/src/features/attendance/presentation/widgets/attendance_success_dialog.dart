@@ -45,11 +45,7 @@ class AttendanceSuccessDialog extends StatelessWidget {
                 color: iconColor.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                icon,
-                size: 64,
-                color: iconColor,
-              ),
+              child: Icon(icon, size: 64, color: iconColor),
             ),
             const SizedBox(height: AppSpacing.large),
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -46,12 +48,41 @@ class _HomeViewState extends State<_HomeView> {
   final SessionStorageRepository _sessionStorageRepository =
       getIt<SessionStorageRepository>();
   bool _hasFaceEmbedding = false;
+  Timer? _clockTimer;
+  String _currentTime = '';
+  String _currentDate = '';
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting('id');
     _loadSessionUser();
+    _updateTime();
+    _startClockTimer();
+  }
+
+  @override
+  void dispose() {
+    _clockTimer?.cancel();
+    super.dispose();
+  }
+
+  void _updateTime() {
+    setState(() {
+      _currentTime = DateFormatter.getCurrentTime();
+      _currentDate = DateFormatter.getCurrentDateIndonesian();
+    });
+  }
+
+  void _startClockTimer() {
+    // Update setiap detik
+    _clockTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+      _updateTime();
+    });
   }
 
   Future<void> _loadSessionUser() async {
@@ -81,7 +112,7 @@ class _HomeViewState extends State<_HomeView> {
   Future<void> _handleMainButtonTap(BuildContext context) async {
     final targetRoute = _hasFaceEmbedding ? '/attendance' : '/face-recognition';
     await context.push(targetRoute);
-    
+
     // Refetch clock-in status after returning from attendance screen
     if (!mounted) return;
     context.read<HomeBloc>().add(const HomeEvent.fetchIsClockedInData());
@@ -130,9 +161,6 @@ class _HomeViewState extends State<_HomeView> {
     final isClockedIn = context.select<HomeBloc, bool>(
       (bloc) => bloc.state.isClockedIn?.isClockedIn ?? false,
     );
-
-    final currentTime = DateFormatter.getCurrentTime();
-    final currentDate = DateFormatter.getCurrentDateIndonesian();
 
     // Extract working hours from API data or use defaults if not available
     final startTime = operationalHourData?.workingHours.startTime ?? '--';
@@ -227,7 +255,7 @@ class _HomeViewState extends State<_HomeView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    currentTime,
+                                    _currentTime,
                                     style: const TextStyle(
                                       color: AppColors.white,
                                       fontSize: 32,
@@ -236,7 +264,7 @@ class _HomeViewState extends State<_HomeView> {
                                   ),
                                   const SizedBox(height: AppSpacing.xs),
                                   Text(
-                                    currentDate,
+                                    _currentDate,
                                     style: AppTypography.bodySmall.copyWith(
                                       color: AppColors.white.withOpacity(0.9),
                                     ),

@@ -662,7 +662,8 @@ class _ClockInScreenState extends State<ClockInScreen> {
       barrierDismissible: false,
       builder: (dialogContext) => AttendanceSuccessDialog(
         title: 'Absensi Berhasil!',
-        message: state.clockInSuccessMessage ?? 'Absensi masuk berhasil dicatat',
+        message:
+            state.clockInSuccessMessage ?? 'Absensi masuk berhasil dicatat',
         waktuAbsensi: clockInData.waktuMasuk,
         statusTerlambat: clockInData.statusMasuk,
         durasiTerlambat: clockInData.durasiTelat,
