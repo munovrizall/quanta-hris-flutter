@@ -144,7 +144,22 @@ class _HomeViewState extends State<_HomeView> {
 
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        state.mapOrNull(loggedOut: (_) => context.go('/login'));
+        state.mapOrNull(
+          error: (errorState) {
+            final messenger = ScaffoldMessenger.of(context);
+            messenger
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(errorState.message),
+                  backgroundColor: AppColors.error,
+                ),
+              );
+          },
+          loggedOut: (_) {
+            context.go('/login');
+          },
+        );
       },
       child: Scaffold(
         backgroundColor: AppColors.background,

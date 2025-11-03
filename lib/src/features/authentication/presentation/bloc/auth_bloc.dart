@@ -5,7 +5,7 @@ import 'package:quanta_hris/src/core/utils/app_logger.dart'; // ✅ Tambah impor
 import 'package:quanta_hris/src/features/authentication/domain/usecases/login_usecase.dart';
 import 'package:quanta_hris/src/features/authentication/domain/usecases/logout_usecase.dart';
 import 'package:quanta_hris/src/features/authentication/domain/usecases/save_session_usecase.dart';
-import 'package:flutter/foundation.dart'; 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'auth_event.dart';
@@ -76,15 +76,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
     } catch (e) {
       _logError('❌ Manual logout failed', e);
-      emit(AuthState.error(e.toString()));
+      final fallbackMessage = e is ApiException
+          ? e.message
+          : 'Logout gagal. Silakan login kembali.';
 
-      // Jika logout gagal, tetap clear session dengan message error
+      emit(AuthState.error(fallbackMessage));
+
       _sessionBloc.add(
-        const SessionEvent.sessionLoggedOut(
-          message: 'Logout berhasil (offline mode).',
+        SessionEvent.sessionLoggedOut(
+          message: '$fallbackMessage (offline mode).',
           isManualLogout: true,
         ),
       );
+
+      emit(const AuthState.loggedOut());
     }
   }
 

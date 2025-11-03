@@ -31,6 +31,8 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
   bool _isFetchingLocation = true;
   String? _locationError;
   BranchEntity? _selectedBranch;
+  StreamSubscription<Position>? _positionStreamSubscription;
+  bool _isFirstLocation = true;
 
   @override
   void initState() {
@@ -57,6 +59,7 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
         return;
       }
 
+      // Get initial position
       final position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
@@ -73,6 +76,9 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
           _moveTo(userLatLng);
         }),
       );
+
+      // Start listening to position updates for live tracking
+      _startLocationTracking();
     } catch (error, stackTrace) {
       AppLogger.d('❌ Attendance map location error: $error');
       AppLogger.d('📍 StackTrace: $stackTrace');
@@ -81,6 +87,38 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
         _isFetchingLocation = false;
       });
     }
+  }
+
+  void _startLocationTracking() {
+    // Cancel any existing subscription
+    _positionStreamSubscription?.cancel();
+
+    const locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 5, // Update only when user moves 5 meters
+    );
+
+    _positionStreamSubscription = Geolocator.getPositionStream(
+      locationSettings: locationSettings,
+    ).listen(
+      (Position position) {
+        final newLocation = LatLng(position.latitude, position.longitude);
+        
+        AppLogger.d('📍 Live location update: ${position.latitude}, ${position.longitude}');
+        
+        setState(() {
+          _userLocation = newLocation;
+        });
+
+        // Auto-center map on first location update after initial load
+        if (_isFirstLocation) {
+          _isFirstLocation = false;
+        }
+      },
+      onError: (error) {
+        AppLogger.d('❌ Location stream error: $error');
+      },
+    );
   }
 
   Future<bool> _ensurePermission() async {
@@ -146,6 +184,7 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
 
   @override
   void dispose() {
+    _positionStreamSubscription?.cancel();
     _bloc.close();
     super.dispose();
   }
@@ -284,7 +323,9 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
                               point: _userLocation!,
                               width: 40,
                               height: 40,
-                              child: const _UserLocationMarker(),
+                              child: _UserLocationMarker(
+                                isTracking: _positionStreamSubscription != null,
+                              ),
                             ),
                           ...branches.branches.map(
                             (branch) => Marker(
@@ -313,6 +354,7 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
                   selectedBranch: _selectedBranch,
                   hasLocation: _userLocation != null,
                   isWithinRadius: _isWithinSelectedBranchRadius,
+                  isTracking: _positionStreamSubscription != null,
                   onConfirm: _isWithinSelectedBranchRadius
                       ? _handleConfirmPresence
                       : null,
@@ -333,6 +375,7 @@ class _BranchInfoPanel extends StatelessWidget {
   final BranchEntity? selectedBranch;
   final bool hasLocation;
   final bool isWithinRadius;
+  final bool isTracking;
   final VoidCallback? onConfirm;
   final VoidCallback? onLocateMe;
 
@@ -340,6 +383,7 @@ class _BranchInfoPanel extends StatelessWidget {
     required this.selectedBranch,
     required this.hasLocation,
     required this.isWithinRadius,
+    required this.isTracking,
     required this.onConfirm,
     required this.onLocateMe,
   });
@@ -357,11 +401,55 @@ class _BranchInfoPanel extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PrimaryButton(
-            text: 'Lokasi Saya',
-            onPressed: onLocateMe,
-            variant: PrimaryButtonVariant.outline,
-            size: PrimaryButtonSize.medium,
+          Row(
+            children: [
+              Expanded(
+                child: PrimaryButton(
+                  text: 'Lokasi Saya',
+                  onPressed: onLocateMe,
+                  variant: PrimaryButtonVariant.outline,
+                  size: PrimaryButtonSize.medium,
+                ),
+              ),
+              if (isTracking) ...[
+                const SizedBox(width: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.success.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: AppColors.success,
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          color: AppColors.success,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Live',
+                        style: AppTypography.bodySmall.copyWith(
+                          color: AppColors.success,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ],
           ),
           const SizedBox(height: 16),
           if (selectedBranch != null) ...[
@@ -405,7 +493,9 @@ class _BranchInfoPanel extends StatelessWidget {
 }
 
 class _UserLocationMarker extends StatelessWidget {
-  const _UserLocationMarker();
+  final bool isTracking;
+
+  const _UserLocationMarker({this.isTracking = false});
 
   @override
   Widget build(BuildContext context) {
@@ -414,6 +504,15 @@ class _UserLocationMarker extends StatelessWidget {
         color: AppColors.success,
         shape: BoxShape.circle,
         border: Border.all(color: AppColors.white, width: 3),
+        boxShadow: isTracking
+            ? [
+                BoxShadow(
+                  color: AppColors.success.withValues(alpha: 0.5),
+                  blurRadius: 8,
+                  spreadRadius: 2,
+                ),
+              ]
+            : null,
       ),
       child: const Icon(
         Icons.person_pin_circle,
