@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:quanta_hris/src/core/constants/api_endpoints.dart';
 import 'package:quanta_hris/src/core/error/error_handler.dart';
 import 'package:quanta_hris/src/core/network/api_response_model.dart';
@@ -126,11 +129,36 @@ class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
       AppLogger.d(
         '🌐 RemoteDataSource: Posting clock-in to ${ApiEndpoints.attendance.postClockIn}',
       );
-      AppLogger.d('📤 Request data: ${request.toJson()}');
+
+      // Create FormData for multipart upload
+      final formData = FormData.fromMap({
+        'latitude': request.latitude,
+        'longitude': request.longitude,
+      });
+
+      // Add foto_masuk as multipart file if available
+      if (request.fotoMasuk != null && request.fotoMasuk!.isNotEmpty) {
+        AppLogger.d('� Adding foto_masuk to FormData');
+        
+        // Convert base64 to bytes
+        final bytes = base64Decode(request.fotoMasuk!);
+        
+        // Create MultipartFile from bytes
+        final multipartFile = MultipartFile.fromBytes(
+          bytes,
+          filename: 'foto_masuk_${DateTime.now().millisecondsSinceEpoch}.jpg',
+          contentType: MediaType('image', 'jpeg'),
+        );
+        
+        formData.files.add(MapEntry('foto_masuk', multipartFile));
+        AppLogger.d('✅ Photo added to FormData (${bytes.length} bytes)');
+      }
+
+      AppLogger.d('📤 FormData fields: ${formData.fields}');
 
       final response = await _dio.post(
         ApiEndpoints.attendance.postClockIn,
-        data: request.toJson(),
+        data: formData,
       );
 
       AppLogger.d(
@@ -161,11 +189,36 @@ class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
       AppLogger.d(
         '🌐 RemoteDataSource: Posting clock-out to ${ApiEndpoints.attendance.postClockOut}',
       );
-      AppLogger.d('📤 Clock-out request data: ${request.toJson()}');
+
+      // Create FormData for multipart upload
+      final formData = FormData.fromMap({
+        'latitude': request.latitude,
+        'longitude': request.longitude,
+      });
+
+      // Add foto_pulang as multipart file if available
+      if (request.fotoPulang != null && request.fotoPulang!.isNotEmpty) {
+        AppLogger.d('� Adding foto_pulang to FormData');
+        
+        // Convert base64 to bytes
+        final bytes = base64Decode(request.fotoPulang!);
+        
+        // Create MultipartFile from bytes
+        final multipartFile = MultipartFile.fromBytes(
+          bytes,
+          filename: 'foto_pulang_${DateTime.now().millisecondsSinceEpoch}.jpg',
+          contentType: MediaType('image', 'jpeg'),
+        );
+        
+        formData.files.add(MapEntry('foto_pulang', multipartFile));
+        AppLogger.d('✅ Photo added to FormData (${bytes.length} bytes)');
+      }
+
+      AppLogger.d('📤 FormData fields: ${formData.fields}');
 
       final response = await _dio.post(
         ApiEndpoints.attendance.postClockOut,
-        data: request.toJson(),
+        data: formData,
       );
 
       AppLogger.d(

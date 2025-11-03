@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:camera/camera.dart';
@@ -95,17 +96,9 @@ class _ClockInScreenState extends State<ClockInScreen> {
       _selectedCamera = _getCameraForDirection(camDirec);
       final previousController = _controller;
 
+      // Properly dispose previous controller
       if (previousController != null) {
-        try {
-          if (previousController.value.isStreamingImages) {
-            await previousController.stopImageStream();
-          }
-        } catch (e) {
-          debugPrint('Error stopping image stream: $e');
-        }
-
-        await previousController.dispose();
-        await Future.delayed(const Duration(milliseconds: 100));
+        await _disposeController(previousController);
       }
 
       controller = CameraController(
@@ -123,7 +116,7 @@ class _ClockInScreenState extends State<ClockInScreen> {
       }
 
       await controller.startImageStream((CameraImage image) {
-        if (!isBusy && !_isProcessing) {
+        if (!isBusy && !_isProcessing && mounted) {
           isBusy = true;
           frame = image;
           doFaceDetectionOnFrame();
@@ -137,6 +130,39 @@ class _ClockInScreenState extends State<ClockInScreen> {
     } on CameraException catch (error) {
       debugPrint('Failed to initialize camera: $error');
       await controller?.dispose();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Gagal menginisialisasi kamera: ${error.description}',
+            ),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('Unexpected error initializing camera: $e');
+      await controller?.dispose();
+    }
+  }
+
+  Future<void> _disposeController(CameraController controller) async {
+    try {
+      if (controller.value.isStreamingImages) {
+        await controller.stopImageStream();
+        // Give time for the stream to fully stop
+        await Future.delayed(const Duration(milliseconds: 200));
+      }
+    } catch (e) {
+      debugPrint('⚠️ Error stopping image stream: $e');
+    }
+
+    try {
+      await controller.dispose();
+      // Give time for resources to be released
+      await Future.delayed(const Duration(milliseconds: 100));
+    } catch (e) {
+      debugPrint('⚠️ Error disposing controller: $e');
     }
   }
 
@@ -476,7 +502,7 @@ class _ClockInScreenState extends State<ClockInScreen> {
     }
   }
 
-  void _takeAbsen() {
+  void _takeAbsen() async {
     if (latitude == null || longitude == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -497,15 +523,104 @@ class _ClockInScreenState extends State<ClockInScreen> {
       return;
     }
 
-    debugPrint('🎯 Clock in with lat=$latitude, lng=$longitude');
+    final controller = _controller;
+    if (controller == null || !controller.value.isInitialized) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Kamera tidak siap'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
 
-    _attendanceBloc.add(
-      AttendanceEvent.postClockIn(
-        latitude: latitude!,
-        longitude: longitude!,
-        fotoMasuk: null, // TODO: Add photo capture if needed
-      ),
-    );
+    // Prevent multiple captures
+    if (_isProcessing) {
+      debugPrint('⚠️ Already processing, skipping capture');
+      return;
+    }
+
+    setState(() {
+      _isProcessing = true;
+    });
+
+    debugPrint('📸 Capturing photo for clock in...');
+
+    try {
+      // Stop image stream before taking picture
+      if (controller.value.isStreamingImages) {
+        await controller.stopImageStream();
+        // Wait for stream to fully stop
+        await Future.delayed(const Duration(milliseconds: 300));
+      }
+
+      // Check if still mounted and controller is valid
+      if (!mounted || !controller.value.isInitialized) {
+        throw Exception('Camera not ready');
+      }
+
+      // Take picture
+      final XFile photo = await controller.takePicture();
+      debugPrint('✅ Photo captured: ${photo.path}');
+
+      // Convert to base64
+      final bytes = await photo.readAsBytes();
+      final base64Image = base64Encode(bytes);
+      debugPrint('✅ Photo converted to base64 (${base64Image.length} chars)');
+
+      debugPrint('🎯 Clock in with lat=$latitude, lng=$longitude');
+
+      // Send clock in request
+      _attendanceBloc.add(
+        AttendanceEvent.postClockIn(
+          latitude: latitude!,
+          longitude: longitude!,
+          fotoMasuk: base64Image,
+        ),
+      );
+
+      // Don't restart stream here, let the success/error handler deal with it
+    } catch (e) {
+      debugPrint('❌ Error capturing photo: $e');
+
+      if (mounted) {
+        setState(() {
+          _isProcessing = false;
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Gagal mengambil foto'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+
+        // Try to restart image stream
+        _restartImageStream();
+      }
+    }
+  }
+
+  Future<void> _restartImageStream() async {
+    final controller = _controller;
+    if (controller == null || !controller.value.isInitialized) {
+      return;
+    }
+
+    try {
+      if (!controller.value.isStreamingImages) {
+        await controller.startImageStream((CameraImage image) {
+          if (!isBusy && !_isProcessing && mounted) {
+            isBusy = true;
+            frame = image;
+            doFaceDetectionOnFrame();
+          }
+        });
+        debugPrint('✅ Image stream restarted');
+      }
+    } catch (e) {
+      debugPrint('❌ Error restarting image stream: $e');
+    }
   }
 
   Future<void> _reverseCamera() async {
@@ -515,26 +630,50 @@ class _ClockInScreenState extends State<ClockInScreen> {
       return;
     }
 
+    // Prevent camera switch during processing
+    if (_isProcessing) {
+      debugPrint('⚠️ Cannot switch camera while processing');
+      return;
+    }
+
     camDirec = camDirec == CameraLensDirection.back
         ? CameraLensDirection.front
         : CameraLensDirection.back;
+
+    debugPrint(
+      '🔄 Switching to ${camDirec == CameraLensDirection.front ? "front" : "back"} camera',
+    );
 
     await _initializeCamera();
   }
 
   @override
   void dispose() {
-    _controller
-        ?.stopImageStream()
-        .then((_) {
-          _controller?.dispose();
-        })
-        .catchError((e) {
-          debugPrint('Error disposing camera: $e');
-        });
+    _disposeCamera();
     detector.close();
     _attendanceBloc.close();
     super.dispose();
+  }
+
+  Future<void> _disposeCamera() async {
+    final controller = _controller;
+    if (controller == null) return;
+
+    try {
+      if (controller.value.isStreamingImages) {
+        await controller.stopImageStream();
+      }
+    } catch (e) {
+      debugPrint('⚠️ Error stopping image stream during dispose: $e');
+    }
+
+    try {
+      await controller.dispose();
+    } catch (e) {
+      debugPrint('⚠️ Error disposing camera controller: $e');
+    }
+
+    _controller = null;
   }
 
   Widget _buildPreviewContainer(Widget child) {
@@ -691,20 +830,32 @@ class _ClockInScreenState extends State<ClockInScreen> {
                           BlocConsumer<AttendanceBloc, AttendanceState>(
                             listener: (context, state) {
                               if (state.clockInError != null) {
+                                setState(() {
+                                  _isProcessing = false;
+                                });
+
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(state.clockInError!),
                                     backgroundColor: AppColors.error,
                                   ),
                                 );
+
+                                // Restart image stream after error
+                                _restartImageStream();
                               } else if (state.clockInData != null &&
                                   state.clockInSuccessMessage != null) {
+                                setState(() {
+                                  _isProcessing = false;
+                                });
+
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(state.clockInSuccessMessage!),
                                     backgroundColor: AppColors.success,
                                   ),
                                 );
+
                                 // Navigate back or to success screen
                                 Navigator.of(context).pop();
                               }
@@ -722,7 +873,8 @@ class _ClockInScreenState extends State<ClockInScreen> {
                                     isFaceRegistered &&
                                         !_isFetchingLocation &&
                                         latitude != null &&
-                                        longitude != null
+                                        longitude != null &&
+                                        !_isProcessing
                                     ? _takeAbsen
                                     : null,
                                 icon: const Icon(Icons.circle, size: 70.0),
@@ -730,7 +882,8 @@ class _ClockInScreenState extends State<ClockInScreen> {
                                     isFaceRegistered &&
                                         !_isFetchingLocation &&
                                         latitude != null &&
-                                        longitude != null
+                                        longitude != null &&
+                                        !_isProcessing
                                     ? AppColors.error
                                     : AppColors.neutral400,
                               );
