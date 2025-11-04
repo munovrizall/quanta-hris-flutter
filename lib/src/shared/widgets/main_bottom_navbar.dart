@@ -4,11 +4,11 @@ import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_e
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeBottomNavBar extends StatelessWidget {
+class MainBottomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int)? onTap;
 
-  const HomeBottomNavBar({super.key, this.currentIndex = 0, this.onTap});
+  const MainBottomNavBar({super.key, this.currentIndex = 0, this.onTap});
 
   @override
   Widget build(BuildContext context) {
