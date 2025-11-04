@@ -14,6 +14,6 @@ class HomeEvent with _$HomeEvent {
   /// Perintah untuk mengambil/memperbarui data cuti dan izin hari ini
   const factory HomeEvent.fetchTodayLeavesData() = _FetchTodayLeavesData;
 
-  /// Perintah untuk mengambil/memperbarui status apakah pengguna sudah clock-in hari ini
-  const factory HomeEvent.fetchIsClockedInData() = _FetchIsClockedIn;
+  /// Perintah untuk mengambil/memperbarui status attendance (clock in/out) pengguna hari ini
+  const factory HomeEvent.fetchAttendanceStatusData() = _FetchAttendanceStatus;
 }

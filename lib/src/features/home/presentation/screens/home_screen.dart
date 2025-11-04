@@ -23,7 +23,7 @@ import 'package:quanta_hris/src/features/home/presentation/widgets/work_time_ite
 import 'package:quanta_hris/src/shared/styles/app_colors.dart';
 import 'package:quanta_hris/src/shared/styles/app_measures.dart';
 import 'package:quanta_hris/src/shared/styles/app_typography.dart';
-import 'package:quanta_hris/src/shared/widgets/home_bottom_navbar.dart';
+import 'package:quanta_hris/src/shared/widgets/main_bottom_navbar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -110,12 +110,29 @@ class _HomeViewState extends State<_HomeView> {
   }
 
   Future<void> _handleMainButtonTap(BuildContext context) async {
-    final targetRoute = _hasFaceEmbedding ? '/attendance' : '/face-recognition';
-    await context.push(targetRoute);
+    // Jika belum punya face embedding, ke face recognition
+    if (!_hasFaceEmbedding) {
+      await context.push('/face-recognition');
+      await _loadSessionUser();
+      return;
+    }
 
-    // Refetch clock-in status after returning from attendance screen
+    // Jika sudah punya face embedding, ke attendance screen
+    // Tentukan apakah clock in atau clock out berdasarkan attendance status state
+    final isClockedIn =
+        context.read<HomeBloc>().state.attendanceStatus?.isClockedIn ?? false;
+
+    if (isClockedIn) {
+      // Sudah clock in, maka sekarang clock out
+      await context.push('/attendance?type=clockOut');
+    } else {
+      // Belum clock in, maka sekarang clock in
+      await context.push('/attendance?type=clockIn');
+    }
+
+    // Refetch attendance status after returning from attendance screen
     if (!mounted) return;
-    context.read<HomeBloc>().add(const HomeEvent.fetchIsClockedInData());
+    context.read<HomeBloc>().add(const HomeEvent.fetchAttendanceStatusData());
     await _loadSessionUser();
   }
 
@@ -157,9 +174,9 @@ class _HomeViewState extends State<_HomeView> {
       (bloc) => bloc.state.isLoadingTodayLeaves,
     );
 
-    // Get clock-in status from HomeBloc
+    // Get attendance status from HomeBloc
     final isClockedIn = context.select<HomeBloc, bool>(
-      (bloc) => bloc.state.isClockedIn?.isClockedIn ?? false,
+      (bloc) => bloc.state.attendanceStatus?.isClockedIn ?? false,
     );
 
     // Extract working hours from API data or use defaults if not available
@@ -514,8 +531,25 @@ class _HomeViewState extends State<_HomeView> {
             ),
           ),
         ),
-        bottomNavigationBar: const HomeBottomNavBar(),
+        bottomNavigationBar: MainBottomNavBar(
+          currentIndex: 0,
+          onTap: (index) => _onBottomNavTapped(context, index),
+        ),
       ),
     );
+  }
+
+  void _onBottomNavTapped(BuildContext context, int index) {
+    switch (index) {
+      case 0:
+        context.go('/home');
+        break;
+      case 1:
+        // TODO: Navigate to payroll module when available.
+        break;
+      case 2:
+        context.go('/profile');
+        break;
+    }
   }
 }

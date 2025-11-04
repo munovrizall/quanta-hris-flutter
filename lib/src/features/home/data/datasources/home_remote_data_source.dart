@@ -2,14 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:quanta_hris/src/core/constants/api_endpoints.dart';
 import 'package:quanta_hris/src/core/error/error_handler.dart';
 import 'package:quanta_hris/src/core/network/api_response_model.dart';
-import 'package:quanta_hris/src/features/home/data/models/get_is_clocked_in_response.dart';
+import 'package:quanta_hris/src/features/home/data/models/get_attendance_status_response.dart';
 import 'package:quanta_hris/src/features/home/data/models/get_operational_hour_response.dart';
 import 'package:quanta_hris/src/features/home/data/models/get_today_leaves_response.dart';
 
 abstract class HomeRemoteDataSource {
   Future<ApiResponseModel<GetOperationalHourResponse>> getOperationalHours();
   Future<ApiResponseModel<GetTodayLeavesResponse>> getTodayLeaves();
-  Future<ApiResponseModel<GetIsClockedInResponse>> getIsClockedIn();
+  Future<ApiResponseModel<GetAttendanceStatusResponse>> getAttendanceStatus();
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -48,13 +48,13 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
  
   @override
-  Future<ApiResponseModel<GetIsClockedInResponse>> getIsClockedIn() async {
+  Future<ApiResponseModel<GetAttendanceStatusResponse>> getAttendanceStatus() async {
     try {
-      final response = await _dio.get(ApiEndpoints.home.getIsClockedIn);
+      final response = await _dio.get(ApiEndpoints.home.getAttendanceStatus);
 
       return ApiResponseModel.fromJson(
         response.data,
-        (json) => GetIsClockedInResponse.fromJson(json as Map<String, dynamic>),
+        (json) => GetAttendanceStatusResponse.fromJson(json as Map<String, dynamic>),
       );
     } catch (error) {
       throw ErrorHandler.handle(error);

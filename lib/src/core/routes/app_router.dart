@@ -2,11 +2,11 @@ import 'package:alice/alice.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quanta_hris/src/core/di/injector.dart';
-import 'package:quanta_hris/src/features/attendance/presentation/screens/clock_in_screen.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/screens/attendance_screen.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/screens/login_screen.dart';
-import 'package:quanta_hris/src/features/attendance/presentation/screens/attendance_maps_screen.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/screens/register_face_screen.dart';
 import 'package:quanta_hris/src/features/home/presentation/screens/home_screen.dart'; // Akan kita buat
+import 'package:quanta_hris/src/features/profile/presentation/screens/profile_screen.dart';
 import 'package:quanta_hris/src/features/splash/presentation/screens/splash_screen.dart'; // Akan kita buat
 
 // GoRouter configuration
@@ -41,6 +41,13 @@ final GoRouter appRouter = GoRouter(
       },
     ),
     GoRoute(
+      name: 'profile',
+      path: '/profile',
+      builder: (BuildContext context, GoRouterState state) {
+        return const ProfileScreen();
+      },
+    ),
+    GoRoute(
       name: 'face-recognition',
       path: '/face-recognition',
       builder: (BuildContext context, GoRouterState state) {
@@ -51,14 +58,13 @@ final GoRouter appRouter = GoRouter(
       name: 'attendance',
       path: '/attendance',
       builder: (BuildContext context, GoRouterState state) {
-        return const AttendanceMapsScreen();
-      },
-    ),
-    GoRoute(
-      name: 'clock-in',
-      path: '/clock-in',
-      builder: (BuildContext context, GoRouterState state) {
-        return const ClockInScreen();
+        // Get attendance type from query parameter
+        final typeParam = state.uri.queryParameters['type'] ?? 'clockIn';
+        final attendanceType = typeParam == 'clockOut'
+            ? AttendanceType.clockOut
+            : AttendanceType.clockIn;
+
+        return AttendanceScreen(attendanceType: attendanceType);
       },
     ),
   ],

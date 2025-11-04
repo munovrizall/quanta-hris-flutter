@@ -1,6 +1,6 @@
 import 'package:quanta_hris/src/core/error/app_exception.dart';
 import 'package:quanta_hris/src/features/home/data/datasources/home_remote_data_source.dart';
-import 'package:quanta_hris/src/features/home/domain/entities/is_clocked_in_entity.dart';
+import 'package:quanta_hris/src/features/home/domain/entities/attendance_status_entity.dart';
 import 'package:quanta_hris/src/features/home/domain/entities/operational_hour_entity.dart';
 import 'package:quanta_hris/src/features/home/domain/entities/today_leaves_entity.dart';
 import 'package:quanta_hris/src/features/home/domain/repositories/home_repository.dart';
@@ -59,11 +59,14 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<IsClockedInEntity> getIsClockedIn() async {
+  Future<AttendanceStatusEntity> getAttendanceStatus() async {
     try {
-      final response = await _remoteDataSource.getIsClockedIn();
+      final response = await _remoteDataSource.getAttendanceStatus();
       final data = response.data;
-      return IsClockedInEntity(isClockedIn: data.isClockedIn);
+      return AttendanceStatusEntity(
+        isClockedIn: data.isClockedIn,
+        isClockedOut: data.isClockedOut,
+      );
     } on ApiException {
       rethrow;
     } catch (_) {

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quanta_hris/src/core/error/app_exception.dart';
-import 'package:quanta_hris/src/features/home/domain/usecases/get_is_clocked_in_usecase.dart';
+import 'package:quanta_hris/src/features/home/domain/usecases/get_attendance_status_usecase.dart';
 import 'package:quanta_hris/src/features/home/domain/usecases/get_operational_hour_usecase.dart';
 import 'package:quanta_hris/src/features/home/domain/usecases/get_today_leaves_usecase.dart';
 
@@ -12,15 +12,15 @@ import 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetOperationalHourUseCase _getOperationalHoursUseCase;
   final GetTodayLeavesUseCase _getTodayLeavesUseCase;
-  final GetIsClockedInUsecase _getIsClockedInUsecase;
+  final GetAttendanceStatusUsecase _getAttendanceStatusUsecase;
 
   HomeBloc({
     required GetOperationalHourUseCase getOperationalHoursUseCase,
     required GetTodayLeavesUseCase getTodayLeavesUseCase,
-    required GetIsClockedInUsecase getIsClockedInUsecase,
+    required GetAttendanceStatusUsecase getAttendanceStatusUsecase,
   }) : _getOperationalHoursUseCase = getOperationalHoursUseCase,
        _getTodayLeavesUseCase = getTodayLeavesUseCase,
-       _getIsClockedInUsecase = getIsClockedInUsecase,
+       _getAttendanceStatusUsecase = getAttendanceStatusUsecase,
        super(const HomeState()) {
     // Register event handlers
     on<HomeEvent>((event, emit) async {
@@ -28,7 +28,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         fetchInitialData: () => _onFetchInitialData(emit),
         fetchOperationalHourData: () => _onFetchOperationalHourData(emit),
         fetchTodayLeavesData: () => _onFetchTodayLeavesData(emit),
-        fetchIsClockedInData: () => _onFetchIsClockedInData(emit),
+        fetchAttendanceStatusData: () => _onFetchAttendanceStatusData(emit),
       );
     });
   }
@@ -38,7 +38,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     add(const HomeEvent.fetchOperationalHourData());
     // Fetch today leaves data
     add(const HomeEvent.fetchTodayLeavesData());
-    add(const HomeEvent.fetchIsClockedInData());
+    add(const HomeEvent.fetchAttendanceStatusData());
   }
 
   Future<void> _onFetchOperationalHourData(Emitter<HomeState> emit) async {
@@ -88,22 +88,33 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  Future<void> _onFetchIsClockedInData(Emitter<HomeState> emit) async {
-    emit(state.copyWith(isLoadingClockedIn: true, clockedInError: null));
-
+  Future<void> _onFetchAttendanceStatusData(Emitter<HomeState> emit) async {
+    emit(
+      state.copyWith(
+        isLoadingAttendanceStatus: true,
+        attendanceStatusError: null,
+      ),
+    );
     try {
-      final isClockedIn = await _getIsClockedInUsecase();
+      final attendanceStatus = await _getAttendanceStatusUsecase();
       emit(
         state.copyWith(
-          isClockedIn: isClockedIn,
-          isLoadingClockedIn: false,
+          attendanceStatus: attendanceStatus,
+          isLoadingAttendanceStatus: false,
         ),
       );
-    } on ApiException catch (error) {
+    } on ApiException catch (e) {
       emit(
         state.copyWith(
-          isLoadingClockedIn: false,
-          clockedInError: error.message,
+          attendanceStatusError: e.message,
+          isLoadingAttendanceStatus: false,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          attendanceStatusError: e.toString(),
+          isLoadingAttendanceStatus: false,
         ),
       );
     }
