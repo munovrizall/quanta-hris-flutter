@@ -248,12 +248,12 @@ class AppTheme {
     return AppBarTheme(
       elevation: 0,
       scrolledUnderElevation: 1,
-      backgroundColor: isDark ? AppColors.neutral900 : AppColors.surface,
-      foregroundColor: isDark ? AppColors.white : AppColors.textPrimary,
+      backgroundColor: isDark ? AppColors.neutral900 : AppColors.primary,
+      foregroundColor: AppColors.white,
       surfaceTintColor: AppColors.primary,
       shadowColor: AppColors.neutral900.withAlpha((0.1 * 255).round()),
       titleTextStyle: AppTypography.heading3.copyWith(
-        color: isDark ? AppColors.white : AppColors.textPrimary,
+        color: AppColors.white,
       ),
       centerTitle: false,
       titleSpacing: AppSpacing.medium,
@@ -261,11 +261,11 @@ class AppTheme {
           ? SystemUiOverlayStyle.light
           : SystemUiOverlayStyle.dark,
       iconTheme: IconThemeData(
-        color: isDark ? AppColors.white : AppColors.textPrimary,
+        color: AppColors.white,
         size: AppSizes.iconMedium,
       ),
       actionsIconTheme: IconThemeData(
-        color: isDark ? AppColors.white : AppColors.textPrimary,
+        color: AppColors.white,
         size: AppSizes.iconMedium,
       ),
     );

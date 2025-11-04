@@ -204,7 +204,9 @@ void _registerHome() {
     () => GetOperationalHourUseCase(getIt<HomeRepository>()),
   );
   getIt.registerFactory(() => GetTodayLeavesUseCase(getIt<HomeRepository>()));
-  getIt.registerFactory(() => GetAttendanceStatusUsecase(getIt<HomeRepository>()));
+  getIt.registerFactory(
+    () => GetAttendanceStatusUsecase(getIt<HomeRepository>()),
+  );
   // BLoC
   getIt.registerFactory(
     () => HomeBloc(

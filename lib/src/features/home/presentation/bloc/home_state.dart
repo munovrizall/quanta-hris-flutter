@@ -27,7 +27,9 @@ abstract class HomeState with _$HomeState {
   const HomeState._();
 
   bool get isLoadingAny =>
-      isLoadingOperationalHour || isLoadingTodayLeaves || isLoadingAttendanceStatus;
+      isLoadingOperationalHour ||
+      isLoadingTodayLeaves ||
+      isLoadingAttendanceStatus;
 
   bool get hasAnyError =>
       operationalHourError != null ||

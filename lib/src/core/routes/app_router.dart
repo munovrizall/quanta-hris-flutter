@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quanta_hris/src/core/di/injector.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/screens/attendance_screen.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/screens/attendance_maps_screen.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/screens/login_screen.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/screens/register_face_screen.dart';
 import 'package:quanta_hris/src/features/home/presentation/screens/home_screen.dart'; // Akan kita buat
@@ -36,22 +37,38 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       name: 'home',
       path: '/home',
-      builder: (BuildContext context, GoRouterState state) {
-        return const HomeScreen();
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        final shouldRefresh = (state.extra as bool?) ?? false;
+        return NoTransitionPage(
+          child: HomeScreen(shouldRefreshAttendanceStatus: shouldRefresh),
+        );
       },
     ),
     GoRoute(
       name: 'profile',
       path: '/profile',
-      builder: (BuildContext context, GoRouterState state) {
-        return const ProfileScreen();
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        return const NoTransitionPage(child: ProfileScreen());
       },
     ),
     GoRoute(
-      name: 'face-recognition',
-      path: '/face-recognition',
+      name: 'register-face',
+      path: '/register-face',
       builder: (BuildContext context, GoRouterState state) {
         return const RegisterFaceScreen();
+      },
+    ),
+    GoRoute(
+      name: 'attendance-maps',
+      path: '/attendance-maps',
+      builder: (BuildContext context, GoRouterState state) {
+        // Get attendance type from query parameter
+        final typeParam = state.uri.queryParameters['type'] ?? 'clockIn';
+        final attendanceType = typeParam == 'clockOut'
+            ? AttendanceType.clockOut
+            : AttendanceType.clockIn;
+
+        return AttendanceMapsScreen(attendanceType: attendanceType);
       },
     ),
     GoRoute(

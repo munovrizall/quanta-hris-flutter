@@ -13,6 +13,7 @@ import 'package:quanta_hris/src/core/storage/session_storage_repository.dart';
 import 'package:quanta_hris/src/core/utils/date_formatter.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_state.dart';
+import 'package:quanta_hris/src/features/home/domain/entities/attendance_status_entity.dart';
 import 'package:quanta_hris/src/features/home/domain/entities/operational_hour_entity.dart';
 import 'package:quanta_hris/src/features/home/domain/entities/today_leaves_entity.dart';
 import 'package:quanta_hris/src/features/home/presentation/bloc/home_bloc.dart';
@@ -26,19 +27,28 @@ import 'package:quanta_hris/src/shared/styles/app_typography.dart';
 import 'package:quanta_hris/src/shared/widgets/main_bottom_navbar.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final bool shouldRefreshAttendanceStatus;
+
+  const HomeScreen({
+    super.key,
+    this.shouldRefreshAttendanceStatus = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HomeBloc>(
       create: (_) => getIt<HomeBloc>()..add(const HomeEvent.fetchInitialData()),
-      child: const _HomeView(),
+      child: _HomeView(
+        shouldRefreshAttendanceStatus: shouldRefreshAttendanceStatus,
+      ),
     );
   }
 }
 
 class _HomeView extends StatefulWidget {
-  const _HomeView();
+  final bool shouldRefreshAttendanceStatus;
+
+  const _HomeView({required this.shouldRefreshAttendanceStatus});
 
   @override
   State<_HomeView> createState() => _HomeViewState();
@@ -59,6 +69,27 @@ class _HomeViewState extends State<_HomeView> {
     _loadSessionUser();
     _updateTime();
     _startClockTimer();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (widget.shouldRefreshAttendanceStatus) {
+        context
+            .read<HomeBloc>()
+            .add(const HomeEvent.fetchAttendanceStatusData());
+      }
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant _HomeView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.shouldRefreshAttendanceStatus &&
+        widget.shouldRefreshAttendanceStatus !=
+            oldWidget.shouldRefreshAttendanceStatus) {
+      context
+          .read<HomeBloc>()
+          .add(const HomeEvent.fetchAttendanceStatusData());
+    }
   }
 
   @override
@@ -110,24 +141,37 @@ class _HomeViewState extends State<_HomeView> {
   }
 
   Future<void> _handleMainButtonTap(BuildContext context) async {
-    // Jika belum punya face embedding, ke face recognition
+    // Jika belum punya face embedding, ke register face
     if (!_hasFaceEmbedding) {
-      await context.push('/face-recognition');
+      await context.push('/register-face');
       await _loadSessionUser();
       return;
     }
 
-    // Jika sudah punya face embedding, ke attendance screen
+    // Jika sudah punya face embedding, ke attendance maps screen dulu
     // Tentukan apakah clock in atau clock out berdasarkan attendance status state
-    final isClockedIn =
-        context.read<HomeBloc>().state.attendanceStatus?.isClockedIn ?? false;
+    final attendanceStatus = context.read<HomeBloc>().state.attendanceStatus;
+    final isClockedIn = attendanceStatus?.isClockedIn ?? false;
+    final isClockedOut = attendanceStatus?.isClockedOut ?? false;
+
+    if (isClockedIn && isClockedOut) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          const SnackBar(
+            content: Text('Anda telah menyelesaikan absensi hari ini.'),
+          ),
+        );
+      return;
+    }
 
     if (isClockedIn) {
       // Sudah clock in, maka sekarang clock out
-      await context.push('/attendance?type=clockOut');
+      await context.push('/attendance-maps?type=clockOut');
     } else {
       // Belum clock in, maka sekarang clock in
-      await context.push('/attendance?type=clockIn');
+      await context.push('/attendance-maps?type=clockIn');
     }
 
     // Refetch attendance status after returning from attendance screen
@@ -175,9 +219,13 @@ class _HomeViewState extends State<_HomeView> {
     );
 
     // Get attendance status from HomeBloc
-    final isClockedIn = context.select<HomeBloc, bool>(
-      (bloc) => bloc.state.attendanceStatus?.isClockedIn ?? false,
+    final attendanceStatus = context.select<HomeBloc, AttendanceStatusEntity?>(
+      (bloc) => bloc.state.attendanceStatus,
     );
+
+    final isClockedIn = attendanceStatus?.isClockedIn ?? false;
+    final isClockedOut = attendanceStatus?.isClockedOut ?? false;
+    final hasCompletedAttendance = isClockedIn && isClockedOut;
 
     // Extract working hours from API data or use defaults if not available
     final startTime = operationalHourData?.workingHours.startTime ?? '--';
@@ -355,7 +403,9 @@ class _HomeViewState extends State<_HomeView> {
                     elevation: 4,
                     borderRadius: BorderRadius.circular(AppRadius.xl),
                     child: InkWell(
-                      onTap: () async => _handleMainButtonTap(context),
+                      onTap: hasCompletedAttendance
+                          ? null
+                          : () async => _handleMainButtonTap(context),
                       borderRadius: BorderRadius.circular(AppRadius.xl),
                       child: Container(
                         width: double.infinity,
@@ -364,9 +414,22 @@ class _HomeViewState extends State<_HomeView> {
                         ),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: _hasFaceEmbedding && isClockedIn
-                                ? [AppColors.warning, AppColors.warningLight]
-                                : [AppColors.primary, AppColors.primary200],
+                            colors: !_hasFaceEmbedding
+                                ? [AppColors.primary, AppColors.primary200]
+                                : hasCompletedAttendance
+                                    ? [
+                                        AppColors.success,
+                                        AppColors.successLight,
+                                      ]
+                                    : isClockedIn
+                                        ? [
+                                            AppColors.warning,
+                                            AppColors.warningLight,
+                                          ]
+                                        : [
+                                            AppColors.primary,
+                                            AppColors.primary200,
+                                          ],
                           ),
                           borderRadius: BorderRadius.circular(AppRadius.xl),
                         ),
@@ -375,9 +438,11 @@ class _HomeViewState extends State<_HomeView> {
                             Icon(
                               !_hasFaceEmbedding
                                   ? Icons.person_add_alt_1
-                                  : isClockedIn
-                                  ? Icons.logout
-                                  : Icons.fingerprint,
+                                  : hasCompletedAttendance
+                                      ? Icons.bedtime
+                                      : isClockedIn
+                                          ? Icons.logout
+                                          : Icons.fingerprint,
                               size: AppSizes.iconHuge,
                               color: AppColors.white,
                             ),
@@ -385,9 +450,12 @@ class _HomeViewState extends State<_HomeView> {
                             Text(
                               !_hasFaceEmbedding
                                   ? AppStrings.home.registerFaceButtonText
-                                  : isClockedIn
-                                  ? AppStrings.home.checkOutButtonText
-                                  : AppStrings.home.checkInButtonText,
+                                  : hasCompletedAttendance
+                                      ? 'Selamat beristirahat'
+                                      : isClockedIn
+                                          ? AppStrings.home.checkOutButtonText
+                                          :
+                                          AppStrings.home.checkInButtonText,
                               style: AppTypography.buttonLarge.copyWith(
                                 letterSpacing: 1.2,
                               ),
@@ -396,9 +464,11 @@ class _HomeViewState extends State<_HomeView> {
                             Text(
                               !_hasFaceEmbedding
                                   ? AppStrings.home.registerFaceSubtitle
-                                  : isClockedIn
-                                  ? AppStrings.home.checkOutSubtitle
-                                  : AppStrings.home.checkInSubtitle,
+                                  : hasCompletedAttendance
+                                      ? 'Anda telah menyelesaikan absensi hari ini'
+                                      : isClockedIn
+                                          ? AppStrings.home.checkOutSubtitle
+                                          : AppStrings.home.checkInSubtitle,
                               style: AppTypography.bodySmall.copyWith(
                                 color: AppColors.white.withOpacity(0.9),
                               ),

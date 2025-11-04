@@ -46,15 +46,17 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       throw ErrorHandler.handle(error);
     }
   }
- 
+
   @override
-  Future<ApiResponseModel<GetAttendanceStatusResponse>> getAttendanceStatus() async {
+  Future<ApiResponseModel<GetAttendanceStatusResponse>>
+  getAttendanceStatus() async {
     try {
       final response = await _dio.get(ApiEndpoints.home.getAttendanceStatus);
 
       return ApiResponseModel.fromJson(
         response.data,
-        (json) => GetAttendanceStatusResponse.fromJson(json as Map<String, dynamic>),
+        (json) =>
+            GetAttendanceStatusResponse.fromJson(json as Map<String, dynamic>),
       );
     } catch (error) {
       throw ErrorHandler.handle(error);

@@ -12,12 +12,15 @@ import 'package:quanta_hris/src/features/attendance/domain/entities/company_bran
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_bloc.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_event.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_state.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/screens/attendance_screen.dart';
 import 'package:quanta_hris/src/shared/styles/app_colors.dart';
 import 'package:quanta_hris/src/shared/styles/app_typography.dart';
 import 'package:quanta_hris/src/shared/widgets/primary_button.dart';
 
 class AttendanceMapsScreen extends StatefulWidget {
-  const AttendanceMapsScreen({super.key});
+  final AttendanceType attendanceType;
+
+  const AttendanceMapsScreen({super.key, required this.attendanceType});
 
   @override
   State<AttendanceMapsScreen> createState() => _AttendanceMapsScreenState();
@@ -183,8 +186,13 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
       SnackBar(content: Text('Berhasil memilih cabang ${branch.branchName}.')),
     );
 
+    // Navigate to attendance screen with type parameter
+    final typeParam = widget.attendanceType == AttendanceType.clockOut
+        ? 'clockOut'
+        : 'clockIn';
+
     context.push(
-      '/clock-in',
+      '/attendance?type=$typeParam',
       extra: {
         'latitude': _userLocation!.latitude,
         'longitude': _userLocation!.longitude,

@@ -726,9 +726,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     if (!mounted) return;
     Navigator.of(context).pop(); // Close dialog
 
-    // Navigate to home
     if (!mounted) return;
-    context.go('/home');
+
+    // Navigate back to home and trigger attendance status refresh
+    context.go('/home', extra: true);
   }
 
   @override

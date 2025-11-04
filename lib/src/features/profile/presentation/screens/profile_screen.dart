@@ -10,6 +10,7 @@ import 'package:quanta_hris/src/shared/styles/app_colors.dart';
 import 'package:quanta_hris/src/shared/styles/app_measures.dart';
 import 'package:quanta_hris/src/shared/styles/app_typography.dart';
 import 'package:quanta_hris/src/shared/widgets/main_bottom_navbar.dart';
+import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_state.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -23,27 +24,43 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profil'),
-        backgroundColor: Colors.white,
-        foregroundColor: AppColors.neutral900,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.large),
-          child: user == null
-              ? _EmptyProfileState(onLogout: () => _showLogoutDialog(context))
-              : _ProfileContent(
-                  user: user,
-                  onLogoutPressed: () => _showLogoutDialog(context),
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        state.mapOrNull(
+          error: (errorState) {
+            final messenger = ScaffoldMessenger.of(context);
+            messenger
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(errorState.message),
+                  backgroundColor: AppColors.error,
                 ),
+              );
+          },
+          loggedOut: (_) => context.go('/login'),
+        );
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Profil'),
+          elevation: 0,
         ),
-      ),
-      bottomNavigationBar: MainBottomNavBar(
-        currentIndex: 2,
-        onTap: (index) => _handleNavigationTap(context, index),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.large),
+            child: user == null
+                ? _EmptyProfileState(onLogout: () => _showLogoutDialog(context))
+                : _ProfileContent(
+                    user: user,
+                    onLogoutPressed: () => _showLogoutDialog(context),
+                  ),
+          ),
+        ),
+        bottomNavigationBar: MainBottomNavBar(
+          currentIndex: 2,
+          onTap: (index) => _handleNavigationTap(context, index),
+        ),
       ),
     );
   }
@@ -168,7 +185,7 @@ class _ProfileContent extends StatelessWidget {
                 ),
                 const Divider(),
                 _ProfileDetailRow(
-                  label: 'Peran',
+                  label: 'Role',
                   value: user.role.name,
                 ),
               ],
