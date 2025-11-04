@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostClockOutResponse {
 
- String? get absensiId; String? get karyawanId; String? get tanggal; String? get waktuMasuk; String? get statusMasuk; String? get statusAbsensi; String? get durasiTelat; String? get fotoMasuk; ClockOutBranchResponse? get cabang; String? get distanceFromBranch;
+ String? get absensiId; String? get karyawanId; String? get tanggal; String? get waktuPulang; String? get statusPulang; String? get statusAbsensi; String? get durasiPulangCepat; String? get fotoPulang; ClockOutBranchResponse? get cabang; String? get distanceFromBranch;
 /// Create a copy of PostClockOutResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PostClockOutResponseCopyWith<PostClockOutResponse> get copyWith => _$PostClockO
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostClockOutResponse&&(identical(other.absensiId, absensiId) || other.absensiId == absensiId)&&(identical(other.karyawanId, karyawanId) || other.karyawanId == karyawanId)&&(identical(other.tanggal, tanggal) || other.tanggal == tanggal)&&(identical(other.waktuMasuk, waktuMasuk) || other.waktuMasuk == waktuMasuk)&&(identical(other.statusMasuk, statusMasuk) || other.statusMasuk == statusMasuk)&&(identical(other.statusAbsensi, statusAbsensi) || other.statusAbsensi == statusAbsensi)&&(identical(other.durasiTelat, durasiTelat) || other.durasiTelat == durasiTelat)&&(identical(other.fotoMasuk, fotoMasuk) || other.fotoMasuk == fotoMasuk)&&(identical(other.cabang, cabang) || other.cabang == cabang)&&(identical(other.distanceFromBranch, distanceFromBranch) || other.distanceFromBranch == distanceFromBranch));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostClockOutResponse&&(identical(other.absensiId, absensiId) || other.absensiId == absensiId)&&(identical(other.karyawanId, karyawanId) || other.karyawanId == karyawanId)&&(identical(other.tanggal, tanggal) || other.tanggal == tanggal)&&(identical(other.waktuPulang, waktuPulang) || other.waktuPulang == waktuPulang)&&(identical(other.statusPulang, statusPulang) || other.statusPulang == statusPulang)&&(identical(other.statusAbsensi, statusAbsensi) || other.statusAbsensi == statusAbsensi)&&(identical(other.durasiPulangCepat, durasiPulangCepat) || other.durasiPulangCepat == durasiPulangCepat)&&(identical(other.fotoPulang, fotoPulang) || other.fotoPulang == fotoPulang)&&(identical(other.cabang, cabang) || other.cabang == cabang)&&(identical(other.distanceFromBranch, distanceFromBranch) || other.distanceFromBranch == distanceFromBranch));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,absensiId,karyawanId,tanggal,waktuMasuk,statusMasuk,statusAbsensi,durasiTelat,fotoMasuk,cabang,distanceFromBranch);
+int get hashCode => Object.hash(runtimeType,absensiId,karyawanId,tanggal,waktuPulang,statusPulang,statusAbsensi,durasiPulangCepat,fotoPulang,cabang,distanceFromBranch);
 
 @override
 String toString() {
-  return 'PostClockOutResponse(absensiId: $absensiId, karyawanId: $karyawanId, tanggal: $tanggal, waktuMasuk: $waktuMasuk, statusMasuk: $statusMasuk, statusAbsensi: $statusAbsensi, durasiTelat: $durasiTelat, fotoMasuk: $fotoMasuk, cabang: $cabang, distanceFromBranch: $distanceFromBranch)';
+  return 'PostClockOutResponse(absensiId: $absensiId, karyawanId: $karyawanId, tanggal: $tanggal, waktuPulang: $waktuPulang, statusPulang: $statusPulang, statusAbsensi: $statusAbsensi, durasiPulangCepat: $durasiPulangCepat, fotoPulang: $fotoPulang, cabang: $cabang, distanceFromBranch: $distanceFromBranch)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PostClockOutResponseCopyWith<$Res>  {
   factory $PostClockOutResponseCopyWith(PostClockOutResponse value, $Res Function(PostClockOutResponse) _then) = _$PostClockOutResponseCopyWithImpl;
 @useResult
 $Res call({
- String? absensiId, String? karyawanId, String? tanggal, String? waktuMasuk, String? statusMasuk, String? statusAbsensi, String? durasiTelat, String? fotoMasuk, ClockOutBranchResponse? cabang, String? distanceFromBranch
+ String? absensiId, String? karyawanId, String? tanggal, String? waktuPulang, String? statusPulang, String? statusAbsensi, String? durasiPulangCepat, String? fotoPulang, ClockOutBranchResponse? cabang, String? distanceFromBranch
 });
 
 
@@ -65,16 +65,16 @@ class _$PostClockOutResponseCopyWithImpl<$Res>
 
 /// Create a copy of PostClockOutResponse
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? absensiId = freezed,Object? karyawanId = freezed,Object? tanggal = freezed,Object? waktuMasuk = freezed,Object? statusMasuk = freezed,Object? statusAbsensi = freezed,Object? durasiTelat = freezed,Object? fotoMasuk = freezed,Object? cabang = freezed,Object? distanceFromBranch = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? absensiId = freezed,Object? karyawanId = freezed,Object? tanggal = freezed,Object? waktuPulang = freezed,Object? statusPulang = freezed,Object? statusAbsensi = freezed,Object? durasiPulangCepat = freezed,Object? fotoPulang = freezed,Object? cabang = freezed,Object? distanceFromBranch = freezed,}) {
   return _then(_self.copyWith(
 absensiId: freezed == absensiId ? _self.absensiId : absensiId // ignore: cast_nullable_to_non_nullable
 as String?,karyawanId: freezed == karyawanId ? _self.karyawanId : karyawanId // ignore: cast_nullable_to_non_nullable
 as String?,tanggal: freezed == tanggal ? _self.tanggal : tanggal // ignore: cast_nullable_to_non_nullable
-as String?,waktuMasuk: freezed == waktuMasuk ? _self.waktuMasuk : waktuMasuk // ignore: cast_nullable_to_non_nullable
-as String?,statusMasuk: freezed == statusMasuk ? _self.statusMasuk : statusMasuk // ignore: cast_nullable_to_non_nullable
+as String?,waktuPulang: freezed == waktuPulang ? _self.waktuPulang : waktuPulang // ignore: cast_nullable_to_non_nullable
+as String?,statusPulang: freezed == statusPulang ? _self.statusPulang : statusPulang // ignore: cast_nullable_to_non_nullable
 as String?,statusAbsensi: freezed == statusAbsensi ? _self.statusAbsensi : statusAbsensi // ignore: cast_nullable_to_non_nullable
-as String?,durasiTelat: freezed == durasiTelat ? _self.durasiTelat : durasiTelat // ignore: cast_nullable_to_non_nullable
-as String?,fotoMasuk: freezed == fotoMasuk ? _self.fotoMasuk : fotoMasuk // ignore: cast_nullable_to_non_nullable
+as String?,durasiPulangCepat: freezed == durasiPulangCepat ? _self.durasiPulangCepat : durasiPulangCepat // ignore: cast_nullable_to_non_nullable
+as String?,fotoPulang: freezed == fotoPulang ? _self.fotoPulang : fotoPulang // ignore: cast_nullable_to_non_nullable
 as String?,cabang: freezed == cabang ? _self.cabang : cabang // ignore: cast_nullable_to_non_nullable
 as ClockOutBranchResponse?,distanceFromBranch: freezed == distanceFromBranch ? _self.distanceFromBranch : distanceFromBranch // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -174,10 +174,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? absensiId,  String? karyawanId,  String? tanggal,  String? waktuMasuk,  String? statusMasuk,  String? statusAbsensi,  String? durasiTelat,  String? fotoMasuk,  ClockOutBranchResponse? cabang,  String? distanceFromBranch)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? absensiId,  String? karyawanId,  String? tanggal,  String? waktuPulang,  String? statusPulang,  String? statusAbsensi,  String? durasiPulangCepat,  String? fotoPulang,  ClockOutBranchResponse? cabang,  String? distanceFromBranch)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostClockOutResponse() when $default != null:
-return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuMasuk,_that.statusMasuk,_that.statusAbsensi,_that.durasiTelat,_that.fotoMasuk,_that.cabang,_that.distanceFromBranch);case _:
+return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuPulang,_that.statusPulang,_that.statusAbsensi,_that.durasiPulangCepat,_that.fotoPulang,_that.cabang,_that.distanceFromBranch);case _:
   return orElse();
 
 }
@@ -195,10 +195,10 @@ return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuMasuk,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? absensiId,  String? karyawanId,  String? tanggal,  String? waktuMasuk,  String? statusMasuk,  String? statusAbsensi,  String? durasiTelat,  String? fotoMasuk,  ClockOutBranchResponse? cabang,  String? distanceFromBranch)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? absensiId,  String? karyawanId,  String? tanggal,  String? waktuPulang,  String? statusPulang,  String? statusAbsensi,  String? durasiPulangCepat,  String? fotoPulang,  ClockOutBranchResponse? cabang,  String? distanceFromBranch)  $default,) {final _that = this;
 switch (_that) {
 case _PostClockOutResponse():
-return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuMasuk,_that.statusMasuk,_that.statusAbsensi,_that.durasiTelat,_that.fotoMasuk,_that.cabang,_that.distanceFromBranch);case _:
+return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuPulang,_that.statusPulang,_that.statusAbsensi,_that.durasiPulangCepat,_that.fotoPulang,_that.cabang,_that.distanceFromBranch);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -215,10 +215,10 @@ return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuMasuk,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? absensiId,  String? karyawanId,  String? tanggal,  String? waktuMasuk,  String? statusMasuk,  String? statusAbsensi,  String? durasiTelat,  String? fotoMasuk,  ClockOutBranchResponse? cabang,  String? distanceFromBranch)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? absensiId,  String? karyawanId,  String? tanggal,  String? waktuPulang,  String? statusPulang,  String? statusAbsensi,  String? durasiPulangCepat,  String? fotoPulang,  ClockOutBranchResponse? cabang,  String? distanceFromBranch)?  $default,) {final _that = this;
 switch (_that) {
 case _PostClockOutResponse() when $default != null:
-return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuMasuk,_that.statusMasuk,_that.statusAbsensi,_that.durasiTelat,_that.fotoMasuk,_that.cabang,_that.distanceFromBranch);case _:
+return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuPulang,_that.statusPulang,_that.statusAbsensi,_that.durasiPulangCepat,_that.fotoPulang,_that.cabang,_that.distanceFromBranch);case _:
   return null;
 
 }
@@ -230,17 +230,17 @@ return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuMasuk,
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _PostClockOutResponse implements PostClockOutResponse {
-  const _PostClockOutResponse({this.absensiId, this.karyawanId, this.tanggal, this.waktuMasuk, this.statusMasuk, this.statusAbsensi, this.durasiTelat, this.fotoMasuk, this.cabang, this.distanceFromBranch});
+  const _PostClockOutResponse({this.absensiId, this.karyawanId, this.tanggal, this.waktuPulang, this.statusPulang, this.statusAbsensi, this.durasiPulangCepat, this.fotoPulang, this.cabang, this.distanceFromBranch});
   factory _PostClockOutResponse.fromJson(Map<String, dynamic> json) => _$PostClockOutResponseFromJson(json);
 
 @override final  String? absensiId;
 @override final  String? karyawanId;
 @override final  String? tanggal;
-@override final  String? waktuMasuk;
-@override final  String? statusMasuk;
+@override final  String? waktuPulang;
+@override final  String? statusPulang;
 @override final  String? statusAbsensi;
-@override final  String? durasiTelat;
-@override final  String? fotoMasuk;
+@override final  String? durasiPulangCepat;
+@override final  String? fotoPulang;
 @override final  ClockOutBranchResponse? cabang;
 @override final  String? distanceFromBranch;
 
@@ -257,16 +257,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostClockOutResponse&&(identical(other.absensiId, absensiId) || other.absensiId == absensiId)&&(identical(other.karyawanId, karyawanId) || other.karyawanId == karyawanId)&&(identical(other.tanggal, tanggal) || other.tanggal == tanggal)&&(identical(other.waktuMasuk, waktuMasuk) || other.waktuMasuk == waktuMasuk)&&(identical(other.statusMasuk, statusMasuk) || other.statusMasuk == statusMasuk)&&(identical(other.statusAbsensi, statusAbsensi) || other.statusAbsensi == statusAbsensi)&&(identical(other.durasiTelat, durasiTelat) || other.durasiTelat == durasiTelat)&&(identical(other.fotoMasuk, fotoMasuk) || other.fotoMasuk == fotoMasuk)&&(identical(other.cabang, cabang) || other.cabang == cabang)&&(identical(other.distanceFromBranch, distanceFromBranch) || other.distanceFromBranch == distanceFromBranch));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostClockOutResponse&&(identical(other.absensiId, absensiId) || other.absensiId == absensiId)&&(identical(other.karyawanId, karyawanId) || other.karyawanId == karyawanId)&&(identical(other.tanggal, tanggal) || other.tanggal == tanggal)&&(identical(other.waktuPulang, waktuPulang) || other.waktuPulang == waktuPulang)&&(identical(other.statusPulang, statusPulang) || other.statusPulang == statusPulang)&&(identical(other.statusAbsensi, statusAbsensi) || other.statusAbsensi == statusAbsensi)&&(identical(other.durasiPulangCepat, durasiPulangCepat) || other.durasiPulangCepat == durasiPulangCepat)&&(identical(other.fotoPulang, fotoPulang) || other.fotoPulang == fotoPulang)&&(identical(other.cabang, cabang) || other.cabang == cabang)&&(identical(other.distanceFromBranch, distanceFromBranch) || other.distanceFromBranch == distanceFromBranch));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,absensiId,karyawanId,tanggal,waktuMasuk,statusMasuk,statusAbsensi,durasiTelat,fotoMasuk,cabang,distanceFromBranch);
+int get hashCode => Object.hash(runtimeType,absensiId,karyawanId,tanggal,waktuPulang,statusPulang,statusAbsensi,durasiPulangCepat,fotoPulang,cabang,distanceFromBranch);
 
 @override
 String toString() {
-  return 'PostClockOutResponse(absensiId: $absensiId, karyawanId: $karyawanId, tanggal: $tanggal, waktuMasuk: $waktuMasuk, statusMasuk: $statusMasuk, statusAbsensi: $statusAbsensi, durasiTelat: $durasiTelat, fotoMasuk: $fotoMasuk, cabang: $cabang, distanceFromBranch: $distanceFromBranch)';
+  return 'PostClockOutResponse(absensiId: $absensiId, karyawanId: $karyawanId, tanggal: $tanggal, waktuPulang: $waktuPulang, statusPulang: $statusPulang, statusAbsensi: $statusAbsensi, durasiPulangCepat: $durasiPulangCepat, fotoPulang: $fotoPulang, cabang: $cabang, distanceFromBranch: $distanceFromBranch)';
 }
 
 
@@ -277,7 +277,7 @@ abstract mixin class _$PostClockOutResponseCopyWith<$Res> implements $PostClockO
   factory _$PostClockOutResponseCopyWith(_PostClockOutResponse value, $Res Function(_PostClockOutResponse) _then) = __$PostClockOutResponseCopyWithImpl;
 @override @useResult
 $Res call({
- String? absensiId, String? karyawanId, String? tanggal, String? waktuMasuk, String? statusMasuk, String? statusAbsensi, String? durasiTelat, String? fotoMasuk, ClockOutBranchResponse? cabang, String? distanceFromBranch
+ String? absensiId, String? karyawanId, String? tanggal, String? waktuPulang, String? statusPulang, String? statusAbsensi, String? durasiPulangCepat, String? fotoPulang, ClockOutBranchResponse? cabang, String? distanceFromBranch
 });
 
 
@@ -294,16 +294,16 @@ class __$PostClockOutResponseCopyWithImpl<$Res>
 
 /// Create a copy of PostClockOutResponse
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? absensiId = freezed,Object? karyawanId = freezed,Object? tanggal = freezed,Object? waktuMasuk = freezed,Object? statusMasuk = freezed,Object? statusAbsensi = freezed,Object? durasiTelat = freezed,Object? fotoMasuk = freezed,Object? cabang = freezed,Object? distanceFromBranch = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? absensiId = freezed,Object? karyawanId = freezed,Object? tanggal = freezed,Object? waktuPulang = freezed,Object? statusPulang = freezed,Object? statusAbsensi = freezed,Object? durasiPulangCepat = freezed,Object? fotoPulang = freezed,Object? cabang = freezed,Object? distanceFromBranch = freezed,}) {
   return _then(_PostClockOutResponse(
 absensiId: freezed == absensiId ? _self.absensiId : absensiId // ignore: cast_nullable_to_non_nullable
 as String?,karyawanId: freezed == karyawanId ? _self.karyawanId : karyawanId // ignore: cast_nullable_to_non_nullable
 as String?,tanggal: freezed == tanggal ? _self.tanggal : tanggal // ignore: cast_nullable_to_non_nullable
-as String?,waktuMasuk: freezed == waktuMasuk ? _self.waktuMasuk : waktuMasuk // ignore: cast_nullable_to_non_nullable
-as String?,statusMasuk: freezed == statusMasuk ? _self.statusMasuk : statusMasuk // ignore: cast_nullable_to_non_nullable
+as String?,waktuPulang: freezed == waktuPulang ? _self.waktuPulang : waktuPulang // ignore: cast_nullable_to_non_nullable
+as String?,statusPulang: freezed == statusPulang ? _self.statusPulang : statusPulang // ignore: cast_nullable_to_non_nullable
 as String?,statusAbsensi: freezed == statusAbsensi ? _self.statusAbsensi : statusAbsensi // ignore: cast_nullable_to_non_nullable
-as String?,durasiTelat: freezed == durasiTelat ? _self.durasiTelat : durasiTelat // ignore: cast_nullable_to_non_nullable
-as String?,fotoMasuk: freezed == fotoMasuk ? _self.fotoMasuk : fotoMasuk // ignore: cast_nullable_to_non_nullable
+as String?,durasiPulangCepat: freezed == durasiPulangCepat ? _self.durasiPulangCepat : durasiPulangCepat // ignore: cast_nullable_to_non_nullable
+as String?,fotoPulang: freezed == fotoPulang ? _self.fotoPulang : fotoPulang // ignore: cast_nullable_to_non_nullable
 as String?,cabang: freezed == cabang ? _self.cabang : cabang // ignore: cast_nullable_to_non_nullable
 as ClockOutBranchResponse?,distanceFromBranch: freezed == distanceFromBranch ? _self.distanceFromBranch : distanceFromBranch // ignore: cast_nullable_to_non_nullable
 as String?,
