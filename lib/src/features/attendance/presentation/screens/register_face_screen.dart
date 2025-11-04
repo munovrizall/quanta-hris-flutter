@@ -17,14 +17,14 @@ import 'package:quanta_hris/src/features/attendance/presentation/widgets/face_de
 import 'package:quanta_hris/src/shared/styles/app_colors.dart';
 import 'package:quanta_hris/src/shared/widgets/primary_button.dart';
 
-class FaceRecognitionScreen extends StatefulWidget {
-  const FaceRecognitionScreen({super.key});
+class RegisterFaceScreen extends StatefulWidget {
+  const RegisterFaceScreen({super.key});
 
   @override
-  State<FaceRecognitionScreen> createState() => _FaceRecognitionScreenState();
+  State<RegisterFaceScreen> createState() => _RegisterFaceScreenState();
 }
 
-class _FaceRecognitionScreenState extends State<FaceRecognitionScreen> {
+class _RegisterFaceScreenState extends State<RegisterFaceScreen> {
   List<CameraDescription>? _availableCameras;
   CameraDescription? _selectedCamera;
   CameraController? _controller;

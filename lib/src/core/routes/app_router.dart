@@ -5,7 +5,7 @@ import 'package:quanta_hris/src/core/di/injector.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/screens/clock_in_screen.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/screens/login_screen.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/screens/attendance_maps_screen.dart';
-import 'package:quanta_hris/src/features/attendance/presentation/screens/face_recognition_screen.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/screens/register_face_screen.dart';
 import 'package:quanta_hris/src/features/home/presentation/screens/home_screen.dart'; // Akan kita buat
 import 'package:quanta_hris/src/features/splash/presentation/screens/splash_screen.dart'; // Akan kita buat
 
@@ -44,7 +44,7 @@ final GoRouter appRouter = GoRouter(
       name: 'face-recognition',
       path: '/face-recognition',
       builder: (BuildContext context, GoRouterState state) {
-        return const FaceRecognitionScreen();
+        return const RegisterFaceScreen();
       },
     ),
     GoRoute(
