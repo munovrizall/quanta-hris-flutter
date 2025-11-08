@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quanta_hris/src/core/error/app_exception.dart';
 import 'package:quanta_hris/src/core/utils/app_logger.dart';
+import 'package:quanta_hris/src/features/leave/domain/entities/submit_leave_params.dart';
 import 'package:quanta_hris/src/features/leave/domain/usecases/submit_leave_usecase.dart';
 
 import 'leave_event.dart';
@@ -13,33 +14,13 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
     : _submitLeaveUseCase = submitLeaveUseCase,
       super(const LeaveState()) {
     on<LeaveEvent>((event, emit) async {
-      await event.when(
-        submitLeave:
-            (
-              jenisCuti,
-              tanggalMulai,
-              tanggalSelesai,
-              keterangan,
-              dokumenPendukungPath,
-            ) => _onSubmitLeave(
-              emit,
-              jenisCuti,
-              tanggalMulai,
-              tanggalSelesai,
-              keterangan,
-              dokumenPendukungPath,
-            ),
-      );
+      await event.when(submitLeave: (params) => _onSubmitLeave(emit, params));
     });
   }
 
   Future<void> _onSubmitLeave(
     Emitter<LeaveState> emit,
-    String jenisCuti,
-    String tanggalMulai,
-    String tanggalSelesai,
-    String keterangan,
-    String? dokumenPendukungPath,
+    SubmitLeaveParams params,
   ) async {
     AppLogger.d('🎯 LeaveBloc: Submitting leave request');
 
@@ -52,13 +33,7 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
     );
 
     try {
-      final result = await _submitLeaveUseCase(
-        jenisCuti: jenisCuti,
-        tanggalMulai: tanggalMulai,
-        tanggalSelesai: tanggalSelesai,
-        keterangan: keterangan,
-        dokumenPendukungPath: dokumenPendukungPath,
-      );
+      final result = await _submitLeaveUseCase(params: params);
 
       AppLogger.d(
         '✅ LeaveBloc: Leave submitted successfully with ID ${result.leave.cutiId}',

@@ -5,6 +5,7 @@ import 'package:quanta_hris/src/features/leave/data/datasources/leave_remote_dat
 import 'package:quanta_hris/src/features/leave/data/models/submit_leave_request.dart';
 import 'package:quanta_hris/src/features/leave/domain/entities/leave_application_entity.dart';
 import 'package:quanta_hris/src/features/leave/domain/entities/leave_submission_entity.dart';
+import 'package:quanta_hris/src/features/leave/domain/entities/submit_leave_params.dart';
 import 'package:quanta_hris/src/features/leave/domain/repositories/leave_repository.dart';
 
 class LeaveRepositoryImpl implements LeaveRepository {
@@ -14,21 +15,18 @@ class LeaveRepositoryImpl implements LeaveRepository {
 
   @override
   Future<LeaveSubmissionEntity> submitLeave({
-    required String jenisCuti,
-    required String tanggalMulai,
-    required String tanggalSelesai,
-    required String keterangan,
-    String? dokumenPendukungPath,
+    required SubmitLeaveParams params,
   }) async {
     try {
       final request = SubmitLeaveRequest(
-        jenisCuti: jenisCuti,
-        tanggalMulai: tanggalMulai,
-        tanggalSelesai: tanggalSelesai,
-        keterangan: keterangan,
+        jenisCuti: params.jenisCuti,
+        tanggalMulai: params.tanggalMulai,
+        tanggalSelesai: params.tanggalSelesai,
+        keterangan: params.keterangan,
         dokumenPendukung:
-            dokumenPendukungPath != null && dokumenPendukungPath.isNotEmpty
-            ? File(dokumenPendukungPath)
+            params.dokumenPendukungPath != null &&
+                params.dokumenPendukungPath!.isNotEmpty
+            ? File(params.dokumenPendukungPath!)
             : null,
       );
 

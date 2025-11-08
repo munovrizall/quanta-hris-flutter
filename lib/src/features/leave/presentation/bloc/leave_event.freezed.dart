@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LeaveEvent {
 
- String get jenisCuti; String get tanggalMulai; String get tanggalSelesai; String get keterangan; String? get dokumenPendukungPath;
+ SubmitLeaveParams get params;
 /// Create a copy of LeaveEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $LeaveEventCopyWith<LeaveEvent> get copyWith => _$LeaveEventCopyWithImpl<LeaveEv
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LeaveEvent&&(identical(other.jenisCuti, jenisCuti) || other.jenisCuti == jenisCuti)&&(identical(other.tanggalMulai, tanggalMulai) || other.tanggalMulai == tanggalMulai)&&(identical(other.tanggalSelesai, tanggalSelesai) || other.tanggalSelesai == tanggalSelesai)&&(identical(other.keterangan, keterangan) || other.keterangan == keterangan)&&(identical(other.dokumenPendukungPath, dokumenPendukungPath) || other.dokumenPendukungPath == dokumenPendukungPath));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LeaveEvent&&(identical(other.params, params) || other.params == params));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,jenisCuti,tanggalMulai,tanggalSelesai,keterangan,dokumenPendukungPath);
+int get hashCode => Object.hash(runtimeType,params);
 
 @override
 String toString() {
-  return 'LeaveEvent(jenisCuti: $jenisCuti, tanggalMulai: $tanggalMulai, tanggalSelesai: $tanggalSelesai, keterangan: $keterangan, dokumenPendukungPath: $dokumenPendukungPath)';
+  return 'LeaveEvent(params: $params)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $LeaveEventCopyWith<$Res>  {
   factory $LeaveEventCopyWith(LeaveEvent value, $Res Function(LeaveEvent) _then) = _$LeaveEventCopyWithImpl;
 @useResult
 $Res call({
- String jenisCuti, String tanggalMulai, String tanggalSelesai, String keterangan, String? dokumenPendukungPath
+ SubmitLeaveParams params
 });
 
 
-
+$SubmitLeaveParamsCopyWith<$Res> get params;
 
 }
 /// @nodoc
@@ -62,17 +62,22 @@ class _$LeaveEventCopyWithImpl<$Res>
 
 /// Create a copy of LeaveEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? jenisCuti = null,Object? tanggalMulai = null,Object? tanggalSelesai = null,Object? keterangan = null,Object? dokumenPendukungPath = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? params = null,}) {
   return _then(_self.copyWith(
-jenisCuti: null == jenisCuti ? _self.jenisCuti : jenisCuti // ignore: cast_nullable_to_non_nullable
-as String,tanggalMulai: null == tanggalMulai ? _self.tanggalMulai : tanggalMulai // ignore: cast_nullable_to_non_nullable
-as String,tanggalSelesai: null == tanggalSelesai ? _self.tanggalSelesai : tanggalSelesai // ignore: cast_nullable_to_non_nullable
-as String,keterangan: null == keterangan ? _self.keterangan : keterangan // ignore: cast_nullable_to_non_nullable
-as String,dokumenPendukungPath: freezed == dokumenPendukungPath ? _self.dokumenPendukungPath : dokumenPendukungPath // ignore: cast_nullable_to_non_nullable
-as String?,
+params: null == params ? _self.params : params // ignore: cast_nullable_to_non_nullable
+as SubmitLeaveParams,
   ));
 }
-
+/// Create a copy of LeaveEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SubmitLeaveParamsCopyWith<$Res> get params {
+  
+  return $SubmitLeaveParamsCopyWith<$Res>(_self.params, (value) {
+    return _then(_self.copyWith(params: value));
+  });
+}
 }
 
 
@@ -154,10 +159,10 @@ return submitLeave(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String jenisCuti,  String tanggalMulai,  String tanggalSelesai,  String keterangan,  String? dokumenPendukungPath)?  submitLeave,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( SubmitLeaveParams params)?  submitLeave,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SubmitLeave() when submitLeave != null:
-return submitLeave(_that.jenisCuti,_that.tanggalMulai,_that.tanggalSelesai,_that.keterangan,_that.dokumenPendukungPath);case _:
+return submitLeave(_that.params);case _:
   return orElse();
 
 }
@@ -175,10 +180,10 @@ return submitLeave(_that.jenisCuti,_that.tanggalMulai,_that.tanggalSelesai,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String jenisCuti,  String tanggalMulai,  String tanggalSelesai,  String keterangan,  String? dokumenPendukungPath)  submitLeave,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( SubmitLeaveParams params)  submitLeave,}) {final _that = this;
 switch (_that) {
 case _SubmitLeave():
-return submitLeave(_that.jenisCuti,_that.tanggalMulai,_that.tanggalSelesai,_that.keterangan,_that.dokumenPendukungPath);case _:
+return submitLeave(_that.params);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +200,10 @@ return submitLeave(_that.jenisCuti,_that.tanggalMulai,_that.tanggalSelesai,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String jenisCuti,  String tanggalMulai,  String tanggalSelesai,  String keterangan,  String? dokumenPendukungPath)?  submitLeave,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( SubmitLeaveParams params)?  submitLeave,}) {final _that = this;
 switch (_that) {
 case _SubmitLeave() when submitLeave != null:
-return submitLeave(_that.jenisCuti,_that.tanggalMulai,_that.tanggalSelesai,_that.keterangan,_that.dokumenPendukungPath);case _:
+return submitLeave(_that.params);case _:
   return null;
 
 }
@@ -210,14 +215,10 @@ return submitLeave(_that.jenisCuti,_that.tanggalMulai,_that.tanggalSelesai,_that
 
 
 class _SubmitLeave implements LeaveEvent {
-  const _SubmitLeave({required this.jenisCuti, required this.tanggalMulai, required this.tanggalSelesai, required this.keterangan, this.dokumenPendukungPath});
+  const _SubmitLeave({required this.params});
   
 
-@override final  String jenisCuti;
-@override final  String tanggalMulai;
-@override final  String tanggalSelesai;
-@override final  String keterangan;
-@override final  String? dokumenPendukungPath;
+@override final  SubmitLeaveParams params;
 
 /// Create a copy of LeaveEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +230,16 @@ _$SubmitLeaveCopyWith<_SubmitLeave> get copyWith => __$SubmitLeaveCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubmitLeave&&(identical(other.jenisCuti, jenisCuti) || other.jenisCuti == jenisCuti)&&(identical(other.tanggalMulai, tanggalMulai) || other.tanggalMulai == tanggalMulai)&&(identical(other.tanggalSelesai, tanggalSelesai) || other.tanggalSelesai == tanggalSelesai)&&(identical(other.keterangan, keterangan) || other.keterangan == keterangan)&&(identical(other.dokumenPendukungPath, dokumenPendukungPath) || other.dokumenPendukungPath == dokumenPendukungPath));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubmitLeave&&(identical(other.params, params) || other.params == params));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,jenisCuti,tanggalMulai,tanggalSelesai,keterangan,dokumenPendukungPath);
+int get hashCode => Object.hash(runtimeType,params);
 
 @override
 String toString() {
-  return 'LeaveEvent.submitLeave(jenisCuti: $jenisCuti, tanggalMulai: $tanggalMulai, tanggalSelesai: $tanggalSelesai, keterangan: $keterangan, dokumenPendukungPath: $dokumenPendukungPath)';
+  return 'LeaveEvent.submitLeave(params: $params)';
 }
 
 
@@ -249,11 +250,11 @@ abstract mixin class _$SubmitLeaveCopyWith<$Res> implements $LeaveEventCopyWith<
   factory _$SubmitLeaveCopyWith(_SubmitLeave value, $Res Function(_SubmitLeave) _then) = __$SubmitLeaveCopyWithImpl;
 @override @useResult
 $Res call({
- String jenisCuti, String tanggalMulai, String tanggalSelesai, String keterangan, String? dokumenPendukungPath
+ SubmitLeaveParams params
 });
 
 
-
+@override $SubmitLeaveParamsCopyWith<$Res> get params;
 
 }
 /// @nodoc
@@ -266,18 +267,23 @@ class __$SubmitLeaveCopyWithImpl<$Res>
 
 /// Create a copy of LeaveEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? jenisCuti = null,Object? tanggalMulai = null,Object? tanggalSelesai = null,Object? keterangan = null,Object? dokumenPendukungPath = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? params = null,}) {
   return _then(_SubmitLeave(
-jenisCuti: null == jenisCuti ? _self.jenisCuti : jenisCuti // ignore: cast_nullable_to_non_nullable
-as String,tanggalMulai: null == tanggalMulai ? _self.tanggalMulai : tanggalMulai // ignore: cast_nullable_to_non_nullable
-as String,tanggalSelesai: null == tanggalSelesai ? _self.tanggalSelesai : tanggalSelesai // ignore: cast_nullable_to_non_nullable
-as String,keterangan: null == keterangan ? _self.keterangan : keterangan // ignore: cast_nullable_to_non_nullable
-as String,dokumenPendukungPath: freezed == dokumenPendukungPath ? _self.dokumenPendukungPath : dokumenPendukungPath // ignore: cast_nullable_to_non_nullable
-as String?,
+params: null == params ? _self.params : params // ignore: cast_nullable_to_non_nullable
+as SubmitLeaveParams,
   ));
 }
 
-
+/// Create a copy of LeaveEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SubmitLeaveParamsCopyWith<$Res> get params {
+  
+  return $SubmitLeaveParamsCopyWith<$Res>(_self.params, (value) {
+    return _then(_self.copyWith(params: value));
+  });
+}
 }
 
 // dart format on
