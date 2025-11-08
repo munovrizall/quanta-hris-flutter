@@ -10,6 +10,7 @@ abstract class GetLeaveHistoryResponse with _$GetLeaveHistoryResponse {
   const factory GetLeaveHistoryResponse({
     required String karyawanId,
     required int totalPengajuan,
+    required int sisaKuotaCuti,
     required List<LeaveHistoryItemResponse> riwayat,
   }) = _GetLeaveHistoryResponse;
 

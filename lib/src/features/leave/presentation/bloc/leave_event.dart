@@ -8,4 +8,7 @@ abstract class LeaveEvent with _$LeaveEvent {
   /// Submit permohonan cuti baru dengan params entity.
   const factory LeaveEvent.submitLeave({required SubmitLeaveParams params}) =
       _SubmitLeave;
+
+  /// Mendapatkan riwayat cuti karyawan.
+  const factory LeaveEvent.getLeaveHistory() = _GetLeaveHistory;
 }

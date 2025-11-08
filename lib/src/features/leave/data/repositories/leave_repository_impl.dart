@@ -4,6 +4,7 @@ import 'package:quanta_hris/src/core/error/app_exception.dart';
 import 'package:quanta_hris/src/features/leave/data/datasources/leave_remote_data_source.dart';
 import 'package:quanta_hris/src/features/leave/data/models/submit_leave_request.dart';
 import 'package:quanta_hris/src/features/leave/domain/entities/leave_application_entity.dart';
+import 'package:quanta_hris/src/features/leave/domain/entities/leave_history_entity.dart';
 import 'package:quanta_hris/src/features/leave/domain/entities/leave_submission_entity.dart';
 import 'package:quanta_hris/src/features/leave/domain/entities/submit_leave_params.dart';
 import 'package:quanta_hris/src/features/leave/domain/repositories/leave_repository.dart';
@@ -47,6 +48,42 @@ class LeaveRepositoryImpl implements LeaveRepository {
       );
 
       return LeaveSubmissionEntity(leave: leave, message: response.message);
+    } on ApiException {
+      rethrow;
+    } catch (_) {
+      throw ApiException('An unexpected error occurred in the repository.');
+    }
+  }
+
+  @override
+  Future<LeaveHistoryEntity> getLeaveHistory() async {
+    try {
+      final response = await _remoteDataSource.getLeaveHistory();
+
+      final data = response.data;
+      final riwayatList = data.riwayat.map((item) {
+        return LeaveHistoryItemEntity(
+          cutiId: item.cutiId,
+          jenisCuti: item.jenisCuti,
+          tanggalMulai: item.tanggalMulai,
+          tanggalSelesai: item.tanggalSelesai,
+          durasiHari: item.durasiHari,
+          statusCuti: item.statusCuti,
+          alasanPenolakan: item.alasanPenolakan,
+          dokumenPendukung: item.dokumenPendukung,
+          diprosesOleh: item.diprosesOleh,
+          diprosesPada: item.diprosesPada,
+          dibuatPada: item.dibuatPada,
+          diperbaruiPada: item.diperbaruiPada,
+        );
+      }).toList();
+
+      return LeaveHistoryEntity(
+        karyawanId: data.karyawanId,
+        totalPengajuan: data.totalPengajuan,
+        sisaKuotaCuti: data.sisaKuotaCuti,
+        riwayat: riwayatList,
+      );
     } on ApiException {
       rethrow;
     } catch (_) {

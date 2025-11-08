@@ -15,9 +15,10 @@ T _$identity<T>(T value) => value;
 mixin _$LeaveState {
 
 // Loading indicators
- bool get isSubmitLoading;// Data hasil submit
- LeaveApplicationEntity? get submittedLeave;// Error / success message
- String? get submitError; String? get submitSuccessMessage;
+ bool get isSubmitLoading; bool get isHistoryLoading;// Data hasil submit
+ LeaveApplicationEntity? get submittedLeave;// Data riwayat cuti
+ LeaveHistoryEntity? get leaveHistory;// Error / success message
+ String? get submitError; String? get submitSuccessMessage; String? get historyError;
 /// Create a copy of LeaveState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +29,16 @@ $LeaveStateCopyWith<LeaveState> get copyWith => _$LeaveStateCopyWithImpl<LeaveSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LeaveState&&(identical(other.isSubmitLoading, isSubmitLoading) || other.isSubmitLoading == isSubmitLoading)&&(identical(other.submittedLeave, submittedLeave) || other.submittedLeave == submittedLeave)&&(identical(other.submitError, submitError) || other.submitError == submitError)&&(identical(other.submitSuccessMessage, submitSuccessMessage) || other.submitSuccessMessage == submitSuccessMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LeaveState&&(identical(other.isSubmitLoading, isSubmitLoading) || other.isSubmitLoading == isSubmitLoading)&&(identical(other.isHistoryLoading, isHistoryLoading) || other.isHistoryLoading == isHistoryLoading)&&(identical(other.submittedLeave, submittedLeave) || other.submittedLeave == submittedLeave)&&(identical(other.leaveHistory, leaveHistory) || other.leaveHistory == leaveHistory)&&(identical(other.submitError, submitError) || other.submitError == submitError)&&(identical(other.submitSuccessMessage, submitSuccessMessage) || other.submitSuccessMessage == submitSuccessMessage)&&(identical(other.historyError, historyError) || other.historyError == historyError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isSubmitLoading,submittedLeave,submitError,submitSuccessMessage);
+int get hashCode => Object.hash(runtimeType,isSubmitLoading,isHistoryLoading,submittedLeave,leaveHistory,submitError,submitSuccessMessage,historyError);
 
 @override
 String toString() {
-  return 'LeaveState(isSubmitLoading: $isSubmitLoading, submittedLeave: $submittedLeave, submitError: $submitError, submitSuccessMessage: $submitSuccessMessage)';
+  return 'LeaveState(isSubmitLoading: $isSubmitLoading, isHistoryLoading: $isHistoryLoading, submittedLeave: $submittedLeave, leaveHistory: $leaveHistory, submitError: $submitError, submitSuccessMessage: $submitSuccessMessage, historyError: $historyError)';
 }
 
 
@@ -48,11 +49,11 @@ abstract mixin class $LeaveStateCopyWith<$Res>  {
   factory $LeaveStateCopyWith(LeaveState value, $Res Function(LeaveState) _then) = _$LeaveStateCopyWithImpl;
 @useResult
 $Res call({
- bool isSubmitLoading, LeaveApplicationEntity? submittedLeave, String? submitError, String? submitSuccessMessage
+ bool isSubmitLoading, bool isHistoryLoading, LeaveApplicationEntity? submittedLeave, LeaveHistoryEntity? leaveHistory, String? submitError, String? submitSuccessMessage, String? historyError
 });
 
 
-$LeaveApplicationEntityCopyWith<$Res>? get submittedLeave;
+$LeaveApplicationEntityCopyWith<$Res>? get submittedLeave;$LeaveHistoryEntityCopyWith<$Res>? get leaveHistory;
 
 }
 /// @nodoc
@@ -65,12 +66,15 @@ class _$LeaveStateCopyWithImpl<$Res>
 
 /// Create a copy of LeaveState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isSubmitLoading = null,Object? submittedLeave = freezed,Object? submitError = freezed,Object? submitSuccessMessage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isSubmitLoading = null,Object? isHistoryLoading = null,Object? submittedLeave = freezed,Object? leaveHistory = freezed,Object? submitError = freezed,Object? submitSuccessMessage = freezed,Object? historyError = freezed,}) {
   return _then(_self.copyWith(
 isSubmitLoading: null == isSubmitLoading ? _self.isSubmitLoading : isSubmitLoading // ignore: cast_nullable_to_non_nullable
+as bool,isHistoryLoading: null == isHistoryLoading ? _self.isHistoryLoading : isHistoryLoading // ignore: cast_nullable_to_non_nullable
 as bool,submittedLeave: freezed == submittedLeave ? _self.submittedLeave : submittedLeave // ignore: cast_nullable_to_non_nullable
-as LeaveApplicationEntity?,submitError: freezed == submitError ? _self.submitError : submitError // ignore: cast_nullable_to_non_nullable
+as LeaveApplicationEntity?,leaveHistory: freezed == leaveHistory ? _self.leaveHistory : leaveHistory // ignore: cast_nullable_to_non_nullable
+as LeaveHistoryEntity?,submitError: freezed == submitError ? _self.submitError : submitError // ignore: cast_nullable_to_non_nullable
 as String?,submitSuccessMessage: freezed == submitSuccessMessage ? _self.submitSuccessMessage : submitSuccessMessage // ignore: cast_nullable_to_non_nullable
+as String?,historyError: freezed == historyError ? _self.historyError : historyError // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -85,6 +89,18 @@ $LeaveApplicationEntityCopyWith<$Res>? get submittedLeave {
 
   return $LeaveApplicationEntityCopyWith<$Res>(_self.submittedLeave!, (value) {
     return _then(_self.copyWith(submittedLeave: value));
+  });
+}/// Create a copy of LeaveState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LeaveHistoryEntityCopyWith<$Res>? get leaveHistory {
+    if (_self.leaveHistory == null) {
+    return null;
+  }
+
+  return $LeaveHistoryEntityCopyWith<$Res>(_self.leaveHistory!, (value) {
+    return _then(_self.copyWith(leaveHistory: value));
   });
 }
 }
@@ -168,10 +184,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isSubmitLoading,  LeaveApplicationEntity? submittedLeave,  String? submitError,  String? submitSuccessMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isSubmitLoading,  bool isHistoryLoading,  LeaveApplicationEntity? submittedLeave,  LeaveHistoryEntity? leaveHistory,  String? submitError,  String? submitSuccessMessage,  String? historyError)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LeaveState() when $default != null:
-return $default(_that.isSubmitLoading,_that.submittedLeave,_that.submitError,_that.submitSuccessMessage);case _:
+return $default(_that.isSubmitLoading,_that.isHistoryLoading,_that.submittedLeave,_that.leaveHistory,_that.submitError,_that.submitSuccessMessage,_that.historyError);case _:
   return orElse();
 
 }
@@ -189,10 +205,10 @@ return $default(_that.isSubmitLoading,_that.submittedLeave,_that.submitError,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isSubmitLoading,  LeaveApplicationEntity? submittedLeave,  String? submitError,  String? submitSuccessMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isSubmitLoading,  bool isHistoryLoading,  LeaveApplicationEntity? submittedLeave,  LeaveHistoryEntity? leaveHistory,  String? submitError,  String? submitSuccessMessage,  String? historyError)  $default,) {final _that = this;
 switch (_that) {
 case _LeaveState():
-return $default(_that.isSubmitLoading,_that.submittedLeave,_that.submitError,_that.submitSuccessMessage);case _:
+return $default(_that.isSubmitLoading,_that.isHistoryLoading,_that.submittedLeave,_that.leaveHistory,_that.submitError,_that.submitSuccessMessage,_that.historyError);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -209,10 +225,10 @@ return $default(_that.isSubmitLoading,_that.submittedLeave,_that.submitError,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isSubmitLoading,  LeaveApplicationEntity? submittedLeave,  String? submitError,  String? submitSuccessMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isSubmitLoading,  bool isHistoryLoading,  LeaveApplicationEntity? submittedLeave,  LeaveHistoryEntity? leaveHistory,  String? submitError,  String? submitSuccessMessage,  String? historyError)?  $default,) {final _that = this;
 switch (_that) {
 case _LeaveState() when $default != null:
-return $default(_that.isSubmitLoading,_that.submittedLeave,_that.submitError,_that.submitSuccessMessage);case _:
+return $default(_that.isSubmitLoading,_that.isHistoryLoading,_that.submittedLeave,_that.leaveHistory,_that.submitError,_that.submitSuccessMessage,_that.historyError);case _:
   return null;
 
 }
@@ -224,16 +240,20 @@ return $default(_that.isSubmitLoading,_that.submittedLeave,_that.submitError,_th
 
 
 class _LeaveState extends LeaveState {
-  const _LeaveState({this.isSubmitLoading = false, this.submittedLeave, this.submitError, this.submitSuccessMessage}): super._();
+  const _LeaveState({this.isSubmitLoading = false, this.isHistoryLoading = false, this.submittedLeave, this.leaveHistory, this.submitError, this.submitSuccessMessage, this.historyError}): super._();
   
 
 // Loading indicators
 @override@JsonKey() final  bool isSubmitLoading;
+@override@JsonKey() final  bool isHistoryLoading;
 // Data hasil submit
 @override final  LeaveApplicationEntity? submittedLeave;
+// Data riwayat cuti
+@override final  LeaveHistoryEntity? leaveHistory;
 // Error / success message
 @override final  String? submitError;
 @override final  String? submitSuccessMessage;
+@override final  String? historyError;
 
 /// Create a copy of LeaveState
 /// with the given fields replaced by the non-null parameter values.
@@ -245,16 +265,16 @@ _$LeaveStateCopyWith<_LeaveState> get copyWith => __$LeaveStateCopyWithImpl<_Lea
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LeaveState&&(identical(other.isSubmitLoading, isSubmitLoading) || other.isSubmitLoading == isSubmitLoading)&&(identical(other.submittedLeave, submittedLeave) || other.submittedLeave == submittedLeave)&&(identical(other.submitError, submitError) || other.submitError == submitError)&&(identical(other.submitSuccessMessage, submitSuccessMessage) || other.submitSuccessMessage == submitSuccessMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LeaveState&&(identical(other.isSubmitLoading, isSubmitLoading) || other.isSubmitLoading == isSubmitLoading)&&(identical(other.isHistoryLoading, isHistoryLoading) || other.isHistoryLoading == isHistoryLoading)&&(identical(other.submittedLeave, submittedLeave) || other.submittedLeave == submittedLeave)&&(identical(other.leaveHistory, leaveHistory) || other.leaveHistory == leaveHistory)&&(identical(other.submitError, submitError) || other.submitError == submitError)&&(identical(other.submitSuccessMessage, submitSuccessMessage) || other.submitSuccessMessage == submitSuccessMessage)&&(identical(other.historyError, historyError) || other.historyError == historyError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isSubmitLoading,submittedLeave,submitError,submitSuccessMessage);
+int get hashCode => Object.hash(runtimeType,isSubmitLoading,isHistoryLoading,submittedLeave,leaveHistory,submitError,submitSuccessMessage,historyError);
 
 @override
 String toString() {
-  return 'LeaveState(isSubmitLoading: $isSubmitLoading, submittedLeave: $submittedLeave, submitError: $submitError, submitSuccessMessage: $submitSuccessMessage)';
+  return 'LeaveState(isSubmitLoading: $isSubmitLoading, isHistoryLoading: $isHistoryLoading, submittedLeave: $submittedLeave, leaveHistory: $leaveHistory, submitError: $submitError, submitSuccessMessage: $submitSuccessMessage, historyError: $historyError)';
 }
 
 
@@ -265,11 +285,11 @@ abstract mixin class _$LeaveStateCopyWith<$Res> implements $LeaveStateCopyWith<$
   factory _$LeaveStateCopyWith(_LeaveState value, $Res Function(_LeaveState) _then) = __$LeaveStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isSubmitLoading, LeaveApplicationEntity? submittedLeave, String? submitError, String? submitSuccessMessage
+ bool isSubmitLoading, bool isHistoryLoading, LeaveApplicationEntity? submittedLeave, LeaveHistoryEntity? leaveHistory, String? submitError, String? submitSuccessMessage, String? historyError
 });
 
 
-@override $LeaveApplicationEntityCopyWith<$Res>? get submittedLeave;
+@override $LeaveApplicationEntityCopyWith<$Res>? get submittedLeave;@override $LeaveHistoryEntityCopyWith<$Res>? get leaveHistory;
 
 }
 /// @nodoc
@@ -282,12 +302,15 @@ class __$LeaveStateCopyWithImpl<$Res>
 
 /// Create a copy of LeaveState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isSubmitLoading = null,Object? submittedLeave = freezed,Object? submitError = freezed,Object? submitSuccessMessage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isSubmitLoading = null,Object? isHistoryLoading = null,Object? submittedLeave = freezed,Object? leaveHistory = freezed,Object? submitError = freezed,Object? submitSuccessMessage = freezed,Object? historyError = freezed,}) {
   return _then(_LeaveState(
 isSubmitLoading: null == isSubmitLoading ? _self.isSubmitLoading : isSubmitLoading // ignore: cast_nullable_to_non_nullable
+as bool,isHistoryLoading: null == isHistoryLoading ? _self.isHistoryLoading : isHistoryLoading // ignore: cast_nullable_to_non_nullable
 as bool,submittedLeave: freezed == submittedLeave ? _self.submittedLeave : submittedLeave // ignore: cast_nullable_to_non_nullable
-as LeaveApplicationEntity?,submitError: freezed == submitError ? _self.submitError : submitError // ignore: cast_nullable_to_non_nullable
+as LeaveApplicationEntity?,leaveHistory: freezed == leaveHistory ? _self.leaveHistory : leaveHistory // ignore: cast_nullable_to_non_nullable
+as LeaveHistoryEntity?,submitError: freezed == submitError ? _self.submitError : submitError // ignore: cast_nullable_to_non_nullable
 as String?,submitSuccessMessage: freezed == submitSuccessMessage ? _self.submitSuccessMessage : submitSuccessMessage // ignore: cast_nullable_to_non_nullable
+as String?,historyError: freezed == historyError ? _self.historyError : historyError // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -303,6 +326,18 @@ $LeaveApplicationEntityCopyWith<$Res>? get submittedLeave {
 
   return $LeaveApplicationEntityCopyWith<$Res>(_self.submittedLeave!, (value) {
     return _then(_self.copyWith(submittedLeave: value));
+  });
+}/// Create a copy of LeaveState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LeaveHistoryEntityCopyWith<$Res>? get leaveHistory {
+    if (_self.leaveHistory == null) {
+    return null;
+  }
+
+  return $LeaveHistoryEntityCopyWith<$Res>(_self.leaveHistory!, (value) {
+    return _then(_self.copyWith(leaveHistory: value));
   });
 }
 }

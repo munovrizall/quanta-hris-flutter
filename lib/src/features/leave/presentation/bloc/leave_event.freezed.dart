@@ -14,70 +14,30 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LeaveEvent {
 
- SubmitLeaveParams get params;
-/// Create a copy of LeaveEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$LeaveEventCopyWith<LeaveEvent> get copyWith => _$LeaveEventCopyWithImpl<LeaveEvent>(this as LeaveEvent, _$identity);
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LeaveEvent&&(identical(other.params, params) || other.params == params));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LeaveEvent);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,params);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'LeaveEvent(params: $params)';
+  return 'LeaveEvent()';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $LeaveEventCopyWith<$Res>  {
-  factory $LeaveEventCopyWith(LeaveEvent value, $Res Function(LeaveEvent) _then) = _$LeaveEventCopyWithImpl;
-@useResult
-$Res call({
- SubmitLeaveParams params
-});
-
-
-$SubmitLeaveParamsCopyWith<$Res> get params;
-
-}
-/// @nodoc
-class _$LeaveEventCopyWithImpl<$Res>
-    implements $LeaveEventCopyWith<$Res> {
-  _$LeaveEventCopyWithImpl(this._self, this._then);
-
-  final LeaveEvent _self;
-  final $Res Function(LeaveEvent) _then;
-
-/// Create a copy of LeaveEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? params = null,}) {
-  return _then(_self.copyWith(
-params: null == params ? _self.params : params // ignore: cast_nullable_to_non_nullable
-as SubmitLeaveParams,
-  ));
-}
-/// Create a copy of LeaveEvent
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$SubmitLeaveParamsCopyWith<$Res> get params {
-  
-  return $SubmitLeaveParamsCopyWith<$Res>(_self.params, (value) {
-    return _then(_self.copyWith(params: value));
-  });
-}
+class $LeaveEventCopyWith<$Res>  {
+$LeaveEventCopyWith(LeaveEvent _, $Res Function(LeaveEvent) __);
 }
 
 
@@ -95,11 +55,12 @@ extension LeaveEventPatterns on LeaveEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _SubmitLeave value)?  submitLeave,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _SubmitLeave value)?  submitLeave,TResult Function( _GetLeaveHistory value)?  getLeaveHistory,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _SubmitLeave() when submitLeave != null:
-return submitLeave(_that);case _:
+return submitLeave(_that);case _GetLeaveHistory() when getLeaveHistory != null:
+return getLeaveHistory(_that);case _:
   return orElse();
 
 }
@@ -117,11 +78,12 @@ return submitLeave(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _SubmitLeave value)  submitLeave,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _SubmitLeave value)  submitLeave,required TResult Function( _GetLeaveHistory value)  getLeaveHistory,}){
 final _that = this;
 switch (_that) {
 case _SubmitLeave():
-return submitLeave(_that);case _:
+return submitLeave(_that);case _GetLeaveHistory():
+return getLeaveHistory(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -138,11 +100,12 @@ return submitLeave(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _SubmitLeave value)?  submitLeave,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _SubmitLeave value)?  submitLeave,TResult? Function( _GetLeaveHistory value)?  getLeaveHistory,}){
 final _that = this;
 switch (_that) {
 case _SubmitLeave() when submitLeave != null:
-return submitLeave(_that);case _:
+return submitLeave(_that);case _GetLeaveHistory() when getLeaveHistory != null:
+return getLeaveHistory(_that);case _:
   return null;
 
 }
@@ -159,10 +122,11 @@ return submitLeave(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( SubmitLeaveParams params)?  submitLeave,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( SubmitLeaveParams params)?  submitLeave,TResult Function()?  getLeaveHistory,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SubmitLeave() when submitLeave != null:
-return submitLeave(_that.params);case _:
+return submitLeave(_that.params);case _GetLeaveHistory() when getLeaveHistory != null:
+return getLeaveHistory();case _:
   return orElse();
 
 }
@@ -180,10 +144,11 @@ return submitLeave(_that.params);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( SubmitLeaveParams params)  submitLeave,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( SubmitLeaveParams params)  submitLeave,required TResult Function()  getLeaveHistory,}) {final _that = this;
 switch (_that) {
 case _SubmitLeave():
-return submitLeave(_that.params);case _:
+return submitLeave(_that.params);case _GetLeaveHistory():
+return getLeaveHistory();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +165,11 @@ return submitLeave(_that.params);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( SubmitLeaveParams params)?  submitLeave,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( SubmitLeaveParams params)?  submitLeave,TResult? Function()?  getLeaveHistory,}) {final _that = this;
 switch (_that) {
 case _SubmitLeave() when submitLeave != null:
-return submitLeave(_that.params);case _:
+return submitLeave(_that.params);case _GetLeaveHistory() when getLeaveHistory != null:
+return getLeaveHistory();case _:
   return null;
 
 }
@@ -218,11 +184,11 @@ class _SubmitLeave implements LeaveEvent {
   const _SubmitLeave({required this.params});
   
 
-@override final  SubmitLeaveParams params;
+ final  SubmitLeaveParams params;
 
 /// Create a copy of LeaveEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
+@JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 _$SubmitLeaveCopyWith<_SubmitLeave> get copyWith => __$SubmitLeaveCopyWithImpl<_SubmitLeave>(this, _$identity);
 
@@ -248,13 +214,13 @@ String toString() {
 /// @nodoc
 abstract mixin class _$SubmitLeaveCopyWith<$Res> implements $LeaveEventCopyWith<$Res> {
   factory _$SubmitLeaveCopyWith(_SubmitLeave value, $Res Function(_SubmitLeave) _then) = __$SubmitLeaveCopyWithImpl;
-@override @useResult
+@useResult
 $Res call({
  SubmitLeaveParams params
 });
 
 
-@override $SubmitLeaveParamsCopyWith<$Res> get params;
+$SubmitLeaveParamsCopyWith<$Res> get params;
 
 }
 /// @nodoc
@@ -267,7 +233,7 @@ class __$SubmitLeaveCopyWithImpl<$Res>
 
 /// Create a copy of LeaveEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? params = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? params = null,}) {
   return _then(_SubmitLeave(
 params: null == params ? _self.params : params // ignore: cast_nullable_to_non_nullable
 as SubmitLeaveParams,
@@ -285,5 +251,37 @@ $SubmitLeaveParamsCopyWith<$Res> get params {
   });
 }
 }
+
+/// @nodoc
+
+
+class _GetLeaveHistory implements LeaveEvent {
+  const _GetLeaveHistory();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetLeaveHistory);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'LeaveEvent.getLeaveHistory()';
+}
+
+
+}
+
+
+
 
 // dart format on
