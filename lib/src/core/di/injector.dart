@@ -38,6 +38,7 @@ import 'package:quanta_hris/src/features/home/presentation/bloc/home_bloc.dart';
 import 'package:quanta_hris/src/features/payroll/data/datasources/payroll_remote_data_source.dart';
 import 'package:quanta_hris/src/features/payroll/data/repositories/payroll_repository_impl.dart';
 import 'package:quanta_hris/src/features/payroll/domain/repositories/payroll_repository.dart';
+import 'package:quanta_hris/src/features/payroll/domain/usecases/get_slip_gaji_detail_usecase.dart';
 import 'package:quanta_hris/src/features/payroll/domain/usecases/get_slip_gaji_usecase.dart';
 import 'package:quanta_hris/src/features/payroll/presentation/bloc/payroll_bloc.dart';
 import 'package:quanta_hris/src/features/splash/domain/usecases/check_session_usecase.dart';
@@ -234,13 +235,15 @@ void _registerPayroll() {
     () => PayrollRepositoryImpl(getIt<PayrollRemoteDataSource>()),
   );
 
+  getIt.registerFactory(() => GetSlipGajiUseCase(getIt<PayrollRepository>()));
   getIt.registerFactory(
-    () => GetSlipGajiUseCase(getIt<PayrollRepository>()),
+    () => GetSlipGajiDetailUseCase(getIt<PayrollRepository>()),
   );
 
   getIt.registerFactory(
     () => PayrollBloc(
       getSlipGajiUseCase: getIt<GetSlipGajiUseCase>(),
+      getSlipGajiDetailUseCase: getIt<GetSlipGajiDetailUseCase>(),
     ),
   );
 }

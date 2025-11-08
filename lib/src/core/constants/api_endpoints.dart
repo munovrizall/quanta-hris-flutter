@@ -45,10 +45,12 @@ class PayrollEndpoints {
   const PayrollEndpoints();
 
   final String getSlipGaji = '/slip-gaji';
+  String getSlipGajiDetail(int tahun, int bulan) => '/slip-gaji/$tahun/$bulan';
 }
 
 class LeaveEndpoints {
   const LeaveEndpoints();
 
+  final String getCuti = '/cuti';
   final String postCuti = '/cuti';
 }

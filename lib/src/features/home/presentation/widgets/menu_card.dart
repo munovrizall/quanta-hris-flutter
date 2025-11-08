@@ -20,7 +20,6 @@ class MenuCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      elevation: 2,
       borderRadius: BorderRadius.circular(AppRadius.large),
       child: InkWell(
         onTap: onTap,
@@ -28,7 +27,8 @@ class MenuCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: AppSpacing.large),
           decoration: BoxDecoration(
-            color: AppColors.surface,
+            color: AppColors.white,
+            border: BoxBorder.all(color: AppColors.border),
             borderRadius: BorderRadius.circular(AppRadius.large),
           ),
           child: Column(

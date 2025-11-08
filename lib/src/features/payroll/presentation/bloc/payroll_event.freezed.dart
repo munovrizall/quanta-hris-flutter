@@ -55,11 +55,12 @@ extension PayrollEventPatterns on PayrollEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchSlipGaji value)?  fetchSlipGaji,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchSlipGaji value)?  fetchSlipGaji,TResult Function( _FetchSlipGajiDetail value)?  fetchSlipGajiDetail,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _FetchSlipGaji() when fetchSlipGaji != null:
-return fetchSlipGaji(_that);case _:
+return fetchSlipGaji(_that);case _FetchSlipGajiDetail() when fetchSlipGajiDetail != null:
+return fetchSlipGajiDetail(_that);case _:
   return orElse();
 
 }
@@ -77,11 +78,12 @@ return fetchSlipGaji(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchSlipGaji value)  fetchSlipGaji,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchSlipGaji value)  fetchSlipGaji,required TResult Function( _FetchSlipGajiDetail value)  fetchSlipGajiDetail,}){
 final _that = this;
 switch (_that) {
 case _FetchSlipGaji():
-return fetchSlipGaji(_that);case _:
+return fetchSlipGaji(_that);case _FetchSlipGajiDetail():
+return fetchSlipGajiDetail(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -98,11 +100,12 @@ return fetchSlipGaji(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchSlipGaji value)?  fetchSlipGaji,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchSlipGaji value)?  fetchSlipGaji,TResult? Function( _FetchSlipGajiDetail value)?  fetchSlipGajiDetail,}){
 final _that = this;
 switch (_that) {
 case _FetchSlipGaji() when fetchSlipGaji != null:
-return fetchSlipGaji(_that);case _:
+return fetchSlipGaji(_that);case _FetchSlipGajiDetail() when fetchSlipGajiDetail != null:
+return fetchSlipGajiDetail(_that);case _:
   return null;
 
 }
@@ -119,10 +122,11 @@ return fetchSlipGaji(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchSlipGaji,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchSlipGaji,TResult Function( int tahun,  int bulan)?  fetchSlipGajiDetail,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FetchSlipGaji() when fetchSlipGaji != null:
-return fetchSlipGaji();case _:
+return fetchSlipGaji();case _FetchSlipGajiDetail() when fetchSlipGajiDetail != null:
+return fetchSlipGajiDetail(_that.tahun,_that.bulan);case _:
   return orElse();
 
 }
@@ -140,10 +144,11 @@ return fetchSlipGaji();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchSlipGaji,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchSlipGaji,required TResult Function( int tahun,  int bulan)  fetchSlipGajiDetail,}) {final _that = this;
 switch (_that) {
 case _FetchSlipGaji():
-return fetchSlipGaji();case _:
+return fetchSlipGaji();case _FetchSlipGajiDetail():
+return fetchSlipGajiDetail(_that.tahun,_that.bulan);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -160,10 +165,11 @@ return fetchSlipGaji();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchSlipGaji,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchSlipGaji,TResult? Function( int tahun,  int bulan)?  fetchSlipGajiDetail,}) {final _that = this;
 switch (_that) {
 case _FetchSlipGaji() when fetchSlipGaji != null:
-return fetchSlipGaji();case _:
+return fetchSlipGaji();case _FetchSlipGajiDetail() when fetchSlipGajiDetail != null:
+return fetchSlipGajiDetail(_that.tahun,_that.bulan);case _:
   return null;
 
 }
@@ -202,5 +208,73 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _FetchSlipGajiDetail implements PayrollEvent {
+  const _FetchSlipGajiDetail({required this.tahun, required this.bulan});
+  
+
+ final  int tahun;
+ final  int bulan;
+
+/// Create a copy of PayrollEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$FetchSlipGajiDetailCopyWith<_FetchSlipGajiDetail> get copyWith => __$FetchSlipGajiDetailCopyWithImpl<_FetchSlipGajiDetail>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchSlipGajiDetail&&(identical(other.tahun, tahun) || other.tahun == tahun)&&(identical(other.bulan, bulan) || other.bulan == bulan));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,tahun,bulan);
+
+@override
+String toString() {
+  return 'PayrollEvent.fetchSlipGajiDetail(tahun: $tahun, bulan: $bulan)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$FetchSlipGajiDetailCopyWith<$Res> implements $PayrollEventCopyWith<$Res> {
+  factory _$FetchSlipGajiDetailCopyWith(_FetchSlipGajiDetail value, $Res Function(_FetchSlipGajiDetail) _then) = __$FetchSlipGajiDetailCopyWithImpl;
+@useResult
+$Res call({
+ int tahun, int bulan
+});
+
+
+
+
+}
+/// @nodoc
+class __$FetchSlipGajiDetailCopyWithImpl<$Res>
+    implements _$FetchSlipGajiDetailCopyWith<$Res> {
+  __$FetchSlipGajiDetailCopyWithImpl(this._self, this._then);
+
+  final _FetchSlipGajiDetail _self;
+  final $Res Function(_FetchSlipGajiDetail) _then;
+
+/// Create a copy of PayrollEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? tahun = null,Object? bulan = null,}) {
+  return _then(_FetchSlipGajiDetail(
+tahun: null == tahun ? _self.tahun : tahun // ignore: cast_nullable_to_non_nullable
+as int,bulan: null == bulan ? _self.bulan : bulan // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
 
 // dart format on

@@ -4,7 +4,7 @@ part 'slip_gaji_detail_entity.freezed.dart';
 
 /// Entity domain untuk detail slip gaji karyawan.
 @freezed
-class SlipGajiDetailEntity with _$SlipGajiDetailEntity {
+abstract class SlipGajiDetailEntity with _$SlipGajiDetailEntity {
   const factory SlipGajiDetailEntity({
     required String detailId,
     required String karyawanId,
@@ -34,7 +34,7 @@ class SlipGajiDetailEntity with _$SlipGajiDetailEntity {
 }
 
 @freezed
-class TunjanganBreakdownEntity with _$TunjanganBreakdownEntity {
+abstract class TunjanganBreakdownEntity with _$TunjanganBreakdownEntity {
   const factory TunjanganBreakdownEntity({
     required List<TunjanganBreakdownItemEntity> breakdown,
     required int total,
@@ -43,7 +43,7 @@ class TunjanganBreakdownEntity with _$TunjanganBreakdownEntity {
 }
 
 @freezed
-class TunjanganBreakdownItemEntity with _$TunjanganBreakdownItemEntity {
+abstract class TunjanganBreakdownItemEntity with _$TunjanganBreakdownItemEntity {
   const factory TunjanganBreakdownItemEntity({
     required String type,
     required String label,
@@ -53,7 +53,7 @@ class TunjanganBreakdownItemEntity with _$TunjanganBreakdownItemEntity {
 }
 
 @freezed
-class TunjanganComplianceEntity with _$TunjanganComplianceEntity {
+abstract class TunjanganComplianceEntity with _$TunjanganComplianceEntity {
   const factory TunjanganComplianceEntity({
     required bool isCompliant,
     required int percentage,
@@ -63,7 +63,7 @@ class TunjanganComplianceEntity with _$TunjanganComplianceEntity {
 }
 
 @freezed
-class BpjsBreakdownEntity with _$BpjsBreakdownEntity {
+abstract class BpjsBreakdownEntity with _$BpjsBreakdownEntity {
   const factory BpjsBreakdownEntity({
     required List<BpjsBreakdownItemEntity> breakdown,
     required int totalAmount,
@@ -71,7 +71,7 @@ class BpjsBreakdownEntity with _$BpjsBreakdownEntity {
 }
 
 @freezed
-class BpjsBreakdownItemEntity with _$BpjsBreakdownItemEntity {
+abstract class BpjsBreakdownItemEntity with _$BpjsBreakdownItemEntity {
   const factory BpjsBreakdownItemEntity({
     required String label,
     required int amount,
@@ -80,7 +80,7 @@ class BpjsBreakdownItemEntity with _$BpjsBreakdownItemEntity {
 }
 
 @freezed
-class Pph21DetailEntity with _$Pph21DetailEntity {
+abstract class Pph21DetailEntity with _$Pph21DetailEntity {
   const factory Pph21DetailEntity({
     required int jumlah,
     required String tarifPersen,
@@ -91,7 +91,7 @@ class Pph21DetailEntity with _$Pph21DetailEntity {
 }
 
 @freezed
-class PotonganDetailEntity with _$PotonganDetailEntity {
+abstract class PotonganDetailEntity with _$PotonganDetailEntity {
   const factory PotonganDetailEntity({
     required PotonganSummaryEntity alfa,
     required PotonganSummaryEntity keterlambatan,
@@ -101,7 +101,7 @@ class PotonganDetailEntity with _$PotonganDetailEntity {
 }
 
 @freezed
-class PotonganSummaryEntity with _$PotonganSummaryEntity {
+abstract class PotonganSummaryEntity with _$PotonganSummaryEntity {
   const factory PotonganSummaryEntity({
     required int totalPotongan,
     required int potonganPerHari,

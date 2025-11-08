@@ -5,7 +5,7 @@ part 'get_slip_gaji_detail_response.g.dart';
 
 /// Response model untuk detail slip gaji karyawan.
 @freezed
-class GetSlipGajiDetailResponse with _$GetSlipGajiDetailResponse {
+abstract class GetSlipGajiDetailResponse with _$GetSlipGajiDetailResponse {
   @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
   const factory GetSlipGajiDetailResponse({
     required String detailId,
@@ -39,7 +39,7 @@ class GetSlipGajiDetailResponse with _$GetSlipGajiDetailResponse {
 }
 
 @freezed
-class TunjanganBreakdownResponse with _$TunjanganBreakdownResponse {
+abstract class TunjanganBreakdownResponse with _$TunjanganBreakdownResponse {
   @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
   const factory TunjanganBreakdownResponse({
     required List<TunjanganBreakdownItemResponse> breakdown,
@@ -52,7 +52,7 @@ class TunjanganBreakdownResponse with _$TunjanganBreakdownResponse {
 }
 
 @freezed
-class TunjanganBreakdownItemResponse with _$TunjanganBreakdownItemResponse {
+abstract class TunjanganBreakdownItemResponse with _$TunjanganBreakdownItemResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory TunjanganBreakdownItemResponse({
     required String type,
@@ -66,7 +66,7 @@ class TunjanganBreakdownItemResponse with _$TunjanganBreakdownItemResponse {
 }
 
 @freezed
-class TunjanganComplianceResponse with _$TunjanganComplianceResponse {
+abstract class TunjanganComplianceResponse with _$TunjanganComplianceResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory TunjanganComplianceResponse({
     required bool isCompliant,
@@ -80,7 +80,7 @@ class TunjanganComplianceResponse with _$TunjanganComplianceResponse {
 }
 
 @freezed
-class BpjsBreakdownResponse with _$BpjsBreakdownResponse {
+abstract class BpjsBreakdownResponse with _$BpjsBreakdownResponse {
   @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
   const factory BpjsBreakdownResponse({
     required List<BpjsBreakdownItemResponse> breakdown,
@@ -92,7 +92,7 @@ class BpjsBreakdownResponse with _$BpjsBreakdownResponse {
 }
 
 @freezed
-class BpjsBreakdownItemResponse with _$BpjsBreakdownItemResponse {
+abstract class BpjsBreakdownItemResponse with _$BpjsBreakdownItemResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory BpjsBreakdownItemResponse({
     required String label,
@@ -105,7 +105,7 @@ class BpjsBreakdownItemResponse with _$BpjsBreakdownItemResponse {
 }
 
 @freezed
-class Pph21DetailResponse with _$Pph21DetailResponse {
+abstract class Pph21DetailResponse with _$Pph21DetailResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Pph21DetailResponse({
     required int jumlah,
@@ -120,7 +120,7 @@ class Pph21DetailResponse with _$Pph21DetailResponse {
 }
 
 @freezed
-class PotonganDetailResponse with _$PotonganDetailResponse {
+abstract class PotonganDetailResponse with _$PotonganDetailResponse {
   @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
   const factory PotonganDetailResponse({
     required PotonganSummaryResponse alfa,
@@ -134,7 +134,7 @@ class PotonganDetailResponse with _$PotonganDetailResponse {
 }
 
 @freezed
-class PotonganSummaryResponse with _$PotonganSummaryResponse {
+abstract class PotonganSummaryResponse with _$PotonganSummaryResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory PotonganSummaryResponse({
     required int totalPotongan,
