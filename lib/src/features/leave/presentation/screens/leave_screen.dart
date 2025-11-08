@@ -153,12 +153,7 @@ class _LeaveHeaderInfo extends StatelessWidget {
             text: 'Tambah Pengajuan Cuti',
             icon: const ButtonIconData(Icons.add),
             onPressed: () {
-              // TODO: Navigate to submit leave form
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Fitur pengajuan cuti akan segera hadir'),
-                ),
-              );
+              context.push('/leave/submit');
             },
           ),
         ],

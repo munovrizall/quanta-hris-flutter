@@ -18,7 +18,10 @@ class MainBottomNavBar extends StatelessWidget {
       onTap: (index) => onTap?.call(index),
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.payments), label: 'Penggajian'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.payments),
+          label: 'Penggajian',
+        ),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
       ],
     );

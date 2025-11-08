@@ -29,10 +29,7 @@ import 'package:quanta_hris/src/shared/widgets/main_bottom_navbar.dart';
 class HomeScreen extends StatelessWidget {
   final bool shouldRefreshAttendanceStatus;
 
-  const HomeScreen({
-    super.key,
-    this.shouldRefreshAttendanceStatus = false,
-  });
+  const HomeScreen({super.key, this.shouldRefreshAttendanceStatus = false});
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +70,9 @@ class _HomeViewState extends State<_HomeView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       if (widget.shouldRefreshAttendanceStatus) {
-        context
-            .read<HomeBloc>()
-            .add(const HomeEvent.fetchAttendanceStatusData());
+        context.read<HomeBloc>().add(
+          const HomeEvent.fetchAttendanceStatusData(),
+        );
       }
     });
   }
@@ -86,9 +83,7 @@ class _HomeViewState extends State<_HomeView> {
     if (widget.shouldRefreshAttendanceStatus &&
         widget.shouldRefreshAttendanceStatus !=
             oldWidget.shouldRefreshAttendanceStatus) {
-      context
-          .read<HomeBloc>()
-          .add(const HomeEvent.fetchAttendanceStatusData());
+      context.read<HomeBloc>().add(const HomeEvent.fetchAttendanceStatusData());
     }
   }
 
@@ -417,19 +412,10 @@ class _HomeViewState extends State<_HomeView> {
                             colors: !_hasFaceEmbedding
                                 ? [AppColors.primary, AppColors.primary200]
                                 : hasCompletedAttendance
-                                    ? [
-                                        AppColors.success,
-                                        AppColors.successLight,
-                                      ]
-                                    : isClockedIn
-                                        ? [
-                                            AppColors.warning,
-                                            AppColors.warningLight,
-                                          ]
-                                        : [
-                                            AppColors.primary,
-                                            AppColors.primary200,
-                                          ],
+                                ? [AppColors.success, AppColors.successLight]
+                                : isClockedIn
+                                ? [AppColors.warning, AppColors.warningLight]
+                                : [AppColors.primary, AppColors.primary200],
                           ),
                           borderRadius: BorderRadius.circular(AppRadius.xl),
                         ),
@@ -439,10 +425,10 @@ class _HomeViewState extends State<_HomeView> {
                               !_hasFaceEmbedding
                                   ? Icons.person_add_alt_1
                                   : hasCompletedAttendance
-                                      ? Icons.bedtime
-                                      : isClockedIn
-                                          ? Icons.logout
-                                          : Icons.fingerprint,
+                                  ? Icons.bedtime
+                                  : isClockedIn
+                                  ? Icons.logout
+                                  : Icons.fingerprint,
                               size: AppSizes.iconHuge,
                               color: AppColors.white,
                             ),
@@ -451,11 +437,10 @@ class _HomeViewState extends State<_HomeView> {
                               !_hasFaceEmbedding
                                   ? AppStrings.home.registerFaceButtonText
                                   : hasCompletedAttendance
-                                      ? 'Selamat beristirahat'
-                                      : isClockedIn
-                                          ? AppStrings.home.checkOutButtonText
-                                          :
-                                          AppStrings.home.checkInButtonText,
+                                  ? 'Selamat beristirahat'
+                                  : isClockedIn
+                                  ? AppStrings.home.checkOutButtonText
+                                  : AppStrings.home.checkInButtonText,
                               style: AppTypography.buttonLarge.copyWith(
                                 letterSpacing: 1.2,
                               ),
@@ -465,10 +450,10 @@ class _HomeViewState extends State<_HomeView> {
                               !_hasFaceEmbedding
                                   ? AppStrings.home.registerFaceSubtitle
                                   : hasCompletedAttendance
-                                      ? 'Anda telah menyelesaikan absensi hari ini'
-                                      : isClockedIn
-                                          ? AppStrings.home.checkOutSubtitle
-                                          : AppStrings.home.checkInSubtitle,
+                                  ? 'Anda telah menyelesaikan absensi hari ini'
+                                  : isClockedIn
+                                  ? AppStrings.home.checkOutSubtitle
+                                  : AppStrings.home.checkInSubtitle,
                               style: AppTypography.bodySmall.copyWith(
                                 color: AppColors.white.withOpacity(0.9),
                               ),
@@ -505,7 +490,7 @@ class _HomeViewState extends State<_HomeView> {
                               label: AppStrings.home.leaveRequestLabel,
                               color: AppColors.primary,
                               onTap: () {
-                                // TODO: Navigate to leave request
+                                context.push('/leave');
                               },
                             ),
                           ),
@@ -612,7 +597,7 @@ class _HomeViewState extends State<_HomeView> {
   void _onBottomNavTapped(BuildContext context, int index) {
     switch (index) {
       case 0:
-        context.go('/home');
+        // Already on home screen
         break;
       case 1:
         context.go('/payroll');

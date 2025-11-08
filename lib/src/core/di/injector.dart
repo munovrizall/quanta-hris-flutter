@@ -38,6 +38,7 @@ import 'package:quanta_hris/src/features/home/presentation/bloc/home_bloc.dart';
 import 'package:quanta_hris/src/features/payroll/data/datasources/payroll_remote_data_source.dart';
 import 'package:quanta_hris/src/features/payroll/data/repositories/payroll_repository_impl.dart';
 import 'package:quanta_hris/src/features/payroll/domain/repositories/payroll_repository.dart';
+import 'package:quanta_hris/src/features/payroll/domain/usecases/download_slip_gaji_usecase.dart';
 import 'package:quanta_hris/src/features/payroll/domain/usecases/get_slip_gaji_detail_usecase.dart';
 import 'package:quanta_hris/src/features/payroll/domain/usecases/get_slip_gaji_usecase.dart';
 import 'package:quanta_hris/src/features/payroll/presentation/bloc/payroll_bloc.dart';
@@ -45,6 +46,7 @@ import 'package:quanta_hris/src/features/splash/domain/usecases/check_session_us
 import 'package:quanta_hris/src/features/leave/data/datasources/leave_remote_data_source.dart';
 import 'package:quanta_hris/src/features/leave/data/repositories/leave_repository_impl.dart';
 import 'package:quanta_hris/src/features/leave/domain/repositories/leave_repository.dart';
+import 'package:quanta_hris/src/features/leave/domain/usecases/get_leave_history_usecase.dart';
 import 'package:quanta_hris/src/features/leave/domain/usecases/submit_leave_usecase.dart';
 import 'package:quanta_hris/src/features/leave/presentation/bloc/leave_bloc.dart';
 
@@ -239,11 +241,15 @@ void _registerPayroll() {
   getIt.registerFactory(
     () => GetSlipGajiDetailUseCase(getIt<PayrollRepository>()),
   );
+  getIt.registerFactory(
+    () => DownloadSlipGajiUseCase(getIt<PayrollRepository>()),
+  );
 
   getIt.registerFactory(
     () => PayrollBloc(
       getSlipGajiUseCase: getIt<GetSlipGajiUseCase>(),
       getSlipGajiDetailUseCase: getIt<GetSlipGajiDetailUseCase>(),
+      downloadSlipGajiUseCase: getIt<DownloadSlipGajiUseCase>(),
     ),
   );
 }
@@ -301,8 +307,13 @@ void _registerLeave() {
 
   getIt.registerFactory(() => SubmitLeaveUseCase(getIt<LeaveRepository>()));
 
+  getIt.registerFactory(() => GetLeaveHistoryUseCase(getIt<LeaveRepository>()));
+
   getIt.registerFactory(
-    () => LeaveBloc(submitLeaveUseCase: getIt<SubmitLeaveUseCase>()),
+    () => LeaveBloc(
+      submitLeaveUseCase: getIt<SubmitLeaveUseCase>(),
+      getLeaveHistoryUseCase: getIt<GetLeaveHistoryUseCase>(),
+    ),
   );
 }
 

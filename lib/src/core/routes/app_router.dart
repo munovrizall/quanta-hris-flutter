@@ -7,6 +7,9 @@ import 'package:quanta_hris/src/features/attendance/presentation/screens/attenda
 import 'package:quanta_hris/src/features/authentication/presentation/screens/login_screen.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/screens/register_face_screen.dart';
 import 'package:quanta_hris/src/features/home/presentation/screens/home_screen.dart'; // Akan kita buat
+import 'package:quanta_hris/src/features/leave/presentation/screens/leave_screen.dart';
+import 'package:quanta_hris/src/features/leave/presentation/screens/submit_leave_form_screen.dart';
+import 'package:quanta_hris/src/features/payroll/presentation/screens/payroll_detail_screen.dart';
 import 'package:quanta_hris/src/features/payroll/presentation/screens/payroll_screen.dart';
 import 'package:quanta_hris/src/features/profile/presentation/screens/profile_screen.dart';
 import 'package:quanta_hris/src/features/splash/presentation/screens/splash_screen.dart'; // Akan kita buat
@@ -57,6 +60,38 @@ final GoRouter appRouter = GoRouter(
       path: '/payroll',
       pageBuilder: (BuildContext context, GoRouterState state) {
         return const NoTransitionPage(child: PayrollScreen());
+      },
+    ),
+    GoRoute(
+      name: 'leave',
+      path: '/leave',
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        return const NoTransitionPage(child: LeaveScreen());
+      },
+    ),
+    GoRoute(
+      name: 'leave-submit',
+      path: '/leave/submit',
+      builder: (BuildContext context, GoRouterState state) {
+        return const SubmitLeaveFormScreen();
+      },
+    ),
+    GoRoute(
+      name: 'payroll-detail',
+      path: '/payroll/:year/:month',
+      builder: (BuildContext context, GoRouterState state) {
+        final yearParam = state.pathParameters['year'];
+        final monthParam = state.pathParameters['month'];
+        final tahun = int.tryParse(yearParam ?? '') ?? 0;
+        final bulan = int.tryParse(monthParam ?? '') ?? 0;
+        final periodeLabel =
+            (state.extra as String?) ?? 'Slip Gaji $monthParam/$yearParam';
+
+        return PayrollDetailScreen(
+          tahun: tahun,
+          bulan: bulan,
+          periodeLabel: periodeLabel,
+        );
       },
     ),
     GoRoute(

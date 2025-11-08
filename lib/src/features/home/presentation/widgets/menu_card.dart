@@ -36,10 +36,14 @@ class MenuCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(AppSpacing.small),
                 decoration: BoxDecoration(
-                  color: AppColors.primary10,
+                  color: color.withAlpha(20),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, color: color, size: AppSizes.iconXL),
+                child: Icon(
+                  icon,
+                  color: AppColors.primary,
+                  size: AppSizes.iconXL,
+                ),
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(

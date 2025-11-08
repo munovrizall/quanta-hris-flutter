@@ -46,6 +46,7 @@ class PayrollEndpoints {
 
   final String getSlipGaji = '/slip-gaji';
   String getSlipGajiDetail(int tahun, int bulan) => '/slip-gaji/$tahun/$bulan';
+  String downloadSlipGaji(int tahun, int bulan) => '/slip-gaji/$tahun/$bulan/download';
 }
 
 class LeaveEndpoints {
