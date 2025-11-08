@@ -103,6 +103,7 @@ class PayrollRepositoryImpl implements PayrollRepository {
       lemburPay: data.lemburPay,
       potonganTotal: data.potonganTotal,
       totalGaji: data.totalGaji,
+      penghasilanBruto: data.penghasilanBruto,
       penyesuaian: data.penyesuaian,
       catatanPenyesuaian: data.catatanPenyesuaian,
       pph21Detail: Pph21DetailEntity(

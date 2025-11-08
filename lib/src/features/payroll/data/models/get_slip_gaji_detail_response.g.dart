@@ -32,6 +32,7 @@ _GetSlipGajiDetailResponse _$GetSlipGajiDetailResponseFromJson(
   lemburPay: (json['lembur_pay'] as num).toInt(),
   potonganTotal: (json['potongan_total'] as num).toInt(),
   totalGaji: (json['total_gaji'] as num).toInt(),
+  penghasilanBruto: (json['penghasilan_bruto'] as num).toInt(),
   penyesuaian: (json['penyesuaian'] as num).toInt(),
   catatanPenyesuaian: json['catatan_penyesuaian'] as String?,
   pph21Detail: Pph21DetailResponse.fromJson(
@@ -65,6 +66,7 @@ Map<String, dynamic> _$GetSlipGajiDetailResponseToJson(
   'lembur_pay': instance.lemburPay,
   'potongan_total': instance.potonganTotal,
   'total_gaji': instance.totalGaji,
+  'penghasilan_bruto': instance.penghasilanBruto,
   'penyesuaian': instance.penyesuaian,
   'catatan_penyesuaian': instance.catatanPenyesuaian,
   'pph21_detail': instance.pph21Detail.toJson(),

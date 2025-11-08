@@ -27,6 +27,7 @@ abstract class GetSlipGajiDetailResponse with _$GetSlipGajiDetailResponse {
     required int lemburPay,
     required int potonganTotal,
     required int totalGaji,
+    required int penghasilanBruto,
     required int penyesuaian,
     String? catatanPenyesuaian,
     required Pph21DetailResponse pph21Detail,

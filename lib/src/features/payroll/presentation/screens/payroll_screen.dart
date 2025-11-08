@@ -31,9 +31,7 @@ class _PayrollView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Slip Gaji'),
-      ),
+      appBar: AppBar(title: const Text('Slip Gaji')),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.large),
@@ -116,25 +114,40 @@ class _PayrollContent extends StatelessWidget {
                 ),
                 elevation: 2,
                 margin: const EdgeInsets.only(bottom: AppSpacing.medium),
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.large),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(slip.periodeLabel, style: AppTypography.heading3),
-                      const SizedBox(height: AppSpacing.small),
-                      _PayrollDetailRow(
-                        label: 'Gaji Bersih',
-                        value: _formatCurrency(slip.gajiBersih),
-                      ),
-                      const Divider(),
-                      _PayrollDetailRow(
-                        label: 'Status Transfer',
-                        value: slip.sudahDitransfer
-                            ? 'Sudah Ditransfer'
-                            : 'Belum Ditransfer',
-                      ),
-                    ],
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(AppRadius.large),
+                  onTap: () => _openSlipDetail(context, slip),
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppSpacing.large),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                slip.periodeLabel,
+                                style: AppTypography.heading3,
+                              ),
+                            ),
+                            const Icon(Icons.chevron_right),
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.small),
+                        _PayrollDetailRow(
+                          label: 'Gaji Bersih',
+                          value: _formatCurrency(slip.gajiBersih),
+                        ),
+                        const Divider(),
+                        _PayrollDetailRow(
+                          label: 'Status Transfer',
+                          value: slip.sudahDitransfer
+                              ? 'Sudah Ditransfer'
+                              : 'Belum Ditransfer',
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -142,6 +155,17 @@ class _PayrollContent extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void _openSlipDetail(BuildContext context, SlipGajiEntity slip) {
+    context.pushNamed(
+      'payroll-detail',
+      pathParameters: {
+        'year': slip.periodeTahun.toString(),
+        'month': slip.periodeBulan.toString(),
+      },
+      extra: slip.periodeLabel,
     );
   }
 }

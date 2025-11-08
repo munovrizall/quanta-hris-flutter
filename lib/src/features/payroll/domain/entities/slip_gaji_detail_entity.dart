@@ -25,6 +25,7 @@ abstract class SlipGajiDetailEntity with _$SlipGajiDetailEntity {
     required int lemburPay,
     required int potonganTotal,
     required int totalGaji,
+    required int penghasilanBruto,
     required int penyesuaian,
     String? catatanPenyesuaian,
     required Pph21DetailEntity pph21Detail,
