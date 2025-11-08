@@ -9,4 +9,8 @@ abstract class PayrollEvent with _$PayrollEvent {
     required int tahun,
     required int bulan,
   }) = _FetchSlipGajiDetail;
+  const factory PayrollEvent.downloadSlipGaji({
+    required int tahun,
+    required int bulan,
+  }) = _DownloadSlipGaji;
 }

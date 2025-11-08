@@ -11,6 +11,7 @@ abstract class PayrollRemoteDataSource {
     int tahun,
     int bulan,
   );
+  Future<List<int>> downloadSlipGaji(int tahun, int bulan);
 }
 
 class PayrollRemoteDataSourceImpl implements PayrollRemoteDataSource {
@@ -51,6 +52,20 @@ class PayrollRemoteDataSourceImpl implements PayrollRemoteDataSource {
         (json) =>
             GetSlipGajiDetailResponse.fromJson(json as Map<String, dynamic>),
       );
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @override
+  Future<List<int>> downloadSlipGaji(int tahun, int bulan) async {
+    try {
+      final response = await _dio.get(
+        ApiEndpoints.payroll.downloadSlipGaji(tahun, bulan),
+        options: Options(responseType: ResponseType.bytes),
+      );
+
+      return (response.data as List<int>);
     } catch (error) {
       throw ErrorHandler.handle(error);
     }

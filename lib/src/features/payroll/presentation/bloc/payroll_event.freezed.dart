@@ -55,12 +55,13 @@ extension PayrollEventPatterns on PayrollEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchSlipGaji value)?  fetchSlipGaji,TResult Function( _FetchSlipGajiDetail value)?  fetchSlipGajiDetail,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchSlipGaji value)?  fetchSlipGaji,TResult Function( _FetchSlipGajiDetail value)?  fetchSlipGajiDetail,TResult Function( _DownloadSlipGaji value)?  downloadSlipGaji,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _FetchSlipGaji() when fetchSlipGaji != null:
 return fetchSlipGaji(_that);case _FetchSlipGajiDetail() when fetchSlipGajiDetail != null:
-return fetchSlipGajiDetail(_that);case _:
+return fetchSlipGajiDetail(_that);case _DownloadSlipGaji() when downloadSlipGaji != null:
+return downloadSlipGaji(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return fetchSlipGajiDetail(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchSlipGaji value)  fetchSlipGaji,required TResult Function( _FetchSlipGajiDetail value)  fetchSlipGajiDetail,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchSlipGaji value)  fetchSlipGaji,required TResult Function( _FetchSlipGajiDetail value)  fetchSlipGajiDetail,required TResult Function( _DownloadSlipGaji value)  downloadSlipGaji,}){
 final _that = this;
 switch (_that) {
 case _FetchSlipGaji():
 return fetchSlipGaji(_that);case _FetchSlipGajiDetail():
-return fetchSlipGajiDetail(_that);case _:
+return fetchSlipGajiDetail(_that);case _DownloadSlipGaji():
+return downloadSlipGaji(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return fetchSlipGajiDetail(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchSlipGaji value)?  fetchSlipGaji,TResult? Function( _FetchSlipGajiDetail value)?  fetchSlipGajiDetail,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchSlipGaji value)?  fetchSlipGaji,TResult? Function( _FetchSlipGajiDetail value)?  fetchSlipGajiDetail,TResult? Function( _DownloadSlipGaji value)?  downloadSlipGaji,}){
 final _that = this;
 switch (_that) {
 case _FetchSlipGaji() when fetchSlipGaji != null:
 return fetchSlipGaji(_that);case _FetchSlipGajiDetail() when fetchSlipGajiDetail != null:
-return fetchSlipGajiDetail(_that);case _:
+return fetchSlipGajiDetail(_that);case _DownloadSlipGaji() when downloadSlipGaji != null:
+return downloadSlipGaji(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return fetchSlipGajiDetail(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchSlipGaji,TResult Function( int tahun,  int bulan)?  fetchSlipGajiDetail,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchSlipGaji,TResult Function( int tahun,  int bulan)?  fetchSlipGajiDetail,TResult Function( int tahun,  int bulan)?  downloadSlipGaji,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FetchSlipGaji() when fetchSlipGaji != null:
 return fetchSlipGaji();case _FetchSlipGajiDetail() when fetchSlipGajiDetail != null:
-return fetchSlipGajiDetail(_that.tahun,_that.bulan);case _:
+return fetchSlipGajiDetail(_that.tahun,_that.bulan);case _DownloadSlipGaji() when downloadSlipGaji != null:
+return downloadSlipGaji(_that.tahun,_that.bulan);case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return fetchSlipGajiDetail(_that.tahun,_that.bulan);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchSlipGaji,required TResult Function( int tahun,  int bulan)  fetchSlipGajiDetail,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchSlipGaji,required TResult Function( int tahun,  int bulan)  fetchSlipGajiDetail,required TResult Function( int tahun,  int bulan)  downloadSlipGaji,}) {final _that = this;
 switch (_that) {
 case _FetchSlipGaji():
 return fetchSlipGaji();case _FetchSlipGajiDetail():
-return fetchSlipGajiDetail(_that.tahun,_that.bulan);case _:
+return fetchSlipGajiDetail(_that.tahun,_that.bulan);case _DownloadSlipGaji():
+return downloadSlipGaji(_that.tahun,_that.bulan);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return fetchSlipGajiDetail(_that.tahun,_that.bulan);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchSlipGaji,TResult? Function( int tahun,  int bulan)?  fetchSlipGajiDetail,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchSlipGaji,TResult? Function( int tahun,  int bulan)?  fetchSlipGajiDetail,TResult? Function( int tahun,  int bulan)?  downloadSlipGaji,}) {final _that = this;
 switch (_that) {
 case _FetchSlipGaji() when fetchSlipGaji != null:
 return fetchSlipGaji();case _FetchSlipGajiDetail() when fetchSlipGajiDetail != null:
-return fetchSlipGajiDetail(_that.tahun,_that.bulan);case _:
+return fetchSlipGajiDetail(_that.tahun,_that.bulan);case _DownloadSlipGaji() when downloadSlipGaji != null:
+return downloadSlipGaji(_that.tahun,_that.bulan);case _:
   return null;
 
 }
@@ -268,6 +274,74 @@ class __$FetchSlipGajiDetailCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? tahun = null,Object? bulan = null,}) {
   return _then(_FetchSlipGajiDetail(
+tahun: null == tahun ? _self.tahun : tahun // ignore: cast_nullable_to_non_nullable
+as int,bulan: null == bulan ? _self.bulan : bulan // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _DownloadSlipGaji implements PayrollEvent {
+  const _DownloadSlipGaji({required this.tahun, required this.bulan});
+  
+
+ final  int tahun;
+ final  int bulan;
+
+/// Create a copy of PayrollEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DownloadSlipGajiCopyWith<_DownloadSlipGaji> get copyWith => __$DownloadSlipGajiCopyWithImpl<_DownloadSlipGaji>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DownloadSlipGaji&&(identical(other.tahun, tahun) || other.tahun == tahun)&&(identical(other.bulan, bulan) || other.bulan == bulan));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,tahun,bulan);
+
+@override
+String toString() {
+  return 'PayrollEvent.downloadSlipGaji(tahun: $tahun, bulan: $bulan)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DownloadSlipGajiCopyWith<$Res> implements $PayrollEventCopyWith<$Res> {
+  factory _$DownloadSlipGajiCopyWith(_DownloadSlipGaji value, $Res Function(_DownloadSlipGaji) _then) = __$DownloadSlipGajiCopyWithImpl;
+@useResult
+$Res call({
+ int tahun, int bulan
+});
+
+
+
+
+}
+/// @nodoc
+class __$DownloadSlipGajiCopyWithImpl<$Res>
+    implements _$DownloadSlipGajiCopyWith<$Res> {
+  __$DownloadSlipGajiCopyWithImpl(this._self, this._then);
+
+  final _DownloadSlipGaji _self;
+  final $Res Function(_DownloadSlipGaji) _then;
+
+/// Create a copy of PayrollEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? tahun = null,Object? bulan = null,}) {
+  return _then(_DownloadSlipGaji(
 tahun: null == tahun ? _self.tahun : tahun // ignore: cast_nullable_to_non_nullable
 as int,bulan: null == bulan ? _self.bulan : bulan // ignore: cast_nullable_to_non_nullable
 as int,

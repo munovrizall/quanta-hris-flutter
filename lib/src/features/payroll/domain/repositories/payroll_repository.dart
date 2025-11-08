@@ -7,4 +7,5 @@ abstract class PayrollRepository {
     required int tahun,
     required int bulan,
   });
+  Future<String> downloadSlipGaji({required int tahun, required int bulan});
 }

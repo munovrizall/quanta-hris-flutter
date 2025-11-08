@@ -9,6 +9,7 @@ import 'package:quanta_hris/src/features/payroll/presentation/bloc/payroll_state
 import 'package:quanta_hris/src/shared/styles/app_colors.dart';
 import 'package:quanta_hris/src/shared/styles/app_measures.dart';
 import 'package:quanta_hris/src/shared/styles/app_typography.dart';
+import 'package:quanta_hris/src/shared/widgets/primary_button.dart';
 
 class PayrollDetailScreen extends StatelessWidget {
   final int tahun;
@@ -53,37 +54,79 @@ class _PayrollDetailView extends StatelessWidget {
     final title = periodeLabel.isNotEmpty
         ? 'Slip Gaji $periodeLabel'
         : 'Slip Gaji';
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.large),
+    return BlocListener<PayrollBloc, PayrollState>(
+      listenWhen: (previous, current) =>
+          previous.downloadSlipGajiError != current.downloadSlipGajiError ||
+          previous.downloadSlipGajiPath != current.downloadSlipGajiPath,
+      listener: (context, state) {
+        if (state.downloadSlipGajiError != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.downloadSlipGajiError!),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        } else if (state.downloadSlipGajiPath != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Slip gaji tersimpan di: ${state.downloadSlipGajiPath}',
+              ),
+            ),
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(title: Text(title)),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.large),
+            child: BlocBuilder<PayrollBloc, PayrollState>(
+              builder: (context, state) {
+                if (state.isLoadingSlipGajiDetail) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (state.slipGajiDetailError != null) {
+                  return _PayrollDetailError(
+                    message: state.slipGajiDetailError!,
+                    onRetry: () => context.read<PayrollBloc>().add(
+                      PayrollEvent.fetchSlipGajiDetail(
+                        tahun: tahun,
+                        bulan: bulan,
+                      ),
+                    ),
+                  );
+                }
+
+                final detail = state.slipGajiDetail;
+                if (detail == null) {
+                  return const _PayrollDetailEmpty();
+                }
+
+                return _PayrollDetailContent(
+                  detail: detail,
+                  periodeLabel: periodeLabel,
+                );
+              },
+            ),
+          ),
+        ),
+        bottomNavigationBar: SafeArea(
+          minimum: const EdgeInsets.all(AppSpacing.large),
           child: BlocBuilder<PayrollBloc, PayrollState>(
             builder: (context, state) {
-              if (state.isLoadingSlipGajiDetail) {
-                return const Center(child: CircularProgressIndicator());
-              }
-
-              if (state.slipGajiDetailError != null) {
-                return _PayrollDetailError(
-                  message: state.slipGajiDetailError!,
-                  onRetry: () => context.read<PayrollBloc>().add(
-                    PayrollEvent.fetchSlipGajiDetail(
-                      tahun: tahun,
-                      bulan: bulan,
-                    ),
-                  ),
-                );
-              }
-
-              final detail = state.slipGajiDetail;
-              if (detail == null) {
-                return const _PayrollDetailEmpty();
-              }
-
-              return _PayrollDetailContent(
-                detail: detail,
-                periodeLabel: periodeLabel,
+              return PrimaryButton(
+                text: 'Unduh PDF',
+                isLoading: state.isDownloadingSlipGaji,
+                onPressed: state.isDownloadingSlipGaji
+                    ? null
+                    : () => context.read<PayrollBloc>().add(
+                        PayrollEvent.downloadSlipGaji(
+                          tahun: tahun,
+                          bulan: bulan,
+                        ),
+                      ),
               );
             },
           ),

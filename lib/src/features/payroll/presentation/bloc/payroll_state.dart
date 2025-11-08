@@ -9,9 +9,12 @@ abstract class PayrollState with _$PayrollState {
   const factory PayrollState({
     @Default(false) bool isLoadingSlipGaji,
     @Default(false) bool isLoadingSlipGajiDetail,
+    @Default(false) bool isDownloadingSlipGaji,
     List<SlipGajiEntity>? slipGaji,
     String? slipGajiError,
     SlipGajiDetailEntity? slipGajiDetail,
     String? slipGajiDetailError,
+    String? downloadSlipGajiError,
+    String? downloadSlipGajiPath,
   }) = _PayrollState;
 }

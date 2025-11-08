@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PayrollState {
 
- bool get isLoadingSlipGaji; bool get isLoadingSlipGajiDetail; List<SlipGajiEntity>? get slipGaji; String? get slipGajiError; SlipGajiDetailEntity? get slipGajiDetail; String? get slipGajiDetailError;
+ bool get isLoadingSlipGaji; bool get isLoadingSlipGajiDetail; bool get isDownloadingSlipGaji; List<SlipGajiEntity>? get slipGaji; String? get slipGajiError; SlipGajiDetailEntity? get slipGajiDetail; String? get slipGajiDetailError; String? get downloadSlipGajiError; String? get downloadSlipGajiPath;
 /// Create a copy of PayrollState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PayrollStateCopyWith<PayrollState> get copyWith => _$PayrollStateCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PayrollState&&(identical(other.isLoadingSlipGaji, isLoadingSlipGaji) || other.isLoadingSlipGaji == isLoadingSlipGaji)&&(identical(other.isLoadingSlipGajiDetail, isLoadingSlipGajiDetail) || other.isLoadingSlipGajiDetail == isLoadingSlipGajiDetail)&&const DeepCollectionEquality().equals(other.slipGaji, slipGaji)&&(identical(other.slipGajiError, slipGajiError) || other.slipGajiError == slipGajiError)&&(identical(other.slipGajiDetail, slipGajiDetail) || other.slipGajiDetail == slipGajiDetail)&&(identical(other.slipGajiDetailError, slipGajiDetailError) || other.slipGajiDetailError == slipGajiDetailError));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PayrollState&&(identical(other.isLoadingSlipGaji, isLoadingSlipGaji) || other.isLoadingSlipGaji == isLoadingSlipGaji)&&(identical(other.isLoadingSlipGajiDetail, isLoadingSlipGajiDetail) || other.isLoadingSlipGajiDetail == isLoadingSlipGajiDetail)&&(identical(other.isDownloadingSlipGaji, isDownloadingSlipGaji) || other.isDownloadingSlipGaji == isDownloadingSlipGaji)&&const DeepCollectionEquality().equals(other.slipGaji, slipGaji)&&(identical(other.slipGajiError, slipGajiError) || other.slipGajiError == slipGajiError)&&(identical(other.slipGajiDetail, slipGajiDetail) || other.slipGajiDetail == slipGajiDetail)&&(identical(other.slipGajiDetailError, slipGajiDetailError) || other.slipGajiDetailError == slipGajiDetailError)&&(identical(other.downloadSlipGajiError, downloadSlipGajiError) || other.downloadSlipGajiError == downloadSlipGajiError)&&(identical(other.downloadSlipGajiPath, downloadSlipGajiPath) || other.downloadSlipGajiPath == downloadSlipGajiPath));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoadingSlipGaji,isLoadingSlipGajiDetail,const DeepCollectionEquality().hash(slipGaji),slipGajiError,slipGajiDetail,slipGajiDetailError);
+int get hashCode => Object.hash(runtimeType,isLoadingSlipGaji,isLoadingSlipGajiDetail,isDownloadingSlipGaji,const DeepCollectionEquality().hash(slipGaji),slipGajiError,slipGajiDetail,slipGajiDetailError,downloadSlipGajiError,downloadSlipGajiPath);
 
 @override
 String toString() {
-  return 'PayrollState(isLoadingSlipGaji: $isLoadingSlipGaji, isLoadingSlipGajiDetail: $isLoadingSlipGajiDetail, slipGaji: $slipGaji, slipGajiError: $slipGajiError, slipGajiDetail: $slipGajiDetail, slipGajiDetailError: $slipGajiDetailError)';
+  return 'PayrollState(isLoadingSlipGaji: $isLoadingSlipGaji, isLoadingSlipGajiDetail: $isLoadingSlipGajiDetail, isDownloadingSlipGaji: $isDownloadingSlipGaji, slipGaji: $slipGaji, slipGajiError: $slipGajiError, slipGajiDetail: $slipGajiDetail, slipGajiDetailError: $slipGajiDetailError, downloadSlipGajiError: $downloadSlipGajiError, downloadSlipGajiPath: $downloadSlipGajiPath)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $PayrollStateCopyWith<$Res>  {
   factory $PayrollStateCopyWith(PayrollState value, $Res Function(PayrollState) _then) = _$PayrollStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoadingSlipGaji, bool isLoadingSlipGajiDetail, List<SlipGajiEntity>? slipGaji, String? slipGajiError, SlipGajiDetailEntity? slipGajiDetail, String? slipGajiDetailError
+ bool isLoadingSlipGaji, bool isLoadingSlipGajiDetail, bool isDownloadingSlipGaji, List<SlipGajiEntity>? slipGaji, String? slipGajiError, SlipGajiDetailEntity? slipGajiDetail, String? slipGajiDetailError, String? downloadSlipGajiError, String? downloadSlipGajiPath
 });
 
 
@@ -62,14 +62,17 @@ class _$PayrollStateCopyWithImpl<$Res>
 
 /// Create a copy of PayrollState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoadingSlipGaji = null,Object? isLoadingSlipGajiDetail = null,Object? slipGaji = freezed,Object? slipGajiError = freezed,Object? slipGajiDetail = freezed,Object? slipGajiDetailError = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoadingSlipGaji = null,Object? isLoadingSlipGajiDetail = null,Object? isDownloadingSlipGaji = null,Object? slipGaji = freezed,Object? slipGajiError = freezed,Object? slipGajiDetail = freezed,Object? slipGajiDetailError = freezed,Object? downloadSlipGajiError = freezed,Object? downloadSlipGajiPath = freezed,}) {
   return _then(_self.copyWith(
 isLoadingSlipGaji: null == isLoadingSlipGaji ? _self.isLoadingSlipGaji : isLoadingSlipGaji // ignore: cast_nullable_to_non_nullable
 as bool,isLoadingSlipGajiDetail: null == isLoadingSlipGajiDetail ? _self.isLoadingSlipGajiDetail : isLoadingSlipGajiDetail // ignore: cast_nullable_to_non_nullable
+as bool,isDownloadingSlipGaji: null == isDownloadingSlipGaji ? _self.isDownloadingSlipGaji : isDownloadingSlipGaji // ignore: cast_nullable_to_non_nullable
 as bool,slipGaji: freezed == slipGaji ? _self.slipGaji : slipGaji // ignore: cast_nullable_to_non_nullable
 as List<SlipGajiEntity>?,slipGajiError: freezed == slipGajiError ? _self.slipGajiError : slipGajiError // ignore: cast_nullable_to_non_nullable
 as String?,slipGajiDetail: freezed == slipGajiDetail ? _self.slipGajiDetail : slipGajiDetail // ignore: cast_nullable_to_non_nullable
 as SlipGajiDetailEntity?,slipGajiDetailError: freezed == slipGajiDetailError ? _self.slipGajiDetailError : slipGajiDetailError // ignore: cast_nullable_to_non_nullable
+as String?,downloadSlipGajiError: freezed == downloadSlipGajiError ? _self.downloadSlipGajiError : downloadSlipGajiError // ignore: cast_nullable_to_non_nullable
+as String?,downloadSlipGajiPath: freezed == downloadSlipGajiPath ? _self.downloadSlipGajiPath : downloadSlipGajiPath // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -167,10 +170,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoadingSlipGaji,  bool isLoadingSlipGajiDetail,  List<SlipGajiEntity>? slipGaji,  String? slipGajiError,  SlipGajiDetailEntity? slipGajiDetail,  String? slipGajiDetailError)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoadingSlipGaji,  bool isLoadingSlipGajiDetail,  bool isDownloadingSlipGaji,  List<SlipGajiEntity>? slipGaji,  String? slipGajiError,  SlipGajiDetailEntity? slipGajiDetail,  String? slipGajiDetailError,  String? downloadSlipGajiError,  String? downloadSlipGajiPath)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PayrollState() when $default != null:
-return $default(_that.isLoadingSlipGaji,_that.isLoadingSlipGajiDetail,_that.slipGaji,_that.slipGajiError,_that.slipGajiDetail,_that.slipGajiDetailError);case _:
+return $default(_that.isLoadingSlipGaji,_that.isLoadingSlipGajiDetail,_that.isDownloadingSlipGaji,_that.slipGaji,_that.slipGajiError,_that.slipGajiDetail,_that.slipGajiDetailError,_that.downloadSlipGajiError,_that.downloadSlipGajiPath);case _:
   return orElse();
 
 }
@@ -188,10 +191,10 @@ return $default(_that.isLoadingSlipGaji,_that.isLoadingSlipGajiDetail,_that.slip
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoadingSlipGaji,  bool isLoadingSlipGajiDetail,  List<SlipGajiEntity>? slipGaji,  String? slipGajiError,  SlipGajiDetailEntity? slipGajiDetail,  String? slipGajiDetailError)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoadingSlipGaji,  bool isLoadingSlipGajiDetail,  bool isDownloadingSlipGaji,  List<SlipGajiEntity>? slipGaji,  String? slipGajiError,  SlipGajiDetailEntity? slipGajiDetail,  String? slipGajiDetailError,  String? downloadSlipGajiError,  String? downloadSlipGajiPath)  $default,) {final _that = this;
 switch (_that) {
 case _PayrollState():
-return $default(_that.isLoadingSlipGaji,_that.isLoadingSlipGajiDetail,_that.slipGaji,_that.slipGajiError,_that.slipGajiDetail,_that.slipGajiDetailError);case _:
+return $default(_that.isLoadingSlipGaji,_that.isLoadingSlipGajiDetail,_that.isDownloadingSlipGaji,_that.slipGaji,_that.slipGajiError,_that.slipGajiDetail,_that.slipGajiDetailError,_that.downloadSlipGajiError,_that.downloadSlipGajiPath);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -208,10 +211,10 @@ return $default(_that.isLoadingSlipGaji,_that.isLoadingSlipGajiDetail,_that.slip
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoadingSlipGaji,  bool isLoadingSlipGajiDetail,  List<SlipGajiEntity>? slipGaji,  String? slipGajiError,  SlipGajiDetailEntity? slipGajiDetail,  String? slipGajiDetailError)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoadingSlipGaji,  bool isLoadingSlipGajiDetail,  bool isDownloadingSlipGaji,  List<SlipGajiEntity>? slipGaji,  String? slipGajiError,  SlipGajiDetailEntity? slipGajiDetail,  String? slipGajiDetailError,  String? downloadSlipGajiError,  String? downloadSlipGajiPath)?  $default,) {final _that = this;
 switch (_that) {
 case _PayrollState() when $default != null:
-return $default(_that.isLoadingSlipGaji,_that.isLoadingSlipGajiDetail,_that.slipGaji,_that.slipGajiError,_that.slipGajiDetail,_that.slipGajiDetailError);case _:
+return $default(_that.isLoadingSlipGaji,_that.isLoadingSlipGajiDetail,_that.isDownloadingSlipGaji,_that.slipGaji,_that.slipGajiError,_that.slipGajiDetail,_that.slipGajiDetailError,_that.downloadSlipGajiError,_that.downloadSlipGajiPath);case _:
   return null;
 
 }
@@ -223,11 +226,12 @@ return $default(_that.isLoadingSlipGaji,_that.isLoadingSlipGajiDetail,_that.slip
 
 
 class _PayrollState implements PayrollState {
-  const _PayrollState({this.isLoadingSlipGaji = false, this.isLoadingSlipGajiDetail = false, final  List<SlipGajiEntity>? slipGaji, this.slipGajiError, this.slipGajiDetail, this.slipGajiDetailError}): _slipGaji = slipGaji;
+  const _PayrollState({this.isLoadingSlipGaji = false, this.isLoadingSlipGajiDetail = false, this.isDownloadingSlipGaji = false, final  List<SlipGajiEntity>? slipGaji, this.slipGajiError, this.slipGajiDetail, this.slipGajiDetailError, this.downloadSlipGajiError, this.downloadSlipGajiPath}): _slipGaji = slipGaji;
   
 
 @override@JsonKey() final  bool isLoadingSlipGaji;
 @override@JsonKey() final  bool isLoadingSlipGajiDetail;
+@override@JsonKey() final  bool isDownloadingSlipGaji;
  final  List<SlipGajiEntity>? _slipGaji;
 @override List<SlipGajiEntity>? get slipGaji {
   final value = _slipGaji;
@@ -240,6 +244,8 @@ class _PayrollState implements PayrollState {
 @override final  String? slipGajiError;
 @override final  SlipGajiDetailEntity? slipGajiDetail;
 @override final  String? slipGajiDetailError;
+@override final  String? downloadSlipGajiError;
+@override final  String? downloadSlipGajiPath;
 
 /// Create a copy of PayrollState
 /// with the given fields replaced by the non-null parameter values.
@@ -251,16 +257,16 @@ _$PayrollStateCopyWith<_PayrollState> get copyWith => __$PayrollStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PayrollState&&(identical(other.isLoadingSlipGaji, isLoadingSlipGaji) || other.isLoadingSlipGaji == isLoadingSlipGaji)&&(identical(other.isLoadingSlipGajiDetail, isLoadingSlipGajiDetail) || other.isLoadingSlipGajiDetail == isLoadingSlipGajiDetail)&&const DeepCollectionEquality().equals(other._slipGaji, _slipGaji)&&(identical(other.slipGajiError, slipGajiError) || other.slipGajiError == slipGajiError)&&(identical(other.slipGajiDetail, slipGajiDetail) || other.slipGajiDetail == slipGajiDetail)&&(identical(other.slipGajiDetailError, slipGajiDetailError) || other.slipGajiDetailError == slipGajiDetailError));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PayrollState&&(identical(other.isLoadingSlipGaji, isLoadingSlipGaji) || other.isLoadingSlipGaji == isLoadingSlipGaji)&&(identical(other.isLoadingSlipGajiDetail, isLoadingSlipGajiDetail) || other.isLoadingSlipGajiDetail == isLoadingSlipGajiDetail)&&(identical(other.isDownloadingSlipGaji, isDownloadingSlipGaji) || other.isDownloadingSlipGaji == isDownloadingSlipGaji)&&const DeepCollectionEquality().equals(other._slipGaji, _slipGaji)&&(identical(other.slipGajiError, slipGajiError) || other.slipGajiError == slipGajiError)&&(identical(other.slipGajiDetail, slipGajiDetail) || other.slipGajiDetail == slipGajiDetail)&&(identical(other.slipGajiDetailError, slipGajiDetailError) || other.slipGajiDetailError == slipGajiDetailError)&&(identical(other.downloadSlipGajiError, downloadSlipGajiError) || other.downloadSlipGajiError == downloadSlipGajiError)&&(identical(other.downloadSlipGajiPath, downloadSlipGajiPath) || other.downloadSlipGajiPath == downloadSlipGajiPath));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoadingSlipGaji,isLoadingSlipGajiDetail,const DeepCollectionEquality().hash(_slipGaji),slipGajiError,slipGajiDetail,slipGajiDetailError);
+int get hashCode => Object.hash(runtimeType,isLoadingSlipGaji,isLoadingSlipGajiDetail,isDownloadingSlipGaji,const DeepCollectionEquality().hash(_slipGaji),slipGajiError,slipGajiDetail,slipGajiDetailError,downloadSlipGajiError,downloadSlipGajiPath);
 
 @override
 String toString() {
-  return 'PayrollState(isLoadingSlipGaji: $isLoadingSlipGaji, isLoadingSlipGajiDetail: $isLoadingSlipGajiDetail, slipGaji: $slipGaji, slipGajiError: $slipGajiError, slipGajiDetail: $slipGajiDetail, slipGajiDetailError: $slipGajiDetailError)';
+  return 'PayrollState(isLoadingSlipGaji: $isLoadingSlipGaji, isLoadingSlipGajiDetail: $isLoadingSlipGajiDetail, isDownloadingSlipGaji: $isDownloadingSlipGaji, slipGaji: $slipGaji, slipGajiError: $slipGajiError, slipGajiDetail: $slipGajiDetail, slipGajiDetailError: $slipGajiDetailError, downloadSlipGajiError: $downloadSlipGajiError, downloadSlipGajiPath: $downloadSlipGajiPath)';
 }
 
 
@@ -271,7 +277,7 @@ abstract mixin class _$PayrollStateCopyWith<$Res> implements $PayrollStateCopyWi
   factory _$PayrollStateCopyWith(_PayrollState value, $Res Function(_PayrollState) _then) = __$PayrollStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoadingSlipGaji, bool isLoadingSlipGajiDetail, List<SlipGajiEntity>? slipGaji, String? slipGajiError, SlipGajiDetailEntity? slipGajiDetail, String? slipGajiDetailError
+ bool isLoadingSlipGaji, bool isLoadingSlipGajiDetail, bool isDownloadingSlipGaji, List<SlipGajiEntity>? slipGaji, String? slipGajiError, SlipGajiDetailEntity? slipGajiDetail, String? slipGajiDetailError, String? downloadSlipGajiError, String? downloadSlipGajiPath
 });
 
 
@@ -288,14 +294,17 @@ class __$PayrollStateCopyWithImpl<$Res>
 
 /// Create a copy of PayrollState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoadingSlipGaji = null,Object? isLoadingSlipGajiDetail = null,Object? slipGaji = freezed,Object? slipGajiError = freezed,Object? slipGajiDetail = freezed,Object? slipGajiDetailError = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoadingSlipGaji = null,Object? isLoadingSlipGajiDetail = null,Object? isDownloadingSlipGaji = null,Object? slipGaji = freezed,Object? slipGajiError = freezed,Object? slipGajiDetail = freezed,Object? slipGajiDetailError = freezed,Object? downloadSlipGajiError = freezed,Object? downloadSlipGajiPath = freezed,}) {
   return _then(_PayrollState(
 isLoadingSlipGaji: null == isLoadingSlipGaji ? _self.isLoadingSlipGaji : isLoadingSlipGaji // ignore: cast_nullable_to_non_nullable
 as bool,isLoadingSlipGajiDetail: null == isLoadingSlipGajiDetail ? _self.isLoadingSlipGajiDetail : isLoadingSlipGajiDetail // ignore: cast_nullable_to_non_nullable
+as bool,isDownloadingSlipGaji: null == isDownloadingSlipGaji ? _self.isDownloadingSlipGaji : isDownloadingSlipGaji // ignore: cast_nullable_to_non_nullable
 as bool,slipGaji: freezed == slipGaji ? _self._slipGaji : slipGaji // ignore: cast_nullable_to_non_nullable
 as List<SlipGajiEntity>?,slipGajiError: freezed == slipGajiError ? _self.slipGajiError : slipGajiError // ignore: cast_nullable_to_non_nullable
 as String?,slipGajiDetail: freezed == slipGajiDetail ? _self.slipGajiDetail : slipGajiDetail // ignore: cast_nullable_to_non_nullable
 as SlipGajiDetailEntity?,slipGajiDetailError: freezed == slipGajiDetailError ? _self.slipGajiDetailError : slipGajiDetailError // ignore: cast_nullable_to_non_nullable
+as String?,downloadSlipGajiError: freezed == downloadSlipGajiError ? _self.downloadSlipGajiError : downloadSlipGajiError // ignore: cast_nullable_to_non_nullable
+as String?,downloadSlipGajiPath: freezed == downloadSlipGajiPath ? _self.downloadSlipGajiPath : downloadSlipGajiPath // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
