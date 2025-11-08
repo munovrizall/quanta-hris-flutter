@@ -7,6 +7,7 @@ import 'package:quanta_hris/src/features/attendance/presentation/screens/attenda
 import 'package:quanta_hris/src/features/authentication/presentation/screens/login_screen.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/screens/register_face_screen.dart';
 import 'package:quanta_hris/src/features/home/presentation/screens/home_screen.dart'; // Akan kita buat
+import 'package:quanta_hris/src/features/payroll/presentation/screens/payroll_screen.dart';
 import 'package:quanta_hris/src/features/profile/presentation/screens/profile_screen.dart';
 import 'package:quanta_hris/src/features/splash/presentation/screens/splash_screen.dart'; // Akan kita buat
 
@@ -49,6 +50,13 @@ final GoRouter appRouter = GoRouter(
       path: '/profile',
       pageBuilder: (BuildContext context, GoRouterState state) {
         return const NoTransitionPage(child: ProfileScreen());
+      },
+    ),
+    GoRoute(
+      name: 'payroll',
+      path: '/payroll',
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        return const NoTransitionPage(child: PayrollScreen());
       },
     ),
     GoRoute(

@@ -35,6 +35,11 @@ import 'package:quanta_hris/src/features/home/domain/usecases/get_attendance_sta
 import 'package:quanta_hris/src/features/home/domain/usecases/get_operational_hour_usecase.dart';
 import 'package:quanta_hris/src/features/home/domain/usecases/get_today_leaves_usecase.dart';
 import 'package:quanta_hris/src/features/home/presentation/bloc/home_bloc.dart';
+import 'package:quanta_hris/src/features/payroll/data/datasources/payroll_remote_data_source.dart';
+import 'package:quanta_hris/src/features/payroll/data/repositories/payroll_repository_impl.dart';
+import 'package:quanta_hris/src/features/payroll/domain/repositories/payroll_repository.dart';
+import 'package:quanta_hris/src/features/payroll/domain/usecases/get_slip_gaji_usecase.dart';
+import 'package:quanta_hris/src/features/payroll/presentation/bloc/payroll_bloc.dart';
 import 'package:quanta_hris/src/features/splash/domain/usecases/check_session_usecase.dart';
 import 'package:quanta_hris/src/features/leave/data/datasources/leave_remote_data_source.dart';
 import 'package:quanta_hris/src/features/leave/data/repositories/leave_repository_impl.dart';
@@ -50,6 +55,7 @@ void configureDependencies(FlavorConfig config) {
   _registerRouting();
   _registerAuth();
   _registerHome();
+  _registerPayroll();
   _registerAttendance();
   _registerLeave();
   _configureDioInterceptors();
@@ -213,6 +219,28 @@ void _registerHome() {
       getOperationalHoursUseCase: getIt<GetOperationalHourUseCase>(),
       getTodayLeavesUseCase: getIt<GetTodayLeavesUseCase>(),
       getAttendanceStatusUsecase: getIt<GetAttendanceStatusUsecase>(),
+    ),
+  );
+}
+
+void _registerPayroll() {
+  AppLogger.i('💰 Registering payroll dependencies...');
+
+  getIt.registerLazySingleton<PayrollRemoteDataSource>(
+    () => PayrollRemoteDataSourceImpl(getIt<Dio>()),
+  );
+
+  getIt.registerLazySingleton<PayrollRepository>(
+    () => PayrollRepositoryImpl(getIt<PayrollRemoteDataSource>()),
+  );
+
+  getIt.registerFactory(
+    () => GetSlipGajiUseCase(getIt<PayrollRepository>()),
+  );
+
+  getIt.registerFactory(
+    () => PayrollBloc(
+      getSlipGajiUseCase: getIt<GetSlipGajiUseCase>(),
     ),
   );
 }

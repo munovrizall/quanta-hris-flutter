@@ -9,6 +9,8 @@ class ApiEndpoints {
   // Grup untuk semua endpoint terkait Pengguna
   static const AttendanceEndpoints attendance = AttendanceEndpoints();
 
+  static const PayrollEndpoints payroll = PayrollEndpoints();
+
   static const LeaveEndpoints cuti = LeaveEndpoints();
 }
 
@@ -37,6 +39,12 @@ class AttendanceEndpoints {
   final String getCompanyBranches = '/company/branches';
   final String postClockIn = '/attendance/clock-in';
   final String postClockOut = '/attendance/clock-out';
+}
+
+class PayrollEndpoints {
+  const PayrollEndpoints();
+
+  final String getSlipGaji = '/slip-gaji';
 }
 
 class LeaveEndpoints {

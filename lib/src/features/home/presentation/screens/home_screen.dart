@@ -615,7 +615,7 @@ class _HomeViewState extends State<_HomeView> {
         context.go('/home');
         break;
       case 1:
-        // TODO: Navigate to payroll module when available.
+        context.go('/payroll');
         break;
       case 2:
         context.go('/profile');

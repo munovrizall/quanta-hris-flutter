@@ -71,7 +71,7 @@ class ProfileScreen extends StatelessWidget {
         context.go('/home');
         break;
       case 1:
-        // TODO: Navigate to payroll module when available.
+        context.go('/payroll');
         break;
       case 2:
         // Already on profile screen.

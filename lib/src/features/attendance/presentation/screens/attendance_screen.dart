@@ -731,7 +731,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     // Pop back to maps screen, then pop again to home screen
     // This ensures the refetch code in home screen's _handleMainButtonTap is executed
     context.pop(); // Pop from attendance screen to maps screen
-    
+
     if (!mounted) return;
     context.pop(); // Pop from maps screen to home screen
   }
