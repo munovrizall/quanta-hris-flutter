@@ -286,6 +286,17 @@ class _PermissionHistoryCard extends StatelessWidget {
                 value: item.dokumenPendukung!,
               ),
             ],
+            // Footer: Tanggal Dibuat
+            const SizedBox(height: AppSpacing.medium),
+            const Divider(),
+            const SizedBox(height: AppSpacing.small),
+            Text(
+              'Diajukan pada ${_formatDate(item.dibuatPada)}',
+              style: AppTypography.labelSmall.copyWith(
+                color: AppColors.neutral500,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
           ],
         ),
       ),
