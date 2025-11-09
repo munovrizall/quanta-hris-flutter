@@ -184,67 +184,6 @@ class _SubmitPermissionFormViewState extends State<_SubmitPermissionFormView> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
-                                      Container(
-                                        padding: const EdgeInsets.all(
-                                          AppSpacing.large,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: AppColors.primary10,
-                                          borderRadius: BorderRadius.circular(
-                                            AppRadius.large,
-                                          ),
-                                          border: Border.all(
-                                            color: AppColors.primary200,
-                                          ),
-                                        ),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Icon(
-                                              Icons.info_outline,
-                                              color: AppColors.primary,
-                                            ),
-                                            const SizedBox(
-                                              width: AppSpacing.small,
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Ketentuan Pengajuan Izin:',
-                                                    style: AppTypography
-                                                        .labelLarge
-                                                        .copyWith(
-                                                          color:
-                                                              AppColors.primary,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: AppSpacing.xs,
-                                                  ),
-                                                  Text(
-                                                    '• Ajukan izin minimal untuk hari berjalan\n'
-                                                    '• Sertakan alasan yang jelas agar mudah diproses\n'
-                                                    '• Dokumen pendukung opsional (maks 5MB)',
-                                                    style: AppTypography
-                                                        .bodySmall
-                                                        .copyWith(
-                                                          color: AppColors
-                                                              .primary500,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(height: AppSpacing.xl),
                                       Text(
                                         'Jenis Izin',
                                         style: AppTypography.labelLarge
@@ -277,50 +216,98 @@ class _SubmitPermissionFormViewState extends State<_SubmitPermissionFormView> {
                                             : null,
                                       ),
                                       const SizedBox(height: AppSpacing.large),
-                                      Text(
-                                        'Tanggal Mulai',
-                                        style: AppTypography.labelLarge
-                                            .copyWith(
-                                              fontWeight: FontWeight.w600,
+
+                                      // Tanggal Mulai dan Selesai (2 Kolom)
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          // Tanggal Mulai
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Tanggal Mulai',
+                                                  style: AppTypography
+                                                      .labelLarge
+                                                      .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                                const SizedBox(
+                                                  height: AppSpacing.small,
+                                                ),
+                                                AppTextField(
+                                                  controller:
+                                                      _tanggalMulaiController,
+                                                  hintText: 'Pilih tanggal',
+                                                  prefixIcon: const Icon(
+                                                    Icons.calendar_today,
+                                                  ),
+                                                  readOnly: true,
+                                                  onTap: () => _pickDate(
+                                                    context,
+                                                    isStart: true,
+                                                  ),
+                                                  validator: (value) =>
+                                                      value == null ||
+                                                          value.isEmpty
+                                                      ? 'Wajib diisi'
+                                                      : null,
+                                                ),
+                                              ],
                                             ),
-                                      ),
-                                      const SizedBox(height: AppSpacing.small),
-                                      AppTextField(
-                                        controller: _tanggalMulaiController,
-                                        hintText: 'Pilih tanggal mulai izin',
-                                        prefixIcon: const Icon(
-                                          Icons.calendar_today,
-                                        ),
-                                        readOnly: true,
-                                        onTap: () =>
-                                            _pickDate(context, isStart: true),
-                                        validator: (value) =>
-                                            value == null || value.isEmpty
-                                            ? 'Pilih tanggal mulai'
-                                            : null,
+                                          ),
+                                          const SizedBox(
+                                            width: AppSpacing.medium,
+                                          ),
+                                          // Tanggal Selesai
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Tanggal Selesai',
+                                                  style: AppTypography
+                                                      .labelLarge
+                                                      .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                                const SizedBox(
+                                                  height: AppSpacing.small,
+                                                ),
+                                                AppTextField(
+                                                  controller:
+                                                      _tanggalSelesaiController,
+                                                  hintText: 'Pilih tanggal',
+                                                  prefixIcon: const Icon(
+                                                    Icons.event,
+                                                  ),
+                                                  readOnly: true,
+                                                  onTap: () => _pickDate(
+                                                    context,
+                                                    isStart: false,
+                                                  ),
+                                                  validator: (value) =>
+                                                      value == null ||
+                                                          value.isEmpty
+                                                      ? 'Wajib diisi'
+                                                      : null,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       const SizedBox(height: AppSpacing.large),
-                                      Text(
-                                        'Tanggal Selesai',
-                                        style: AppTypography.labelLarge
-                                            .copyWith(
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                      const SizedBox(height: AppSpacing.small),
-                                      AppTextField(
-                                        controller: _tanggalSelesaiController,
-                                        hintText: 'Pilih tanggal selesai izin',
-                                        prefixIcon: const Icon(Icons.event),
-                                        readOnly: true,
-                                        onTap: () =>
-                                            _pickDate(context, isStart: false),
-                                        validator: (value) =>
-                                            value == null || value.isEmpty
-                                            ? 'Pilih tanggal selesai'
-                                            : null,
-                                      ),
-                                      const SizedBox(height: AppSpacing.large),
+
+                                      // Keterangan
                                       Text(
                                         'Keterangan',
                                         style: AppTypography.labelLarge
@@ -332,9 +319,6 @@ class _SubmitPermissionFormViewState extends State<_SubmitPermissionFormView> {
                                       AppTextField(
                                         controller: _keteranganController,
                                         hintText: 'Tuliskan alasan izin',
-                                        prefixIcon: const Icon(
-                                          Icons.description,
-                                        ),
                                         maxLines: 4,
                                         validator: (value) =>
                                             value == null ||
@@ -367,7 +351,7 @@ class _SubmitPermissionFormViewState extends State<_SubmitPermissionFormView> {
                               ),
                               const SizedBox(height: AppSpacing.large),
                               PrimaryButton(
-                                text: 'Ajukan Izin',
+                                text: 'Simpan',
                                 isLoading: state.isSubmitLoading,
                                 onPressed: state.isSubmitLoading
                                     ? null

@@ -193,69 +193,6 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
-                                      // Header Info
-                                      Container(
-                                        padding: const EdgeInsets.all(
-                                          AppSpacing.medium,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: AppColors.primary10,
-                                          borderRadius: BorderRadius.circular(
-                                            AppRadius.medium,
-                                          ),
-                                          border: Border.all(
-                                            color: AppColors.primary200,
-                                          ),
-                                        ),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Icon(
-                                              Icons.info_outline,
-                                              color: AppColors.primary,
-                                            ),
-                                            const SizedBox(
-                                              width: AppSpacing.small,
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Ketentuan Pengajuan Cuti:',
-                                                    style: AppTypography
-                                                        .labelLarge
-                                                        .copyWith(
-                                                          color:
-                                                              AppColors.primary,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: AppSpacing.xs,
-                                                  ),
-                                                  Text(
-                                                    '• Tanggal cuti minimal H+1 (besok)\n'
-                                                    '• Pastikan semua data sudah benar\n'
-                                                    '• Dokumen pendukung opsional (maks 5MB)',
-                                                    style: AppTypography
-                                                        .bodySmall
-                                                        .copyWith(
-                                                          color: AppColors
-                                                              .primary500,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(height: AppSpacing.xl),
-
                                       // Jenis Cuti Dropdown
                                       Text(
                                         'Jenis Cuti',
@@ -293,59 +230,97 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                                       ),
                                       const SizedBox(height: AppSpacing.large),
 
-                                      // Tanggal Mulai
-                                      Text(
-                                        'Tanggal Mulai',
-                                        style: AppTypography.labelLarge
-                                            .copyWith(
-                                              fontWeight: FontWeight.w600,
+                                      // Tanggal Mulai dan Selesai (2 Kolom)
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          // Tanggal Mulai
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Tanggal Mulai',
+                                                  style: AppTypography
+                                                      .labelLarge
+                                                      .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                                const SizedBox(
+                                                  height: AppSpacing.small,
+                                                ),
+                                                AppTextField(
+                                                  controller:
+                                                      _tanggalMulaiController,
+                                                  hintText: 'Pilih tanggal',
+                                                  prefixIcon: const Icon(
+                                                    Icons.calendar_today,
+                                                  ),
+                                                  readOnly: true,
+                                                  onTap: () => _selectDate(
+                                                    context,
+                                                    isStartDate: true,
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return 'Wajib diisi';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                              ],
                                             ),
-                                      ),
-                                      const SizedBox(height: AppSpacing.small),
-                                      AppTextField(
-                                        controller: _tanggalMulaiController,
-                                        hintText: 'Pilih tanggal mulai cuti',
-                                        prefixIcon: const Icon(
-                                          Icons.calendar_today,
-                                        ),
-                                        readOnly: true,
-                                        onTap: () => _selectDate(
-                                          context,
-                                          isStartDate: true,
-                                        ),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Tanggal mulai harus diisi';
-                                          }
-                                          return null;
-                                        },
-                                      ),
-                                      const SizedBox(height: AppSpacing.large),
-
-                                      // Tanggal Selesai
-                                      Text(
-                                        'Tanggal Selesai',
-                                        style: AppTypography.labelLarge
-                                            .copyWith(
-                                              fontWeight: FontWeight.w600,
+                                          ),
+                                          const SizedBox(
+                                            width: AppSpacing.medium,
+                                          ),
+                                          // Tanggal Selesai
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Tanggal Selesai',
+                                                  style: AppTypography
+                                                      .labelLarge
+                                                      .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                                const SizedBox(
+                                                  height: AppSpacing.small,
+                                                ),
+                                                AppTextField(
+                                                  controller:
+                                                      _tanggalSelesaiController,
+                                                  hintText: 'Pilih tanggal',
+                                                  prefixIcon: const Icon(
+                                                    Icons.event,
+                                                  ),
+                                                  readOnly: true,
+                                                  onTap: () => _selectDate(
+                                                    context,
+                                                    isStartDate: false,
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return 'Wajib diisi';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                              ],
                                             ),
-                                      ),
-                                      const SizedBox(height: AppSpacing.small),
-                                      AppTextField(
-                                        controller: _tanggalSelesaiController,
-                                        hintText: 'Pilih tanggal selesai cuti',
-                                        prefixIcon: const Icon(Icons.event),
-                                        readOnly: true,
-                                        onTap: () => _selectDate(
-                                          context,
-                                          isStartDate: false,
-                                        ),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Tanggal selesai harus diisi';
-                                          }
-                                          return null;
-                                        },
+                                          ),
+                                        ],
                                       ),
                                       const SizedBox(height: AppSpacing.large),
 
