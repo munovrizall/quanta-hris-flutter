@@ -52,6 +52,7 @@ import 'package:quanta_hris/src/features/overtime/data/datasources/overtime_remo
 import 'package:quanta_hris/src/features/overtime/data/repositories/overtime_repository_impl.dart';
 import 'package:quanta_hris/src/features/overtime/domain/repositories/overtime_repository.dart';
 import 'package:quanta_hris/src/features/overtime/domain/usecases/get_overtime_history_usecase.dart';
+import 'package:quanta_hris/src/features/overtime/domain/usecases/submit_overtime_usecase.dart';
 import 'package:quanta_hris/src/features/overtime/presentation/bloc/overtime_bloc.dart';
 import 'package:quanta_hris/src/features/splash/domain/usecases/check_session_usecase.dart';
 import 'package:quanta_hris/src/features/leave/data/datasources/leave_remote_data_source.dart';
@@ -398,10 +399,14 @@ void _registerOvertime() {
   getIt.registerFactory(
     () => GetOvertimeHistoryUseCase(getIt<OvertimeRepository>()),
   );
+  getIt.registerFactory(
+    () => SubmitOvertimeUseCase(getIt<OvertimeRepository>()),
+  );
 
   getIt.registerFactory(
     () => OvertimeBloc(
       getOvertimeHistoryUseCase: getIt<GetOvertimeHistoryUseCase>(),
+      submitOvertimeUseCase: getIt<SubmitOvertimeUseCase>(),
     ),
   );
 }

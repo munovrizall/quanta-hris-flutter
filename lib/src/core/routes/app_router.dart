@@ -12,7 +12,9 @@ import 'package:quanta_hris/src/features/leave/presentation/screens/leave_screen
 import 'package:quanta_hris/src/features/leave/presentation/screens/submit_leave_form_screen.dart';
 import 'package:quanta_hris/src/features/payroll/presentation/screens/payroll_detail_screen.dart';
 import 'package:quanta_hris/src/features/payroll/presentation/screens/payroll_screen.dart';
+import 'package:quanta_hris/src/features/overtime/domain/entities/overtime_history_entity.dart';
 import 'package:quanta_hris/src/features/overtime/presentation/screens/overtime_screen.dart';
+import 'package:quanta_hris/src/features/overtime/presentation/screens/submit_overtime_form_screen.dart';
 import 'package:quanta_hris/src/features/permission/presentation/screens/permission_screen.dart';
 import 'package:quanta_hris/src/features/permission/presentation/screens/submit_permission_form_screen.dart';
 import 'package:quanta_hris/src/features/profile/presentation/screens/profile_screen.dart';
@@ -78,6 +80,19 @@ final GoRouter appRouter = GoRouter(
       path: '/overtime',
       pageBuilder: (BuildContext context, GoRouterState state) {
         return const NoTransitionPage(child: OvertimeScreen());
+      },
+    ),
+    GoRoute(
+      name: 'overtime-submit',
+      path: '/overtime/submit',
+      builder: (BuildContext context, GoRouterState state) {
+        final history = state.extra as OvertimeHistoryEntity?;
+        if (history == null) {
+          return const Scaffold(
+            body: Center(child: Text('Data lembur tidak ditemukan.')),
+          );
+        }
+        return SubmitOvertimeFormScreen(history: history);
       },
     ),
     GoRoute(
