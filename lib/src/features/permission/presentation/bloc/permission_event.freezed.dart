@@ -55,11 +55,12 @@ extension PermissionEventPatterns on PermissionEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchPermissionHistory value)?  fetchPermissionHistory,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchPermissionHistory value)?  fetchPermissionHistory,TResult Function( _SubmitPermission value)?  submitPermission,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _FetchPermissionHistory() when fetchPermissionHistory != null:
-return fetchPermissionHistory(_that);case _:
+return fetchPermissionHistory(_that);case _SubmitPermission() when submitPermission != null:
+return submitPermission(_that);case _:
   return orElse();
 
 }
@@ -77,11 +78,12 @@ return fetchPermissionHistory(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchPermissionHistory value)  fetchPermissionHistory,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchPermissionHistory value)  fetchPermissionHistory,required TResult Function( _SubmitPermission value)  submitPermission,}){
 final _that = this;
 switch (_that) {
 case _FetchPermissionHistory():
-return fetchPermissionHistory(_that);case _:
+return fetchPermissionHistory(_that);case _SubmitPermission():
+return submitPermission(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -98,11 +100,12 @@ return fetchPermissionHistory(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchPermissionHistory value)?  fetchPermissionHistory,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchPermissionHistory value)?  fetchPermissionHistory,TResult? Function( _SubmitPermission value)?  submitPermission,}){
 final _that = this;
 switch (_that) {
 case _FetchPermissionHistory() when fetchPermissionHistory != null:
-return fetchPermissionHistory(_that);case _:
+return fetchPermissionHistory(_that);case _SubmitPermission() when submitPermission != null:
+return submitPermission(_that);case _:
   return null;
 
 }
@@ -119,10 +122,11 @@ return fetchPermissionHistory(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchPermissionHistory,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchPermissionHistory,TResult Function( SubmitPermissionParams params)?  submitPermission,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FetchPermissionHistory() when fetchPermissionHistory != null:
-return fetchPermissionHistory();case _:
+return fetchPermissionHistory();case _SubmitPermission() when submitPermission != null:
+return submitPermission(_that.params);case _:
   return orElse();
 
 }
@@ -140,10 +144,11 @@ return fetchPermissionHistory();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchPermissionHistory,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchPermissionHistory,required TResult Function( SubmitPermissionParams params)  submitPermission,}) {final _that = this;
 switch (_that) {
 case _FetchPermissionHistory():
-return fetchPermissionHistory();case _:
+return fetchPermissionHistory();case _SubmitPermission():
+return submitPermission(_that.params);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -160,10 +165,11 @@ return fetchPermissionHistory();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchPermissionHistory,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchPermissionHistory,TResult? Function( SubmitPermissionParams params)?  submitPermission,}) {final _that = this;
 switch (_that) {
 case _FetchPermissionHistory() when fetchPermissionHistory != null:
-return fetchPermissionHistory();case _:
+return fetchPermissionHistory();case _SubmitPermission() when submitPermission != null:
+return submitPermission(_that.params);case _:
   return null;
 
 }
@@ -202,5 +208,80 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _SubmitPermission implements PermissionEvent {
+  const _SubmitPermission({required this.params});
+  
+
+ final  SubmitPermissionParams params;
+
+/// Create a copy of PermissionEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SubmitPermissionCopyWith<_SubmitPermission> get copyWith => __$SubmitPermissionCopyWithImpl<_SubmitPermission>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubmitPermission&&(identical(other.params, params) || other.params == params));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,params);
+
+@override
+String toString() {
+  return 'PermissionEvent.submitPermission(params: $params)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SubmitPermissionCopyWith<$Res> implements $PermissionEventCopyWith<$Res> {
+  factory _$SubmitPermissionCopyWith(_SubmitPermission value, $Res Function(_SubmitPermission) _then) = __$SubmitPermissionCopyWithImpl;
+@useResult
+$Res call({
+ SubmitPermissionParams params
+});
+
+
+$SubmitPermissionParamsCopyWith<$Res> get params;
+
+}
+/// @nodoc
+class __$SubmitPermissionCopyWithImpl<$Res>
+    implements _$SubmitPermissionCopyWith<$Res> {
+  __$SubmitPermissionCopyWithImpl(this._self, this._then);
+
+  final _SubmitPermission _self;
+  final $Res Function(_SubmitPermission) _then;
+
+/// Create a copy of PermissionEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? params = null,}) {
+  return _then(_SubmitPermission(
+params: null == params ? _self.params : params // ignore: cast_nullable_to_non_nullable
+as SubmitPermissionParams,
+  ));
+}
+
+/// Create a copy of PermissionEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SubmitPermissionParamsCopyWith<$Res> get params {
+  
+  return $SubmitPermissionParamsCopyWith<$Res>(_self.params, (value) {
+    return _then(_self.copyWith(params: value));
+  });
+}
+}
 
 // dart format on

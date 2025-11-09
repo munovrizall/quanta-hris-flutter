@@ -222,6 +222,19 @@ class _HomeViewState extends State<_HomeView> {
     final isClockedOut = attendanceStatus?.isClockedOut ?? false;
     final hasCompletedAttendance = isClockedIn && isClockedOut;
 
+    // Get loading states
+    final isLoadingAttendanceStatus = context.select<HomeBloc, bool>(
+      (bloc) => bloc.state.isLoadingAttendanceStatus,
+    );
+
+    // Check if session is still loading (initial state)
+    final isSessionLoading = context.select<SessionBloc, bool>(
+      (bloc) => bloc.state.maybeWhen(initial: () => true, orElse: () => false),
+    );
+
+    // Button should be disabled if loading attendance status or session
+    final isButtonLoading = isLoadingAttendanceStatus || isSessionLoading;
+
     // Extract working hours from API data or use defaults if not available
     final startTime = operationalHourData?.workingHours.startTime ?? '--';
     final endTime = operationalHourData?.workingHours.endTime ?? '--';
@@ -398,7 +411,7 @@ class _HomeViewState extends State<_HomeView> {
                     elevation: 4,
                     borderRadius: BorderRadius.circular(AppRadius.xl),
                     child: InkWell(
-                      onTap: hasCompletedAttendance
+                      onTap: (hasCompletedAttendance || isButtonLoading)
                           ? null
                           : () async => _handleMainButtonTap(context),
                       borderRadius: BorderRadius.circular(AppRadius.xl),
@@ -409,7 +422,9 @@ class _HomeViewState extends State<_HomeView> {
                         ),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: !_hasFaceEmbedding
+                            colors: isButtonLoading
+                                ? [AppColors.neutral400, AppColors.neutral300]
+                                : !_hasFaceEmbedding
                                 ? [AppColors.primary, AppColors.primary200]
                                 : hasCompletedAttendance
                                 ? [AppColors.success, AppColors.successLight]
@@ -421,20 +436,32 @@ class _HomeViewState extends State<_HomeView> {
                         ),
                         child: Column(
                           children: [
-                            Icon(
-                              !_hasFaceEmbedding
-                                  ? Icons.person_add_alt_1
-                                  : hasCompletedAttendance
-                                  ? Icons.bedtime
-                                  : isClockedIn
-                                  ? Icons.logout
-                                  : Icons.fingerprint,
-                              size: AppSizes.iconHuge,
-                              color: AppColors.white,
-                            ),
+                            if (isButtonLoading)
+                              const SizedBox(
+                                width: AppSizes.iconHuge,
+                                height: AppSizes.iconHuge,
+                                child: CircularProgressIndicator(
+                                  color: AppColors.white,
+                                  strokeWidth: 3,
+                                ),
+                              )
+                            else
+                              Icon(
+                                !_hasFaceEmbedding
+                                    ? Icons.person_add_alt_1
+                                    : hasCompletedAttendance
+                                    ? Icons.bedtime
+                                    : isClockedIn
+                                    ? Icons.logout
+                                    : Icons.fingerprint,
+                                size: AppSizes.iconHuge,
+                                color: AppColors.white,
+                              ),
                             const SizedBox(height: AppSpacing.xs),
                             Text(
-                              !_hasFaceEmbedding
+                              isButtonLoading
+                                  ? 'Memuat...'
+                                  : !_hasFaceEmbedding
                                   ? AppStrings.home.registerFaceButtonText
                                   : hasCompletedAttendance
                                   ? 'Selamat beristirahat'
@@ -447,7 +474,9 @@ class _HomeViewState extends State<_HomeView> {
                             ),
                             const SizedBox(height: AppSpacing.xs),
                             Text(
-                              !_hasFaceEmbedding
+                              isButtonLoading
+                                  ? 'Mohon tunggu sebentar...'
+                                  : !_hasFaceEmbedding
                                   ? AppStrings.home.registerFaceSubtitle
                                   : hasCompletedAttendance
                                   ? 'Anda telah menyelesaikan absensi hari ini'

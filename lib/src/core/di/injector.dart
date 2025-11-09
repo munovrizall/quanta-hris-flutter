@@ -47,6 +47,7 @@ import 'package:quanta_hris/src/features/permission/data/datasources/permission_
 import 'package:quanta_hris/src/features/permission/data/repositories/permission_repository_impl.dart';
 import 'package:quanta_hris/src/features/permission/domain/repositories/permission_repository.dart';
 import 'package:quanta_hris/src/features/permission/domain/usecases/get_permission_history_usecase.dart';
+import 'package:quanta_hris/src/features/permission/domain/usecases/submit_permission_usecase.dart';
 import 'package:quanta_hris/src/features/permission/presentation/bloc/permission_bloc.dart';
 import 'package:quanta_hris/src/features/splash/domain/usecases/check_session_usecase.dart';
 import 'package:quanta_hris/src/features/leave/data/datasources/leave_remote_data_source.dart';
@@ -338,10 +339,14 @@ void _registerPermission() {
   getIt.registerFactory(
     () => GetPermissionHistoryUseCase(getIt<PermissionRepository>()),
   );
+  getIt.registerFactory(
+    () => SubmitPermissionUseCase(getIt<PermissionRepository>()),
+  );
 
   getIt.registerFactory(
     () => PermissionBloc(
       getPermissionHistoryUseCase: getIt<GetPermissionHistoryUseCase>(),
+      submitPermissionUseCase: getIt<SubmitPermissionUseCase>(),
     ),
   );
 }

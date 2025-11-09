@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:quanta_hris/src/core/di/injector.dart';
 import 'package:quanta_hris/src/features/permission/domain/entities/permission_history_entity.dart';
@@ -37,13 +38,13 @@ class _PermissionView extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.large),
           child: BlocBuilder<PermissionBloc, PermissionState>(
             builder: (context, state) {
-              if (state.isLoading) {
+              if (state.isHistoryLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
 
-              if (state.error != null) {
+              if (state.historyError != null) {
                 return _PermissionError(
-                  message: state.error!,
+                  message: state.historyError!,
                   onRetry: () => context.read<PermissionBloc>().add(
                     const PermissionEvent.fetchPermissionHistory(),
                   ),
@@ -151,10 +152,15 @@ class _PermissionHeaderInfo extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.large),
           PrimaryButton(
-            text: 'Ajukan Izin',
+            text: 'Tambah Pengajuan Izin',
             icon: const ButtonIconData(Icons.add),
-            onPressed: () {
-              // TODO: navigate to permission submission form
+            onPressed: () async {
+              final shouldRefresh = await context.push('/permission/submit');
+              if (shouldRefresh == true && context.mounted) {
+                context.read<PermissionBloc>().add(
+                  const PermissionEvent.fetchPermissionHistory(),
+                );
+              }
             },
           ),
         ],

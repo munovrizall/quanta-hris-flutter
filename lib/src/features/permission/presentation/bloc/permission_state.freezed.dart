@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PermissionState {
 
- bool get isLoading; PermissionHistoryEntity? get history; String? get error;
+ bool get isHistoryLoading; bool get isSubmitLoading; PermissionHistoryEntity? get history; PermissionApplicationEntity? get submittedPermission; String? get historyError; String? get submitError; String? get submitSuccessMessage;
 /// Create a copy of PermissionState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PermissionStateCopyWith<PermissionState> get copyWith => _$PermissionStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PermissionState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.history, history) || other.history == history)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PermissionState&&(identical(other.isHistoryLoading, isHistoryLoading) || other.isHistoryLoading == isHistoryLoading)&&(identical(other.isSubmitLoading, isSubmitLoading) || other.isSubmitLoading == isSubmitLoading)&&(identical(other.history, history) || other.history == history)&&(identical(other.submittedPermission, submittedPermission) || other.submittedPermission == submittedPermission)&&(identical(other.historyError, historyError) || other.historyError == historyError)&&(identical(other.submitError, submitError) || other.submitError == submitError)&&(identical(other.submitSuccessMessage, submitSuccessMessage) || other.submitSuccessMessage == submitSuccessMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,history,error);
+int get hashCode => Object.hash(runtimeType,isHistoryLoading,isSubmitLoading,history,submittedPermission,historyError,submitError,submitSuccessMessage);
 
 @override
 String toString() {
-  return 'PermissionState(isLoading: $isLoading, history: $history, error: $error)';
+  return 'PermissionState(isHistoryLoading: $isHistoryLoading, isSubmitLoading: $isSubmitLoading, history: $history, submittedPermission: $submittedPermission, historyError: $historyError, submitError: $submitError, submitSuccessMessage: $submitSuccessMessage)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $PermissionStateCopyWith<$Res>  {
   factory $PermissionStateCopyWith(PermissionState value, $Res Function(PermissionState) _then) = _$PermissionStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, PermissionHistoryEntity? history, String? error
+ bool isHistoryLoading, bool isSubmitLoading, PermissionHistoryEntity? history, PermissionApplicationEntity? submittedPermission, String? historyError, String? submitError, String? submitSuccessMessage
 });
 
 
-$PermissionHistoryEntityCopyWith<$Res>? get history;
+$PermissionHistoryEntityCopyWith<$Res>? get history;$PermissionApplicationEntityCopyWith<$Res>? get submittedPermission;
 
 }
 /// @nodoc
@@ -62,11 +62,15 @@ class _$PermissionStateCopyWithImpl<$Res>
 
 /// Create a copy of PermissionState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? history = freezed,Object? error = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isHistoryLoading = null,Object? isSubmitLoading = null,Object? history = freezed,Object? submittedPermission = freezed,Object? historyError = freezed,Object? submitError = freezed,Object? submitSuccessMessage = freezed,}) {
   return _then(_self.copyWith(
-isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+isHistoryLoading: null == isHistoryLoading ? _self.isHistoryLoading : isHistoryLoading // ignore: cast_nullable_to_non_nullable
+as bool,isSubmitLoading: null == isSubmitLoading ? _self.isSubmitLoading : isSubmitLoading // ignore: cast_nullable_to_non_nullable
 as bool,history: freezed == history ? _self.history : history // ignore: cast_nullable_to_non_nullable
-as PermissionHistoryEntity?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as PermissionHistoryEntity?,submittedPermission: freezed == submittedPermission ? _self.submittedPermission : submittedPermission // ignore: cast_nullable_to_non_nullable
+as PermissionApplicationEntity?,historyError: freezed == historyError ? _self.historyError : historyError // ignore: cast_nullable_to_non_nullable
+as String?,submitError: freezed == submitError ? _self.submitError : submitError // ignore: cast_nullable_to_non_nullable
+as String?,submitSuccessMessage: freezed == submitSuccessMessage ? _self.submitSuccessMessage : submitSuccessMessage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -81,6 +85,18 @@ $PermissionHistoryEntityCopyWith<$Res>? get history {
 
   return $PermissionHistoryEntityCopyWith<$Res>(_self.history!, (value) {
     return _then(_self.copyWith(history: value));
+  });
+}/// Create a copy of PermissionState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PermissionApplicationEntityCopyWith<$Res>? get submittedPermission {
+    if (_self.submittedPermission == null) {
+    return null;
+  }
+
+  return $PermissionApplicationEntityCopyWith<$Res>(_self.submittedPermission!, (value) {
+    return _then(_self.copyWith(submittedPermission: value));
   });
 }
 }
@@ -164,10 +180,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  PermissionHistoryEntity? history,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isHistoryLoading,  bool isSubmitLoading,  PermissionHistoryEntity? history,  PermissionApplicationEntity? submittedPermission,  String? historyError,  String? submitError,  String? submitSuccessMessage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PermissionState() when $default != null:
-return $default(_that.isLoading,_that.history,_that.error);case _:
+return $default(_that.isHistoryLoading,_that.isSubmitLoading,_that.history,_that.submittedPermission,_that.historyError,_that.submitError,_that.submitSuccessMessage);case _:
   return orElse();
 
 }
@@ -185,10 +201,10 @@ return $default(_that.isLoading,_that.history,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  PermissionHistoryEntity? history,  String? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isHistoryLoading,  bool isSubmitLoading,  PermissionHistoryEntity? history,  PermissionApplicationEntity? submittedPermission,  String? historyError,  String? submitError,  String? submitSuccessMessage)  $default,) {final _that = this;
 switch (_that) {
 case _PermissionState():
-return $default(_that.isLoading,_that.history,_that.error);case _:
+return $default(_that.isHistoryLoading,_that.isSubmitLoading,_that.history,_that.submittedPermission,_that.historyError,_that.submitError,_that.submitSuccessMessage);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -205,10 +221,10 @@ return $default(_that.isLoading,_that.history,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  PermissionHistoryEntity? history,  String? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isHistoryLoading,  bool isSubmitLoading,  PermissionHistoryEntity? history,  PermissionApplicationEntity? submittedPermission,  String? historyError,  String? submitError,  String? submitSuccessMessage)?  $default,) {final _that = this;
 switch (_that) {
 case _PermissionState() when $default != null:
-return $default(_that.isLoading,_that.history,_that.error);case _:
+return $default(_that.isHistoryLoading,_that.isSubmitLoading,_that.history,_that.submittedPermission,_that.historyError,_that.submitError,_that.submitSuccessMessage);case _:
   return null;
 
 }
@@ -220,12 +236,16 @@ return $default(_that.isLoading,_that.history,_that.error);case _:
 
 
 class _PermissionState implements PermissionState {
-  const _PermissionState({this.isLoading = false, this.history, this.error});
+  const _PermissionState({this.isHistoryLoading = false, this.isSubmitLoading = false, this.history, this.submittedPermission, this.historyError, this.submitError, this.submitSuccessMessage});
   
 
-@override@JsonKey() final  bool isLoading;
+@override@JsonKey() final  bool isHistoryLoading;
+@override@JsonKey() final  bool isSubmitLoading;
 @override final  PermissionHistoryEntity? history;
-@override final  String? error;
+@override final  PermissionApplicationEntity? submittedPermission;
+@override final  String? historyError;
+@override final  String? submitError;
+@override final  String? submitSuccessMessage;
 
 /// Create a copy of PermissionState
 /// with the given fields replaced by the non-null parameter values.
@@ -237,16 +257,16 @@ _$PermissionStateCopyWith<_PermissionState> get copyWith => __$PermissionStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PermissionState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.history, history) || other.history == history)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PermissionState&&(identical(other.isHistoryLoading, isHistoryLoading) || other.isHistoryLoading == isHistoryLoading)&&(identical(other.isSubmitLoading, isSubmitLoading) || other.isSubmitLoading == isSubmitLoading)&&(identical(other.history, history) || other.history == history)&&(identical(other.submittedPermission, submittedPermission) || other.submittedPermission == submittedPermission)&&(identical(other.historyError, historyError) || other.historyError == historyError)&&(identical(other.submitError, submitError) || other.submitError == submitError)&&(identical(other.submitSuccessMessage, submitSuccessMessage) || other.submitSuccessMessage == submitSuccessMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,history,error);
+int get hashCode => Object.hash(runtimeType,isHistoryLoading,isSubmitLoading,history,submittedPermission,historyError,submitError,submitSuccessMessage);
 
 @override
 String toString() {
-  return 'PermissionState(isLoading: $isLoading, history: $history, error: $error)';
+  return 'PermissionState(isHistoryLoading: $isHistoryLoading, isSubmitLoading: $isSubmitLoading, history: $history, submittedPermission: $submittedPermission, historyError: $historyError, submitError: $submitError, submitSuccessMessage: $submitSuccessMessage)';
 }
 
 
@@ -257,11 +277,11 @@ abstract mixin class _$PermissionStateCopyWith<$Res> implements $PermissionState
   factory _$PermissionStateCopyWith(_PermissionState value, $Res Function(_PermissionState) _then) = __$PermissionStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, PermissionHistoryEntity? history, String? error
+ bool isHistoryLoading, bool isSubmitLoading, PermissionHistoryEntity? history, PermissionApplicationEntity? submittedPermission, String? historyError, String? submitError, String? submitSuccessMessage
 });
 
 
-@override $PermissionHistoryEntityCopyWith<$Res>? get history;
+@override $PermissionHistoryEntityCopyWith<$Res>? get history;@override $PermissionApplicationEntityCopyWith<$Res>? get submittedPermission;
 
 }
 /// @nodoc
@@ -274,11 +294,15 @@ class __$PermissionStateCopyWithImpl<$Res>
 
 /// Create a copy of PermissionState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? history = freezed,Object? error = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isHistoryLoading = null,Object? isSubmitLoading = null,Object? history = freezed,Object? submittedPermission = freezed,Object? historyError = freezed,Object? submitError = freezed,Object? submitSuccessMessage = freezed,}) {
   return _then(_PermissionState(
-isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+isHistoryLoading: null == isHistoryLoading ? _self.isHistoryLoading : isHistoryLoading // ignore: cast_nullable_to_non_nullable
+as bool,isSubmitLoading: null == isSubmitLoading ? _self.isSubmitLoading : isSubmitLoading // ignore: cast_nullable_to_non_nullable
 as bool,history: freezed == history ? _self.history : history // ignore: cast_nullable_to_non_nullable
-as PermissionHistoryEntity?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as PermissionHistoryEntity?,submittedPermission: freezed == submittedPermission ? _self.submittedPermission : submittedPermission // ignore: cast_nullable_to_non_nullable
+as PermissionApplicationEntity?,historyError: freezed == historyError ? _self.historyError : historyError // ignore: cast_nullable_to_non_nullable
+as String?,submitError: freezed == submitError ? _self.submitError : submitError // ignore: cast_nullable_to_non_nullable
+as String?,submitSuccessMessage: freezed == submitSuccessMessage ? _self.submitSuccessMessage : submitSuccessMessage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -294,6 +318,18 @@ $PermissionHistoryEntityCopyWith<$Res>? get history {
 
   return $PermissionHistoryEntityCopyWith<$Res>(_self.history!, (value) {
     return _then(_self.copyWith(history: value));
+  });
+}/// Create a copy of PermissionState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PermissionApplicationEntityCopyWith<$Res>? get submittedPermission {
+    if (_self.submittedPermission == null) {
+    return null;
+  }
+
+  return $PermissionApplicationEntityCopyWith<$Res>(_self.submittedPermission!, (value) {
+    return _then(_self.copyWith(submittedPermission: value));
   });
 }
 }

@@ -5,10 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:quanta_hris/src/core/di/injector.dart';
-import 'package:quanta_hris/src/features/leave/domain/entities/submit_leave_params.dart';
-import 'package:quanta_hris/src/features/leave/presentation/bloc/leave_bloc.dart';
-import 'package:quanta_hris/src/features/leave/presentation/bloc/leave_event.dart';
-import 'package:quanta_hris/src/features/leave/presentation/bloc/leave_state.dart';
+import 'package:quanta_hris/src/features/permission/domain/entities/submit_permission_params.dart';
+import 'package:quanta_hris/src/features/permission/presentation/bloc/permission_bloc.dart';
+import 'package:quanta_hris/src/features/permission/presentation/bloc/permission_event.dart';
+import 'package:quanta_hris/src/features/permission/presentation/bloc/permission_state.dart';
 import 'package:quanta_hris/src/shared/styles/app_colors.dart';
 import 'package:quanta_hris/src/shared/styles/app_measures.dart';
 import 'package:quanta_hris/src/shared/styles/app_typography.dart';
@@ -16,28 +16,29 @@ import 'package:quanta_hris/src/shared/widgets/app_text_field.dart';
 import 'package:quanta_hris/src/shared/widgets/file_picker_widget.dart';
 import 'package:quanta_hris/src/shared/widgets/primary_button.dart';
 
-class SubmitLeaveFormScreen extends StatelessWidget {
-  const SubmitLeaveFormScreen({super.key});
+class SubmitPermissionFormScreen extends StatelessWidget {
+  const SubmitPermissionFormScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<LeaveBloc>(
-      create: (_) => getIt<LeaveBloc>(),
-      child: const _SubmitLeaveFormView(),
+    return BlocProvider<PermissionBloc>(
+      create: (_) => getIt<PermissionBloc>(),
+      child: const _SubmitPermissionFormView(),
     );
   }
 }
 
-class _SubmitLeaveFormView extends StatefulWidget {
-  const _SubmitLeaveFormView();
+class _SubmitPermissionFormView extends StatefulWidget {
+  const _SubmitPermissionFormView();
 
   @override
-  State<_SubmitLeaveFormView> createState() => _SubmitLeaveFormViewState();
+  State<_SubmitPermissionFormView> createState() =>
+      _SubmitPermissionFormViewState();
 }
 
-class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
+class _SubmitPermissionFormViewState extends State<_SubmitPermissionFormView> {
   final _formKey = GlobalKey<FormState>();
-  final _jenisCutiController = TextEditingController();
+  final _jenisIzinController = TextEditingController();
   final _tanggalMulaiController = TextEditingController();
   final _tanggalSelesaiController = TextEditingController();
   final _keteranganController = TextEditingController();
@@ -45,54 +46,44 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
   DateTime? _tanggalMulai;
   DateTime? _tanggalSelesai;
   File? _dokumenPendukung;
-  String? _selectedJenisCuti;
+  String? _selectedJenisIzin;
 
-  final List<String> _jenisCutiOptions = [
-    'Cuti Tahunan',
-    'Cuti Sakit',
-    'Cuti Melahirkan',
-    'Cuti Menikah',
-    'Cuti Kematian',
+  final List<String> _jenisIzinOptions = [
+    'Izin Sakit',
+    'Izin Pribadi',
+    'Izin Keluarga',
+    'Izin Kepentingan Mendesak',
   ];
 
   @override
   void dispose() {
-    _jenisCutiController.dispose();
+    _jenisIzinController.dispose();
     _tanggalMulaiController.dispose();
     _tanggalSelesaiController.dispose();
     _keteranganController.dispose();
     super.dispose();
   }
 
-  Future<void> _selectDate(
-    BuildContext context, {
-    required bool isStartDate,
-  }) async {
-    final initialDate = isStartDate ? _tanggalMulai : _tanggalSelesai;
-
-    // Tanggal mulai minimum adalah besok (tidak boleh hari ini atau sebelumnya)
-    final tomorrow = DateTime.now().add(const Duration(days: 1));
-    final firstDate = isStartDate
-        ? DateTime(tomorrow.year, tomorrow.month, tomorrow.day)
-        : (_tanggalMulai ??
-              DateTime(tomorrow.year, tomorrow.month, tomorrow.day));
+  Future<void> _pickDate(BuildContext context, {required bool isStart}) async {
+    final initialDate = isStart ? _tanggalMulai : _tanggalSelesai;
+    final today = DateTime.now();
+    final firstDate = isStart ? today : (_tanggalMulai ?? today);
 
     final picked = await showDatePicker(
       context: context,
       initialDate: initialDate ?? firstDate,
       firstDate: firstDate,
-      lastDate: DateTime.now().add(const Duration(days: 365)),
+      lastDate: today.add(const Duration(days: 365)),
     );
 
     if (picked != null) {
       setState(() {
-        if (isStartDate) {
+        if (isStart) {
           _tanggalMulai = picked;
           _tanggalMulaiController.text = DateFormat(
             'dd MMM yyyy',
             'id_ID',
           ).format(picked);
-          // Reset tanggal selesai jika lebih awal dari tanggal mulai
           if (_tanggalSelesai != null && _tanggalSelesai!.isBefore(picked)) {
             _tanggalSelesai = null;
             _tanggalSelesaiController.clear();
@@ -108,39 +99,41 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
     }
   }
 
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      if (_selectedJenisCuti == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Pilih jenis cuti terlebih dahulu')),
-        );
-        return;
-      }
+  void _submit() {
+    if (!_formKey.currentState!.validate()) return;
 
-      if (_tanggalMulai == null || _tanggalSelesai == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Pilih tanggal mulai dan selesai')),
-        );
-        return;
-      }
-
-      final params = SubmitLeaveParams(
-        jenisCuti: _selectedJenisCuti!,
-        tanggalMulai: DateFormat('yyyy-MM-dd').format(_tanggalMulai!),
-        tanggalSelesai: DateFormat('yyyy-MM-dd').format(_tanggalSelesai!),
-        keterangan: _keteranganController.text.trim(),
-        dokumenPendukungPath: _dokumenPendukung?.path,
+    if (_selectedJenisIzin == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pilih jenis izin terlebih dahulu')),
       );
-
-      context.read<LeaveBloc>().add(LeaveEvent.submitLeave(params: params));
+      return;
     }
+
+    if (_tanggalMulai == null || _tanggalSelesai == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Lengkapi tanggal mulai dan selesai')),
+      );
+      return;
+    }
+
+    final params = SubmitPermissionParams(
+      jenisIzin: _selectedJenisIzin!,
+      tanggalMulai: DateFormat('yyyy-MM-dd').format(_tanggalMulai!),
+      tanggalSelesai: DateFormat('yyyy-MM-dd').format(_tanggalSelesai!),
+      keterangan: _keteranganController.text.trim(),
+      dokumenPendukungPath: _dokumenPendukung?.path,
+    );
+
+    context.read<PermissionBloc>().add(
+      PermissionEvent.submitPermission(params: params),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Ajukan Cuti')),
-      body: BlocConsumer<LeaveBloc, LeaveState>(
+      appBar: AppBar(title: const Text('Ajukan Izin')),
+      body: BlocConsumer<PermissionBloc, PermissionState>(
         listener: (context, state) {
           if (state.submitSuccessMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -149,8 +142,7 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                 backgroundColor: AppColors.success,
               ),
             );
-            // Navigate back to leave screen
-            context.pop();
+            context.pop(true);
           }
 
           if (state.submitError != null) {
@@ -186,22 +178,20 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              // Main Content - Scrollable
                               Expanded(
                                 child: SingleChildScrollView(
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
-                                      // Header Info
                                       Container(
                                         padding: const EdgeInsets.all(
-                                          AppSpacing.medium,
+                                          AppSpacing.large,
                                         ),
                                         decoration: BoxDecoration(
                                           color: AppColors.primary10,
                                           borderRadius: BorderRadius.circular(
-                                            AppRadius.medium,
+                                            AppRadius.large,
                                           ),
                                           border: Border.all(
                                             color: AppColors.primary200,
@@ -224,7 +214,7 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    'Ketentuan Pengajuan Cuti:',
+                                                    'Ketentuan Pengajuan Izin:',
                                                     style: AppTypography
                                                         .labelLarge
                                                         .copyWith(
@@ -238,8 +228,8 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                                                     height: AppSpacing.xs,
                                                   ),
                                                   Text(
-                                                    '• Tanggal cuti minimal H+1 (besok)\n'
-                                                    '• Pastikan semua data sudah benar\n'
+                                                    '• Ajukan izin minimal untuk hari berjalan\n'
+                                                    '• Sertakan alasan yang jelas agar mudah diproses\n'
                                                     '• Dokumen pendukung opsional (maks 5MB)',
                                                     style: AppTypography
                                                         .bodySmall
@@ -255,10 +245,8 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                                         ),
                                       ),
                                       const SizedBox(height: AppSpacing.xl),
-
-                                      // Jenis Cuti Dropdown
                                       Text(
-                                        'Jenis Cuti',
+                                        'Jenis Izin',
                                         style: AppTypography.labelLarge
                                             .copyWith(
                                               fontWeight: FontWeight.w600,
@@ -266,34 +254,29 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                                       ),
                                       const SizedBox(height: AppSpacing.small),
                                       DropdownButtonFormField<String>(
-                                        value: _selectedJenisCuti,
+                                        initialValue: _selectedJenisIzin,
                                         decoration: const InputDecoration(
-                                          hintText: 'Pilih jenis cuti',
+                                          hintText: 'Pilih jenis izin',
                                           prefixIcon: Icon(Icons.event_note),
                                         ),
-                                        items: _jenisCutiOptions.map((jenis) {
-                                          return DropdownMenuItem(
-                                            value: jenis,
-                                            child: Text(jenis),
-                                          );
-                                        }).toList(),
+                                        items: _jenisIzinOptions
+                                            .map(
+                                              (item) => DropdownMenuItem(
+                                                value: item,
+                                                child: Text(item),
+                                              ),
+                                            )
+                                            .toList(),
                                         onChanged: (value) {
                                           setState(() {
-                                            _selectedJenisCuti = value;
-                                            _jenisCutiController.text =
-                                                value ?? '';
+                                            _selectedJenisIzin = value;
                                           });
                                         },
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Jenis cuti harus dipilih';
-                                          }
-                                          return null;
-                                        },
+                                        validator: (value) => value == null
+                                            ? 'Pilih jenis izin'
+                                            : null,
                                       ),
                                       const SizedBox(height: AppSpacing.large),
-
-                                      // Tanggal Mulai
                                       Text(
                                         'Tanggal Mulai',
                                         style: AppTypography.labelLarge
@@ -304,25 +287,19 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                                       const SizedBox(height: AppSpacing.small),
                                       AppTextField(
                                         controller: _tanggalMulaiController,
-                                        hintText: 'Pilih tanggal mulai cuti',
+                                        hintText: 'Pilih tanggal mulai izin',
                                         prefixIcon: const Icon(
                                           Icons.calendar_today,
                                         ),
                                         readOnly: true,
-                                        onTap: () => _selectDate(
-                                          context,
-                                          isStartDate: true,
-                                        ),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Tanggal mulai harus diisi';
-                                          }
-                                          return null;
-                                        },
+                                        onTap: () =>
+                                            _pickDate(context, isStart: true),
+                                        validator: (value) =>
+                                            value == null || value.isEmpty
+                                            ? 'Pilih tanggal mulai'
+                                            : null,
                                       ),
                                       const SizedBox(height: AppSpacing.large),
-
-                                      // Tanggal Selesai
                                       Text(
                                         'Tanggal Selesai',
                                         style: AppTypography.labelLarge
@@ -333,23 +310,17 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                                       const SizedBox(height: AppSpacing.small),
                                       AppTextField(
                                         controller: _tanggalSelesaiController,
-                                        hintText: 'Pilih tanggal selesai cuti',
+                                        hintText: 'Pilih tanggal selesai izin',
                                         prefixIcon: const Icon(Icons.event),
                                         readOnly: true,
-                                        onTap: () => _selectDate(
-                                          context,
-                                          isStartDate: false,
-                                        ),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Tanggal selesai harus diisi';
-                                          }
-                                          return null;
-                                        },
+                                        onTap: () =>
+                                            _pickDate(context, isStart: false),
+                                        validator: (value) =>
+                                            value == null || value.isEmpty
+                                            ? 'Pilih tanggal selesai'
+                                            : null,
                                       ),
                                       const SizedBox(height: AppSpacing.large),
-
-                                      // Keterangan
                                       Text(
                                         'Keterangan',
                                         style: AppTypography.labelLarge
@@ -360,63 +331,47 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                                       const SizedBox(height: AppSpacing.small),
                                       AppTextField(
                                         controller: _keteranganController,
-                                        hintText:
-                                            'Masukkan alasan/keterangan cuti',
+                                        hintText: 'Tuliskan alasan izin',
+                                        prefixIcon: const Icon(
+                                          Icons.description,
+                                        ),
                                         maxLines: 4,
-                                        textCapitalization:
-                                            TextCapitalization.sentences,
-                                        validator: (value) {
-                                          if (value == null ||
-                                              value.trim().isEmpty) {
-                                            return 'Keterangan harus diisi';
-                                          }
-                                          if (value.trim().length < 10) {
-                                            return 'Keterangan minimal 10 karakter';
-                                          }
-                                          return null;
-                                        },
+                                        validator: (value) =>
+                                            value == null ||
+                                                value.trim().isEmpty
+                                            ? 'Keterangan wajib diisi'
+                                            : null,
                                       ),
                                       const SizedBox(height: AppSpacing.large),
-
-                                      // Dokumen Pendukung
+                                      Text(
+                                        'Dokumen Pendukung (Opsional)',
+                                        style: AppTypography.labelLarge
+                                            .copyWith(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                      const SizedBox(height: AppSpacing.small),
                                       FilePickerWidget(
-                                        label: 'Dokumen Pendukung (Opsional)',
-                                        hint: 'PDF, JPG, atau PNG (Maks. 5MB)',
+                                        hint:
+                                            'Format pdf/jpg/png, ukuran maksimal 5MB',
                                         initialFile: _dokumenPendukung,
                                         onFileSelected: (file) {
                                           setState(() {
                                             _dokumenPendukung = file;
                                           });
                                         },
-                                        maxSizeInMB: 5,
-                                        allowedExtensions: const [
-                                          'pdf',
-                                          'jpg',
-                                          'jpeg',
-                                          'png',
-                                        ],
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-
-                              // Bottom Section - Fixed Buttons
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  const SizedBox(height: AppSpacing.medium),
-
-                                  // Submit Button
-                                  PrimaryButton(
-                                    text: 'Simpan',
-                                    onPressed: state.isSubmitLoading
-                                        ? null
-                                        : _submitForm,
-                                    isLoading: state.isSubmitLoading,
-                                    loadingText: 'Mengirim...',
-                                  ),
-                                ],
+                              const SizedBox(height: AppSpacing.large),
+                              PrimaryButton(
+                                text: 'Ajukan Izin',
+                                isLoading: state.isSubmitLoading,
+                                onPressed: state.isSubmitLoading
+                                    ? null
+                                    : _submit,
                               ),
                             ],
                           ),

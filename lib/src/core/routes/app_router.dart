@@ -12,6 +12,7 @@ import 'package:quanta_hris/src/features/leave/presentation/screens/submit_leave
 import 'package:quanta_hris/src/features/payroll/presentation/screens/payroll_detail_screen.dart';
 import 'package:quanta_hris/src/features/payroll/presentation/screens/payroll_screen.dart';
 import 'package:quanta_hris/src/features/permission/presentation/screens/permission_screen.dart';
+import 'package:quanta_hris/src/features/permission/presentation/screens/submit_permission_form_screen.dart';
 import 'package:quanta_hris/src/features/profile/presentation/screens/profile_screen.dart';
 import 'package:quanta_hris/src/features/splash/presentation/screens/splash_screen.dart'; // Akan kita buat
 
@@ -75,6 +76,13 @@ final GoRouter appRouter = GoRouter(
       path: '/permission',
       pageBuilder: (BuildContext context, GoRouterState state) {
         return const NoTransitionPage(child: PermissionScreen());
+      },
+    ),
+    GoRoute(
+      name: 'permission-submit',
+      path: '/permission/submit',
+      builder: (BuildContext context, GoRouterState state) {
+        return const SubmitPermissionFormScreen();
       },
     ),
     GoRoute(

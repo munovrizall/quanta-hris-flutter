@@ -4,7 +4,8 @@ part 'get_permission_history_response.freezed.dart';
 part 'get_permission_history_response.g.dart';
 
 @freezed
-abstract class GetPermissionHistoryResponse with _$GetPermissionHistoryResponse {
+abstract class GetPermissionHistoryResponse
+    with _$GetPermissionHistoryResponse {
   @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
   const factory GetPermissionHistoryResponse({
     required String karyawanId,
@@ -17,7 +18,8 @@ abstract class GetPermissionHistoryResponse with _$GetPermissionHistoryResponse 
 }
 
 @freezed
-abstract class PermissionHistoryItemResponse with _$PermissionHistoryItemResponse {
+abstract class PermissionHistoryItemResponse
+    with _$PermissionHistoryItemResponse {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory PermissionHistoryItemResponse({
     required String izinId,
