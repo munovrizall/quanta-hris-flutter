@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +13,7 @@ import 'package:quanta_hris/src/shared/styles/app_colors.dart';
 import 'package:quanta_hris/src/shared/styles/app_measures.dart';
 import 'package:quanta_hris/src/shared/styles/app_typography.dart';
 import 'package:quanta_hris/src/shared/widgets/app_text_field.dart';
+import 'package:quanta_hris/src/shared/widgets/file_picker_widget.dart';
 import 'package:quanta_hris/src/shared/widgets/primary_button.dart';
 
 class SubmitLeaveFormScreen extends StatelessWidget {
@@ -41,6 +44,7 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
 
   DateTime? _tanggalMulai;
   DateTime? _tanggalSelesai;
+  File? _dokumenPendukung;
   String? _selectedJenisCuti;
 
   final List<String> _jenisCutiOptions = [
@@ -65,9 +69,13 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
     required bool isStartDate,
   }) async {
     final initialDate = isStartDate ? _tanggalMulai : _tanggalSelesai;
+
+    // Tanggal mulai minimum adalah besok (tidak boleh hari ini atau sebelumnya)
+    final tomorrow = DateTime.now().add(const Duration(days: 1));
     final firstDate = isStartDate
-        ? DateTime.now()
-        : (_tanggalMulai ?? DateTime.now());
+        ? DateTime(tomorrow.year, tomorrow.month, tomorrow.day)
+        : (_tanggalMulai ??
+              DateTime(tomorrow.year, tomorrow.month, tomorrow.day));
 
     final picked = await showDatePicker(
       context: context,
@@ -100,17 +108,6 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
     }
   }
 
-  Future<void> _pickDocument() async {
-    // TODO: Implement file picker when file_picker package is added
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Fitur upload dokumen akan segera tersedia'),
-        ),
-      );
-    }
-  }
-
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       if (_selectedJenisCuti == null) {
@@ -132,7 +129,7 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
         tanggalMulai: DateFormat('yyyy-MM-dd').format(_tanggalMulai!),
         tanggalSelesai: DateFormat('yyyy-MM-dd').format(_tanggalSelesai!),
         keterangan: _keteranganController.text.trim(),
-        dokumenPendukungPath: null, // File picker not implemented yet
+        dokumenPendukungPath: _dokumenPendukung?.path,
       );
 
       context.read<LeaveBloc>().add(LeaveEvent.submitLeave(params: params));
@@ -153,7 +150,7 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
               ),
             );
             // Navigate back to leave screen and refresh
-            context.go('/leave');
+            context.pop();
           }
 
           if (state.submitError != null) {
@@ -181,15 +178,31 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                       border: Border.all(color: AppColors.primary200),
                     ),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Icon(Icons.info_outline, color: AppColors.primary),
                         const SizedBox(width: AppSpacing.small),
                         Expanded(
-                          child: Text(
-                            'Pastikan semua data yang diisi sudah benar sebelum mengajukan permohonan cuti',
-                            style: AppTypography.bodySmall.copyWith(
-                              color: AppColors.primary500,
-                            ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Ketentuan Pengajuan Cuti:',
+                                style: AppTypography.labelLarge.copyWith(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: AppSpacing.xs),
+                              Text(
+                                '• Tanggal cuti minimal H+1 (besok)\n'
+                                '• Pastikan semua data sudah benar\n'
+                                '• Dokumen pendukung opsional (maks 5MB)',
+                                style: AppTypography.bodySmall.copyWith(
+                                  color: AppColors.primary500,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -286,7 +299,6 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                   AppTextField(
                     controller: _keteranganController,
                     hintText: 'Masukkan alasan/keterangan cuti',
-                    prefixIcon: const Icon(Icons.notes),
                     maxLines: 4,
                     textCapitalization: TextCapitalization.sentences,
                     validator: (value) {
@@ -302,23 +314,17 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                   const SizedBox(height: AppSpacing.large),
 
                   // Dokumen Pendukung
-                  Text(
-                    'Dokumen Pendukung (Opsional)',
-                    style: AppTypography.labelLarge.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.small),
-                  OutlinedButton.icon(
-                    onPressed: _pickDocument,
-                    icon: const Icon(Icons.attach_file),
-                    label: const Text('Pilih Dokumen (Segera Hadir)'),
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: AppSpacing.medium,
-                        horizontal: AppSpacing.large,
-                      ),
-                    ),
+                  FilePickerWidget(
+                    label: 'Dokumen Pendukung (Opsional)',
+                    hint: 'PDF, JPG, atau PNG (Maks. 5MB)',
+                    initialFile: _dokumenPendukung,
+                    onFileSelected: (file) {
+                      setState(() {
+                        _dokumenPendukung = file;
+                      });
+                    },
+                    maxSizeInMB: 5,
+                    allowedExtensions: const ['pdf', 'jpg', 'jpeg', 'png'],
                   ),
                   const SizedBox(height: AppSpacing.xxl),
 
@@ -328,16 +334,6 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                     onPressed: state.isSubmitLoading ? null : _submitForm,
                     isLoading: state.isSubmitLoading,
                     loadingText: 'Mengirim...',
-                  ),
-                  const SizedBox(height: AppSpacing.medium),
-
-                  // Cancel Button
-                  PrimaryButton(
-                    text: 'Batal',
-                    variant: PrimaryButtonVariant.outline,
-                    onPressed: state.isSubmitLoading
-                        ? null
-                        : () => context.pop(),
                   ),
                 ],
               ),
