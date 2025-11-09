@@ -47,6 +47,8 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
         '✅ LeaveBloc: Leave submitted successfully with ID ${result.leave.cutiId}',
       );
 
+      _onGetLeaveHistory(emit); // Refresh history after submission
+
       emit(
         state.copyWith(
           isSubmitLoading: false,

@@ -12,6 +12,8 @@ class ApiEndpoints {
   static const PayrollEndpoints payroll = PayrollEndpoints();
 
   static const LeaveEndpoints cuti = LeaveEndpoints();
+
+  static const PermissionEndpoints izin = PermissionEndpoints();
 }
 
 // Class khusus untuk endpoint Autentikasi
@@ -54,4 +56,11 @@ class LeaveEndpoints {
 
   final String getCuti = '/cuti';
   final String postCuti = '/cuti';
+}
+
+class PermissionEndpoints {
+  const PermissionEndpoints();
+
+  final String getIzin = '/izin';
+  final String postIzin = '/izin';
 }

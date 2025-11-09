@@ -149,7 +149,7 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
                 backgroundColor: AppColors.success,
               ),
             );
-            // Navigate back to leave screen and refresh
+            // Navigate back to leave screen
             context.pop();
           }
 
@@ -164,179 +164,268 @@ class _SubmitLeaveFormViewState extends State<_SubmitLeaveFormView> {
         },
         builder: (context, state) {
           return SafeArea(
-            child: Form(
-              key: _formKey,
-              child: ListView(
-                padding: const EdgeInsets.all(AppSpacing.large),
-                children: [
-                  // Header Info
-                  Container(
-                    padding: const EdgeInsets.all(AppSpacing.medium),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary10,
-                      borderRadius: BorderRadius.circular(AppRadius.medium),
-                      border: Border.all(color: AppColors.primary200),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
                     ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(Icons.info_outline, color: AppColors.primary),
-                        const SizedBox(width: AppSpacing.small),
-                        Expanded(
+                    child: IntrinsicHeight(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: AppSpacing.large,
+                          right: AppSpacing.large,
+                          top: AppSpacing.large,
+                          bottom:
+                              AppSpacing.large +
+                              MediaQuery.of(context).viewInsets.bottom,
+                        ),
+                        child: Form(
+                          key: _formKey,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Text(
-                                'Ketentuan Pengajuan Cuti:',
-                                style: AppTypography.labelLarge.copyWith(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.bold,
+                              // Main Content - Scrollable
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      // Header Info
+                                      Container(
+                                        padding: const EdgeInsets.all(
+                                          AppSpacing.medium,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.primary10,
+                                          borderRadius: BorderRadius.circular(
+                                            AppRadius.medium,
+                                          ),
+                                          border: Border.all(
+                                            color: AppColors.primary200,
+                                          ),
+                                        ),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Icon(
+                                              Icons.info_outline,
+                                              color: AppColors.primary,
+                                            ),
+                                            const SizedBox(
+                                              width: AppSpacing.small,
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Ketentuan Pengajuan Cuti:',
+                                                    style: AppTypography
+                                                        .labelLarge
+                                                        .copyWith(
+                                                          color:
+                                                              AppColors.primary,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: AppSpacing.xs,
+                                                  ),
+                                                  Text(
+                                                    '• Tanggal cuti minimal H+1 (besok)\n'
+                                                    '• Pastikan semua data sudah benar\n'
+                                                    '• Dokumen pendukung opsional (maks 5MB)',
+                                                    style: AppTypography
+                                                        .bodySmall
+                                                        .copyWith(
+                                                          color: AppColors
+                                                              .primary500,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: AppSpacing.xl),
+
+                                      // Jenis Cuti Dropdown
+                                      Text(
+                                        'Jenis Cuti',
+                                        style: AppTypography.labelLarge
+                                            .copyWith(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                      const SizedBox(height: AppSpacing.small),
+                                      DropdownButtonFormField<String>(
+                                        value: _selectedJenisCuti,
+                                        decoration: const InputDecoration(
+                                          hintText: 'Pilih jenis cuti',
+                                          prefixIcon: Icon(Icons.event_note),
+                                        ),
+                                        items: _jenisCutiOptions.map((jenis) {
+                                          return DropdownMenuItem(
+                                            value: jenis,
+                                            child: Text(jenis),
+                                          );
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _selectedJenisCuti = value;
+                                            _jenisCutiController.text =
+                                                value ?? '';
+                                          });
+                                        },
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Jenis cuti harus dipilih';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      const SizedBox(height: AppSpacing.large),
+
+                                      // Tanggal Mulai
+                                      Text(
+                                        'Tanggal Mulai',
+                                        style: AppTypography.labelLarge
+                                            .copyWith(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                      const SizedBox(height: AppSpacing.small),
+                                      AppTextField(
+                                        controller: _tanggalMulaiController,
+                                        hintText: 'Pilih tanggal mulai cuti',
+                                        prefixIcon: const Icon(
+                                          Icons.calendar_today,
+                                        ),
+                                        readOnly: true,
+                                        onTap: () => _selectDate(
+                                          context,
+                                          isStartDate: true,
+                                        ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Tanggal mulai harus diisi';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      const SizedBox(height: AppSpacing.large),
+
+                                      // Tanggal Selesai
+                                      Text(
+                                        'Tanggal Selesai',
+                                        style: AppTypography.labelLarge
+                                            .copyWith(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                      const SizedBox(height: AppSpacing.small),
+                                      AppTextField(
+                                        controller: _tanggalSelesaiController,
+                                        hintText: 'Pilih tanggal selesai cuti',
+                                        prefixIcon: const Icon(Icons.event),
+                                        readOnly: true,
+                                        onTap: () => _selectDate(
+                                          context,
+                                          isStartDate: false,
+                                        ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Tanggal selesai harus diisi';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      const SizedBox(height: AppSpacing.large),
+
+                                      // Keterangan
+                                      Text(
+                                        'Keterangan',
+                                        style: AppTypography.labelLarge
+                                            .copyWith(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                      const SizedBox(height: AppSpacing.small),
+                                      AppTextField(
+                                        controller: _keteranganController,
+                                        hintText:
+                                            'Masukkan alasan/keterangan cuti',
+                                        maxLines: 4,
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.trim().isEmpty) {
+                                            return 'Keterangan harus diisi';
+                                          }
+                                          if (value.trim().length < 10) {
+                                            return 'Keterangan minimal 10 karakter';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      const SizedBox(height: AppSpacing.large),
+
+                                      // Dokumen Pendukung
+                                      FilePickerWidget(
+                                        label: 'Dokumen Pendukung (Opsional)',
+                                        hint: 'PDF, JPG, atau PNG (Maks. 5MB)',
+                                        initialFile: _dokumenPendukung,
+                                        onFileSelected: (file) {
+                                          setState(() {
+                                            _dokumenPendukung = file;
+                                          });
+                                        },
+                                        maxSizeInMB: 5,
+                                        allowedExtensions: const [
+                                          'pdf',
+                                          'jpg',
+                                          'jpeg',
+                                          'png',
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                              const SizedBox(height: AppSpacing.xs),
-                              Text(
-                                '• Tanggal cuti minimal H+1 (besok)\n'
-                                '• Pastikan semua data sudah benar\n'
-                                '• Dokumen pendukung opsional (maks 5MB)',
-                                style: AppTypography.bodySmall.copyWith(
-                                  color: AppColors.primary500,
-                                ),
+
+                              // Bottom Section - Fixed Buttons
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  const SizedBox(height: AppSpacing.medium),
+
+                                  // Submit Button
+                                  PrimaryButton(
+                                    text: 'Ajukan Cuti',
+                                    onPressed: state.isSubmitLoading
+                                        ? null
+                                        : _submitForm,
+                                    isLoading: state.isSubmitLoading,
+                                    loadingText: 'Mengirim...',
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.xl),
-
-                  // Jenis Cuti Dropdown
-                  Text(
-                    'Jenis Cuti',
-                    style: AppTypography.labelLarge.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.small),
-                  DropdownButtonFormField<String>(
-                    value: _selectedJenisCuti,
-                    decoration: const InputDecoration(
-                      hintText: 'Pilih jenis cuti',
-                      prefixIcon: Icon(Icons.event_note),
-                    ),
-                    items: _jenisCutiOptions.map((jenis) {
-                      return DropdownMenuItem(value: jenis, child: Text(jenis));
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedJenisCuti = value;
-                        _jenisCutiController.text = value ?? '';
-                      });
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Jenis cuti harus dipilih';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.large),
-
-                  // Tanggal Mulai
-                  Text(
-                    'Tanggal Mulai',
-                    style: AppTypography.labelLarge.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.small),
-                  AppTextField(
-                    controller: _tanggalMulaiController,
-                    hintText: 'Pilih tanggal mulai cuti',
-                    prefixIcon: const Icon(Icons.calendar_today),
-                    readOnly: true,
-                    onTap: () => _selectDate(context, isStartDate: true),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Tanggal mulai harus diisi';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.large),
-
-                  // Tanggal Selesai
-                  Text(
-                    'Tanggal Selesai',
-                    style: AppTypography.labelLarge.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.small),
-                  AppTextField(
-                    controller: _tanggalSelesaiController,
-                    hintText: 'Pilih tanggal selesai cuti',
-                    prefixIcon: const Icon(Icons.event),
-                    readOnly: true,
-                    onTap: () => _selectDate(context, isStartDate: false),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Tanggal selesai harus diisi';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.large),
-
-                  // Keterangan
-                  Text(
-                    'Keterangan',
-                    style: AppTypography.labelLarge.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.small),
-                  AppTextField(
-                    controller: _keteranganController,
-                    hintText: 'Masukkan alasan/keterangan cuti',
-                    maxLines: 4,
-                    textCapitalization: TextCapitalization.sentences,
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return 'Keterangan harus diisi';
-                      }
-                      if (value.trim().length < 10) {
-                        return 'Keterangan minimal 10 karakter';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.large),
-
-                  // Dokumen Pendukung
-                  FilePickerWidget(
-                    label: 'Dokumen Pendukung (Opsional)',
-                    hint: 'PDF, JPG, atau PNG (Maks. 5MB)',
-                    initialFile: _dokumenPendukung,
-                    onFileSelected: (file) {
-                      setState(() {
-                        _dokumenPendukung = file;
-                      });
-                    },
-                    maxSizeInMB: 5,
-                    allowedExtensions: const ['pdf', 'jpg', 'jpeg', 'png'],
-                  ),
-                  const SizedBox(height: AppSpacing.xxl),
-
-                  // Submit Button
-                  PrimaryButton(
-                    text: 'Ajukan Cuti',
-                    onPressed: state.isSubmitLoading ? null : _submitForm,
-                    isLoading: state.isSubmitLoading,
-                    loadingText: 'Mengirim...',
-                  ),
-                ],
-              ),
+                );
+              },
             ),
           );
         },

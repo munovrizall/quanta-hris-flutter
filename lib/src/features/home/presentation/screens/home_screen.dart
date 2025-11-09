@@ -512,7 +512,7 @@ class _HomeViewState extends State<_HomeView> {
                               label: AppStrings.home.permissionRequestLabel,
                               color: AppColors.warning,
                               onTap: () {
-                                // TODO: Navigate to permission request
+                                context.push('/permission');
                               },
                             ),
                           ),

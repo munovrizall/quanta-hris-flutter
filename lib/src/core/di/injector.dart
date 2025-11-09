@@ -39,9 +39,15 @@ import 'package:quanta_hris/src/features/payroll/data/datasources/payroll_remote
 import 'package:quanta_hris/src/features/payroll/data/repositories/payroll_repository_impl.dart';
 import 'package:quanta_hris/src/features/payroll/domain/repositories/payroll_repository.dart';
 import 'package:quanta_hris/src/features/payroll/domain/usecases/download_slip_gaji_usecase.dart';
+import 'package:quanta_hris/src/features/payroll/domain/usecases/download_slip_gaji_usecase.dart';
 import 'package:quanta_hris/src/features/payroll/domain/usecases/get_slip_gaji_detail_usecase.dart';
 import 'package:quanta_hris/src/features/payroll/domain/usecases/get_slip_gaji_usecase.dart';
 import 'package:quanta_hris/src/features/payroll/presentation/bloc/payroll_bloc.dart';
+import 'package:quanta_hris/src/features/permission/data/datasources/permission_remote_data_source.dart';
+import 'package:quanta_hris/src/features/permission/data/repositories/permission_repository_impl.dart';
+import 'package:quanta_hris/src/features/permission/domain/repositories/permission_repository.dart';
+import 'package:quanta_hris/src/features/permission/domain/usecases/get_permission_history_usecase.dart';
+import 'package:quanta_hris/src/features/permission/presentation/bloc/permission_bloc.dart';
 import 'package:quanta_hris/src/features/splash/domain/usecases/check_session_usecase.dart';
 import 'package:quanta_hris/src/features/leave/data/datasources/leave_remote_data_source.dart';
 import 'package:quanta_hris/src/features/leave/data/repositories/leave_repository_impl.dart';
@@ -61,6 +67,7 @@ void configureDependencies(FlavorConfig config) {
   _registerPayroll();
   _registerAttendance();
   _registerLeave();
+  _registerPermission();
   _configureDioInterceptors();
 }
 
@@ -313,6 +320,28 @@ void _registerLeave() {
     () => LeaveBloc(
       submitLeaveUseCase: getIt<SubmitLeaveUseCase>(),
       getLeaveHistoryUseCase: getIt<GetLeaveHistoryUseCase>(),
+    ),
+  );
+}
+
+void _registerPermission() {
+  AppLogger.i('🗂️ Registering permission dependencies...');
+
+  getIt.registerLazySingleton<PermissionRemoteDataSource>(
+    () => PermissionRemoteDataSourceImpl(getIt<Dio>()),
+  );
+
+  getIt.registerLazySingleton<PermissionRepository>(
+    () => PermissionRepositoryImpl(getIt<PermissionRemoteDataSource>()),
+  );
+
+  getIt.registerFactory(
+    () => GetPermissionHistoryUseCase(getIt<PermissionRepository>()),
+  );
+
+  getIt.registerFactory(
+    () => PermissionBloc(
+      getPermissionHistoryUseCase: getIt<GetPermissionHistoryUseCase>(),
     ),
   );
 }
