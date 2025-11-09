@@ -262,13 +262,6 @@ class _OvertimeSubmissionSummary extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.small),
-          Text(
-            'ID: ${submission.lemburId}',
-            style: AppTypography.labelSmall.copyWith(
-              color: AppColors.neutral600,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.small),
           _OvertimeDetailRow(
             icon: Icons.av_timer,
             label: 'Durasi Lembur',

@@ -99,148 +99,67 @@ class _SubmitOvertimeFormViewState extends State<_SubmitOvertimeFormView> {
           }
         },
         builder: (context, state) {
-          return SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(
-                left: AppSpacing.large,
-                right: AppSpacing.large,
-                top: AppSpacing.large,
-                bottom:
-                    AppSpacing.large + MediaQuery.of(context).viewInsets.bottom,
-              ),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _OvertimeInfoCard(history: widget.history),
-                    const SizedBox(height: AppSpacing.xl),
-                    Text(
-                      'Deskripsi Pekerjaan',
-                      style: AppTypography.labelLarge.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+          return Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(AppSpacing.large),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          'Deskripsi Pekerjaan',
+                          style: AppTypography.labelLarge.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.small),
+                        AppTextField(
+                          controller: _deskripsiController,
+                          hintText: 'Tuliskan aktivitas lembur yang dilakukan',
+                          maxLines: 4,
+                          validator: (value) =>
+                              value == null || value.trim().isEmpty
+                              ? 'Deskripsi wajib diisi'
+                              : null,
+                        ),
+                        const SizedBox(height: AppSpacing.large),
+                        Text(
+                          'Dokumen Pendukung (Opsional)',
+                          style: AppTypography.labelLarge.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.small),
+                        FilePickerWidget(
+                          hint: 'Unggah bukti lembur (pdf/jpg/png, maks 5MB)',
+                          initialFile: _dokumenPendukung,
+                          onFileSelected: (file) {
+                            setState(() {
+                              _dokumenPendukung = file;
+                            });
+                          },
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: AppSpacing.small),
-                    AppTextField(
-                      controller: _deskripsiController,
-                      hintText: 'Tuliskan aktivitas lembur yang dilakukan',
-                      maxLines: 4,
-                      validator: (value) =>
-                          value == null || value.trim().isEmpty
-                          ? 'Deskripsi wajib diisi'
-                          : null,
-                    ),
-                    const SizedBox(height: AppSpacing.large),
-                    Text(
-                      'Dokumen Pendukung (Opsional)',
-                      style: AppTypography.labelLarge.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.small),
-                    FilePickerWidget(
-                      hint: 'Unggah bukti lembur (pdf/jpg/png, maks 5MB)',
-                      initialFile: _dokumenPendukung,
-                      onFileSelected: (file) {
-                        setState(() {
-                          _dokumenPendukung = file;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: AppSpacing.xl),
-                    PrimaryButton(
-                      text: 'Kirim Pengajuan',
-                      isLoading: state.isSubmitLoading,
-                      onPressed: state.isSubmitLoading ? null : _onSubmit,
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _OvertimeInfoCard extends StatelessWidget {
-  final OvertimeHistoryEntity history;
-
-  const _OvertimeInfoCard({required this.history});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.medium),
-      decoration: BoxDecoration(
-        color: AppColors.primary10,
-        borderRadius: BorderRadius.circular(AppRadius.medium),
-        border: Border.all(color: AppColors.primary200),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.calendar_month, color: AppColors.primary),
-              const SizedBox(width: AppSpacing.small),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(history.tanggal, style: AppTypography.heading3),
-                    Text(
-                      'Status Absensi: ${history.statusAbsensi}',
-                      style: AppTypography.labelSmall.copyWith(
-                        color: AppColors.neutral600,
-                      ),
-                    ),
-                  ],
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.large),
+                  child: PrimaryButton(
+                    text: 'Kirim Pengajuan',
+                    isLoading: state.isSubmitLoading,
+                    onPressed: state.isSubmitLoading ? null : _onSubmit,
+                  ),
                 ),
               ),
             ],
-          ),
-          const SizedBox(height: AppSpacing.medium),
-          _InfoRow(label: 'Jam masuk', value: history.jamMasuk ?? '-'),
-          _InfoRow(label: 'Jam pulang', value: history.jamPulang ?? '-'),
-          _InfoRow(
-            label: 'Durasi lembur terhitung',
-            value: history.durasiLemburTerhitung ?? '-',
-          ),
-          _InfoRow(
-            label: 'Jam pulang perusahaan',
-            value: history.jamPulangPerusahaan,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const _InfoRow({required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.small),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: AppTypography.labelSmall.copyWith(
-                color: AppColors.neutral600,
-              ),
-            ),
-          ),
-          Text(value, style: AppTypography.bodyMedium),
-        ],
+          );
+        },
       ),
     );
   }
