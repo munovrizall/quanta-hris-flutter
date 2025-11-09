@@ -16,6 +16,7 @@ class OvertimeRepositoryImpl implements OvertimeRepository {
           .map(
             (item) => OvertimeHistoryEntity(
               tanggal: item.tanggal,
+              absensiId: item.absensiId,
               jamMasuk: item.jamMasuk,
               statusMasuk: item.statusMasuk,
               jamPulang: item.jamPulang,

@@ -10,6 +10,7 @@ _OvertimeHistoryResponse _$OvertimeHistoryResponseFromJson(
   Map<String, dynamic> json,
 ) => _OvertimeHistoryResponse(
   tanggal: json['tanggal'] as String,
+  absensiId: json['absensi_id'] as String?,
   jamMasuk: json['jam_masuk'] as String?,
   statusMasuk: json['status_masuk'] as String?,
   jamPulang: json['jam_pulang'] as String?,
@@ -29,6 +30,7 @@ Map<String, dynamic> _$OvertimeHistoryResponseToJson(
   _OvertimeHistoryResponse instance,
 ) => <String, dynamic>{
   'tanggal': instance.tanggal,
+  'absensi_id': instance.absensiId,
   'jam_masuk': instance.jamMasuk,
   'status_masuk': instance.statusMasuk,
   'jam_pulang': instance.jamPulang,

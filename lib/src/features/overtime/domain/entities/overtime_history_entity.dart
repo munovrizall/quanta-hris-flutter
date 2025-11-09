@@ -6,6 +6,7 @@ part 'overtime_history_entity.freezed.dart';
 abstract class OvertimeHistoryEntity with _$OvertimeHistoryEntity {
   const factory OvertimeHistoryEntity({
     required String tanggal,
+    String? absensiId,
     String? jamMasuk,
     String? statusMasuk,
     String? jamPulang,

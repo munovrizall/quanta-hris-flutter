@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$OvertimeHistoryEntity {
 
- String get tanggal; String? get jamMasuk; String? get statusMasuk; String? get jamPulang; String? get statusPulang; String get statusAbsensi; bool get eligibleLembur; String? get durasiLemburTerhitung; String get jamPulangPerusahaan; OvertimeSubmissionEntity? get lemburPengajuan;
+ String get tanggal; String? get absensiId; String? get jamMasuk; String? get statusMasuk; String? get jamPulang; String? get statusPulang; String get statusAbsensi; bool get eligibleLembur; String? get durasiLemburTerhitung; String get jamPulangPerusahaan; OvertimeSubmissionEntity? get lemburPengajuan;
 /// Create a copy of OvertimeHistoryEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $OvertimeHistoryEntityCopyWith<OvertimeHistoryEntity> get copyWith => _$Overtime
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OvertimeHistoryEntity&&(identical(other.tanggal, tanggal) || other.tanggal == tanggal)&&(identical(other.jamMasuk, jamMasuk) || other.jamMasuk == jamMasuk)&&(identical(other.statusMasuk, statusMasuk) || other.statusMasuk == statusMasuk)&&(identical(other.jamPulang, jamPulang) || other.jamPulang == jamPulang)&&(identical(other.statusPulang, statusPulang) || other.statusPulang == statusPulang)&&(identical(other.statusAbsensi, statusAbsensi) || other.statusAbsensi == statusAbsensi)&&(identical(other.eligibleLembur, eligibleLembur) || other.eligibleLembur == eligibleLembur)&&(identical(other.durasiLemburTerhitung, durasiLemburTerhitung) || other.durasiLemburTerhitung == durasiLemburTerhitung)&&(identical(other.jamPulangPerusahaan, jamPulangPerusahaan) || other.jamPulangPerusahaan == jamPulangPerusahaan)&&(identical(other.lemburPengajuan, lemburPengajuan) || other.lemburPengajuan == lemburPengajuan));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OvertimeHistoryEntity&&(identical(other.tanggal, tanggal) || other.tanggal == tanggal)&&(identical(other.absensiId, absensiId) || other.absensiId == absensiId)&&(identical(other.jamMasuk, jamMasuk) || other.jamMasuk == jamMasuk)&&(identical(other.statusMasuk, statusMasuk) || other.statusMasuk == statusMasuk)&&(identical(other.jamPulang, jamPulang) || other.jamPulang == jamPulang)&&(identical(other.statusPulang, statusPulang) || other.statusPulang == statusPulang)&&(identical(other.statusAbsensi, statusAbsensi) || other.statusAbsensi == statusAbsensi)&&(identical(other.eligibleLembur, eligibleLembur) || other.eligibleLembur == eligibleLembur)&&(identical(other.durasiLemburTerhitung, durasiLemburTerhitung) || other.durasiLemburTerhitung == durasiLemburTerhitung)&&(identical(other.jamPulangPerusahaan, jamPulangPerusahaan) || other.jamPulangPerusahaan == jamPulangPerusahaan)&&(identical(other.lemburPengajuan, lemburPengajuan) || other.lemburPengajuan == lemburPengajuan));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,tanggal,jamMasuk,statusMasuk,jamPulang,statusPulang,statusAbsensi,eligibleLembur,durasiLemburTerhitung,jamPulangPerusahaan,lemburPengajuan);
+int get hashCode => Object.hash(runtimeType,tanggal,absensiId,jamMasuk,statusMasuk,jamPulang,statusPulang,statusAbsensi,eligibleLembur,durasiLemburTerhitung,jamPulangPerusahaan,lemburPengajuan);
 
 @override
 String toString() {
-  return 'OvertimeHistoryEntity(tanggal: $tanggal, jamMasuk: $jamMasuk, statusMasuk: $statusMasuk, jamPulang: $jamPulang, statusPulang: $statusPulang, statusAbsensi: $statusAbsensi, eligibleLembur: $eligibleLembur, durasiLemburTerhitung: $durasiLemburTerhitung, jamPulangPerusahaan: $jamPulangPerusahaan, lemburPengajuan: $lemburPengajuan)';
+  return 'OvertimeHistoryEntity(tanggal: $tanggal, absensiId: $absensiId, jamMasuk: $jamMasuk, statusMasuk: $statusMasuk, jamPulang: $jamPulang, statusPulang: $statusPulang, statusAbsensi: $statusAbsensi, eligibleLembur: $eligibleLembur, durasiLemburTerhitung: $durasiLemburTerhitung, jamPulangPerusahaan: $jamPulangPerusahaan, lemburPengajuan: $lemburPengajuan)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $OvertimeHistoryEntityCopyWith<$Res>  {
   factory $OvertimeHistoryEntityCopyWith(OvertimeHistoryEntity value, $Res Function(OvertimeHistoryEntity) _then) = _$OvertimeHistoryEntityCopyWithImpl;
 @useResult
 $Res call({
- String tanggal, String? jamMasuk, String? statusMasuk, String? jamPulang, String? statusPulang, String statusAbsensi, bool eligibleLembur, String? durasiLemburTerhitung, String jamPulangPerusahaan, OvertimeSubmissionEntity? lemburPengajuan
+ String tanggal, String? absensiId, String? jamMasuk, String? statusMasuk, String? jamPulang, String? statusPulang, String statusAbsensi, bool eligibleLembur, String? durasiLemburTerhitung, String jamPulangPerusahaan, OvertimeSubmissionEntity? lemburPengajuan
 });
 
 
@@ -62,10 +62,11 @@ class _$OvertimeHistoryEntityCopyWithImpl<$Res>
 
 /// Create a copy of OvertimeHistoryEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? tanggal = null,Object? jamMasuk = freezed,Object? statusMasuk = freezed,Object? jamPulang = freezed,Object? statusPulang = freezed,Object? statusAbsensi = null,Object? eligibleLembur = null,Object? durasiLemburTerhitung = freezed,Object? jamPulangPerusahaan = null,Object? lemburPengajuan = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? tanggal = null,Object? absensiId = freezed,Object? jamMasuk = freezed,Object? statusMasuk = freezed,Object? jamPulang = freezed,Object? statusPulang = freezed,Object? statusAbsensi = null,Object? eligibleLembur = null,Object? durasiLemburTerhitung = freezed,Object? jamPulangPerusahaan = null,Object? lemburPengajuan = freezed,}) {
   return _then(_self.copyWith(
 tanggal: null == tanggal ? _self.tanggal : tanggal // ignore: cast_nullable_to_non_nullable
-as String,jamMasuk: freezed == jamMasuk ? _self.jamMasuk : jamMasuk // ignore: cast_nullable_to_non_nullable
+as String,absensiId: freezed == absensiId ? _self.absensiId : absensiId // ignore: cast_nullable_to_non_nullable
+as String?,jamMasuk: freezed == jamMasuk ? _self.jamMasuk : jamMasuk // ignore: cast_nullable_to_non_nullable
 as String?,statusMasuk: freezed == statusMasuk ? _self.statusMasuk : statusMasuk // ignore: cast_nullable_to_non_nullable
 as String?,jamPulang: freezed == jamPulang ? _self.jamPulang : jamPulang // ignore: cast_nullable_to_non_nullable
 as String?,statusPulang: freezed == statusPulang ? _self.statusPulang : statusPulang // ignore: cast_nullable_to_non_nullable
@@ -171,10 +172,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String tanggal,  String? jamMasuk,  String? statusMasuk,  String? jamPulang,  String? statusPulang,  String statusAbsensi,  bool eligibleLembur,  String? durasiLemburTerhitung,  String jamPulangPerusahaan,  OvertimeSubmissionEntity? lemburPengajuan)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String tanggal,  String? absensiId,  String? jamMasuk,  String? statusMasuk,  String? jamPulang,  String? statusPulang,  String statusAbsensi,  bool eligibleLembur,  String? durasiLemburTerhitung,  String jamPulangPerusahaan,  OvertimeSubmissionEntity? lemburPengajuan)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _OvertimeHistoryEntity() when $default != null:
-return $default(_that.tanggal,_that.jamMasuk,_that.statusMasuk,_that.jamPulang,_that.statusPulang,_that.statusAbsensi,_that.eligibleLembur,_that.durasiLemburTerhitung,_that.jamPulangPerusahaan,_that.lemburPengajuan);case _:
+return $default(_that.tanggal,_that.absensiId,_that.jamMasuk,_that.statusMasuk,_that.jamPulang,_that.statusPulang,_that.statusAbsensi,_that.eligibleLembur,_that.durasiLemburTerhitung,_that.jamPulangPerusahaan,_that.lemburPengajuan);case _:
   return orElse();
 
 }
@@ -192,10 +193,10 @@ return $default(_that.tanggal,_that.jamMasuk,_that.statusMasuk,_that.jamPulang,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String tanggal,  String? jamMasuk,  String? statusMasuk,  String? jamPulang,  String? statusPulang,  String statusAbsensi,  bool eligibleLembur,  String? durasiLemburTerhitung,  String jamPulangPerusahaan,  OvertimeSubmissionEntity? lemburPengajuan)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String tanggal,  String? absensiId,  String? jamMasuk,  String? statusMasuk,  String? jamPulang,  String? statusPulang,  String statusAbsensi,  bool eligibleLembur,  String? durasiLemburTerhitung,  String jamPulangPerusahaan,  OvertimeSubmissionEntity? lemburPengajuan)  $default,) {final _that = this;
 switch (_that) {
 case _OvertimeHistoryEntity():
-return $default(_that.tanggal,_that.jamMasuk,_that.statusMasuk,_that.jamPulang,_that.statusPulang,_that.statusAbsensi,_that.eligibleLembur,_that.durasiLemburTerhitung,_that.jamPulangPerusahaan,_that.lemburPengajuan);case _:
+return $default(_that.tanggal,_that.absensiId,_that.jamMasuk,_that.statusMasuk,_that.jamPulang,_that.statusPulang,_that.statusAbsensi,_that.eligibleLembur,_that.durasiLemburTerhitung,_that.jamPulangPerusahaan,_that.lemburPengajuan);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -212,10 +213,10 @@ return $default(_that.tanggal,_that.jamMasuk,_that.statusMasuk,_that.jamPulang,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String tanggal,  String? jamMasuk,  String? statusMasuk,  String? jamPulang,  String? statusPulang,  String statusAbsensi,  bool eligibleLembur,  String? durasiLemburTerhitung,  String jamPulangPerusahaan,  OvertimeSubmissionEntity? lemburPengajuan)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String tanggal,  String? absensiId,  String? jamMasuk,  String? statusMasuk,  String? jamPulang,  String? statusPulang,  String statusAbsensi,  bool eligibleLembur,  String? durasiLemburTerhitung,  String jamPulangPerusahaan,  OvertimeSubmissionEntity? lemburPengajuan)?  $default,) {final _that = this;
 switch (_that) {
 case _OvertimeHistoryEntity() when $default != null:
-return $default(_that.tanggal,_that.jamMasuk,_that.statusMasuk,_that.jamPulang,_that.statusPulang,_that.statusAbsensi,_that.eligibleLembur,_that.durasiLemburTerhitung,_that.jamPulangPerusahaan,_that.lemburPengajuan);case _:
+return $default(_that.tanggal,_that.absensiId,_that.jamMasuk,_that.statusMasuk,_that.jamPulang,_that.statusPulang,_that.statusAbsensi,_that.eligibleLembur,_that.durasiLemburTerhitung,_that.jamPulangPerusahaan,_that.lemburPengajuan);case _:
   return null;
 
 }
@@ -227,10 +228,11 @@ return $default(_that.tanggal,_that.jamMasuk,_that.statusMasuk,_that.jamPulang,_
 
 
 class _OvertimeHistoryEntity implements OvertimeHistoryEntity {
-  const _OvertimeHistoryEntity({required this.tanggal, this.jamMasuk, this.statusMasuk, this.jamPulang, this.statusPulang, required this.statusAbsensi, required this.eligibleLembur, this.durasiLemburTerhitung, required this.jamPulangPerusahaan, this.lemburPengajuan});
+  const _OvertimeHistoryEntity({required this.tanggal, this.absensiId, this.jamMasuk, this.statusMasuk, this.jamPulang, this.statusPulang, required this.statusAbsensi, required this.eligibleLembur, this.durasiLemburTerhitung, required this.jamPulangPerusahaan, this.lemburPengajuan});
   
 
 @override final  String tanggal;
+@override final  String? absensiId;
 @override final  String? jamMasuk;
 @override final  String? statusMasuk;
 @override final  String? jamPulang;
@@ -251,16 +253,16 @@ _$OvertimeHistoryEntityCopyWith<_OvertimeHistoryEntity> get copyWith => __$Overt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OvertimeHistoryEntity&&(identical(other.tanggal, tanggal) || other.tanggal == tanggal)&&(identical(other.jamMasuk, jamMasuk) || other.jamMasuk == jamMasuk)&&(identical(other.statusMasuk, statusMasuk) || other.statusMasuk == statusMasuk)&&(identical(other.jamPulang, jamPulang) || other.jamPulang == jamPulang)&&(identical(other.statusPulang, statusPulang) || other.statusPulang == statusPulang)&&(identical(other.statusAbsensi, statusAbsensi) || other.statusAbsensi == statusAbsensi)&&(identical(other.eligibleLembur, eligibleLembur) || other.eligibleLembur == eligibleLembur)&&(identical(other.durasiLemburTerhitung, durasiLemburTerhitung) || other.durasiLemburTerhitung == durasiLemburTerhitung)&&(identical(other.jamPulangPerusahaan, jamPulangPerusahaan) || other.jamPulangPerusahaan == jamPulangPerusahaan)&&(identical(other.lemburPengajuan, lemburPengajuan) || other.lemburPengajuan == lemburPengajuan));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OvertimeHistoryEntity&&(identical(other.tanggal, tanggal) || other.tanggal == tanggal)&&(identical(other.absensiId, absensiId) || other.absensiId == absensiId)&&(identical(other.jamMasuk, jamMasuk) || other.jamMasuk == jamMasuk)&&(identical(other.statusMasuk, statusMasuk) || other.statusMasuk == statusMasuk)&&(identical(other.jamPulang, jamPulang) || other.jamPulang == jamPulang)&&(identical(other.statusPulang, statusPulang) || other.statusPulang == statusPulang)&&(identical(other.statusAbsensi, statusAbsensi) || other.statusAbsensi == statusAbsensi)&&(identical(other.eligibleLembur, eligibleLembur) || other.eligibleLembur == eligibleLembur)&&(identical(other.durasiLemburTerhitung, durasiLemburTerhitung) || other.durasiLemburTerhitung == durasiLemburTerhitung)&&(identical(other.jamPulangPerusahaan, jamPulangPerusahaan) || other.jamPulangPerusahaan == jamPulangPerusahaan)&&(identical(other.lemburPengajuan, lemburPengajuan) || other.lemburPengajuan == lemburPengajuan));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,tanggal,jamMasuk,statusMasuk,jamPulang,statusPulang,statusAbsensi,eligibleLembur,durasiLemburTerhitung,jamPulangPerusahaan,lemburPengajuan);
+int get hashCode => Object.hash(runtimeType,tanggal,absensiId,jamMasuk,statusMasuk,jamPulang,statusPulang,statusAbsensi,eligibleLembur,durasiLemburTerhitung,jamPulangPerusahaan,lemburPengajuan);
 
 @override
 String toString() {
-  return 'OvertimeHistoryEntity(tanggal: $tanggal, jamMasuk: $jamMasuk, statusMasuk: $statusMasuk, jamPulang: $jamPulang, statusPulang: $statusPulang, statusAbsensi: $statusAbsensi, eligibleLembur: $eligibleLembur, durasiLemburTerhitung: $durasiLemburTerhitung, jamPulangPerusahaan: $jamPulangPerusahaan, lemburPengajuan: $lemburPengajuan)';
+  return 'OvertimeHistoryEntity(tanggal: $tanggal, absensiId: $absensiId, jamMasuk: $jamMasuk, statusMasuk: $statusMasuk, jamPulang: $jamPulang, statusPulang: $statusPulang, statusAbsensi: $statusAbsensi, eligibleLembur: $eligibleLembur, durasiLemburTerhitung: $durasiLemburTerhitung, jamPulangPerusahaan: $jamPulangPerusahaan, lemburPengajuan: $lemburPengajuan)';
 }
 
 
@@ -271,7 +273,7 @@ abstract mixin class _$OvertimeHistoryEntityCopyWith<$Res> implements $OvertimeH
   factory _$OvertimeHistoryEntityCopyWith(_OvertimeHistoryEntity value, $Res Function(_OvertimeHistoryEntity) _then) = __$OvertimeHistoryEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String tanggal, String? jamMasuk, String? statusMasuk, String? jamPulang, String? statusPulang, String statusAbsensi, bool eligibleLembur, String? durasiLemburTerhitung, String jamPulangPerusahaan, OvertimeSubmissionEntity? lemburPengajuan
+ String tanggal, String? absensiId, String? jamMasuk, String? statusMasuk, String? jamPulang, String? statusPulang, String statusAbsensi, bool eligibleLembur, String? durasiLemburTerhitung, String jamPulangPerusahaan, OvertimeSubmissionEntity? lemburPengajuan
 });
 
 
@@ -288,10 +290,11 @@ class __$OvertimeHistoryEntityCopyWithImpl<$Res>
 
 /// Create a copy of OvertimeHistoryEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? tanggal = null,Object? jamMasuk = freezed,Object? statusMasuk = freezed,Object? jamPulang = freezed,Object? statusPulang = freezed,Object? statusAbsensi = null,Object? eligibleLembur = null,Object? durasiLemburTerhitung = freezed,Object? jamPulangPerusahaan = null,Object? lemburPengajuan = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? tanggal = null,Object? absensiId = freezed,Object? jamMasuk = freezed,Object? statusMasuk = freezed,Object? jamPulang = freezed,Object? statusPulang = freezed,Object? statusAbsensi = null,Object? eligibleLembur = null,Object? durasiLemburTerhitung = freezed,Object? jamPulangPerusahaan = null,Object? lemburPengajuan = freezed,}) {
   return _then(_OvertimeHistoryEntity(
 tanggal: null == tanggal ? _self.tanggal : tanggal // ignore: cast_nullable_to_non_nullable
-as String,jamMasuk: freezed == jamMasuk ? _self.jamMasuk : jamMasuk // ignore: cast_nullable_to_non_nullable
+as String,absensiId: freezed == absensiId ? _self.absensiId : absensiId // ignore: cast_nullable_to_non_nullable
+as String?,jamMasuk: freezed == jamMasuk ? _self.jamMasuk : jamMasuk // ignore: cast_nullable_to_non_nullable
 as String?,statusMasuk: freezed == statusMasuk ? _self.statusMasuk : statusMasuk // ignore: cast_nullable_to_non_nullable
 as String?,jamPulang: freezed == jamPulang ? _self.jamPulang : jamPulang // ignore: cast_nullable_to_non_nullable
 as String?,statusPulang: freezed == statusPulang ? _self.statusPulang : statusPulang // ignore: cast_nullable_to_non_nullable
