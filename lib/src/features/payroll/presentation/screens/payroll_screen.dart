@@ -61,7 +61,7 @@ class _PayrollView extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: MainBottomNavBar(
-        currentIndex: 1,
+        currentIndex: 2,
         onTap: (index) => _handleNavigationTap(context, index),
       ),
     );
@@ -73,9 +73,12 @@ class _PayrollView extends StatelessWidget {
         context.go('/home');
         break;
       case 1:
-        // Already on payroll screen.
+        context.go('/history');
         break;
       case 2:
+        // Already on payroll screen.
+        break;
+      case 3:
         context.go('/profile');
         break;
     }

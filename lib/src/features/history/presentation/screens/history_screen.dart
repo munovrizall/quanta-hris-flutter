@@ -65,7 +65,7 @@ class _HistoryView extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: MainBottomNavBar(
-        currentIndex: 0,
+        currentIndex: 1,
         onTap: (index) => _handleNavigationTap(context, index),
       ),
     );
@@ -77,9 +77,11 @@ class _HistoryView extends StatelessWidget {
         context.go('/home');
         break;
       case 1:
-        context.go('/payroll');
         break;
       case 2:
+        context.go('/payroll');
+        break;
+      case 3:
         context.go('/profile');
         break;
     }
@@ -143,104 +145,97 @@ class _HistoryContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Riwayat Absensi', style: AppTypography.heading2),
-        const SizedBox(height: AppSpacing.medium),
-        Expanded(
-          child: ListView.builder(
-            itemCount: attendanceHistory.length,
-            itemBuilder: (context, index) {
-              final attendance = attendanceHistory[index];
-              return Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.large),
-                ),
-                elevation: 2,
-                margin: const EdgeInsets.only(bottom: AppSpacing.medium),
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.large),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return Expanded(
+      child: ListView.builder(
+        itemCount: attendanceHistory.length,
+        itemBuilder: (context, index) {
+          final attendance = attendanceHistory[index];
+          return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.large),
+            ),
+            elevation: 2,
+            margin: const EdgeInsets.only(bottom: AppSpacing.medium),
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.large),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Tanggal
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Tanggal
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              _formatDate(attendance.tanggal),
-                              style: AppTypography.heading3.copyWith(
-                                fontSize: 16,
-                              ),
-                            ),
+                      Expanded(
+                        child: Text(
+                          _formatDate(attendance.tanggal),
+                          style: AppTypography.heading3.copyWith(
+                            fontSize: 16,
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppSpacing.small,
-                              vertical: AppSpacing.xxs,
-                            ),
-                            decoration: BoxDecoration(
-                              color: _getStatusColor(
-                                attendance.statusAbsensi,
-                              ).withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(
-                                AppRadius.small,
-                              ),
-                              border: Border.all(
-                                color: _getStatusColor(
-                                  attendance.statusAbsensi,
-                                ),
-                              ),
-                            ),
-                            child: Text(
-                              attendance.statusAbsensi,
-                              style: AppTypography.labelSmall.copyWith(
-                                color: _getStatusColor(
-                                  attendance.statusAbsensi,
-                                ),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.medium),
-
-                      // Clock In
-                      _AttendanceTimeRow(
-                        icon: Icons.login,
-                        label: 'Masuk',
-                        time: _formatTime(attendance.jamMasuk),
-                        status: attendance.statusMasuk ?? '-',
-                        statusColor: _getDetailStatusColor(
-                          attendance.statusMasuk,
                         ),
                       ),
-
-                      const SizedBox(height: AppSpacing.small),
-                      const Divider(),
-                      const SizedBox(height: AppSpacing.small),
-
-                      // Clock Out
-                      _AttendanceTimeRow(
-                        icon: Icons.logout,
-                        label: 'Pulang',
-                        time: _formatTime(attendance.jamPulang),
-                        status: attendance.statusPulang ?? '-',
-                        statusColor: _getDetailStatusColor(
-                          attendance.statusPulang,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.small,
+                          vertical: AppSpacing.xxs,
+                        ),
+                        decoration: BoxDecoration(
+                          color: _getStatusColor(
+                            attendance.statusAbsensi,
+                          ).withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(
+                            AppRadius.small,
+                          ),
+                          border: Border.all(
+                            color: _getStatusColor(
+                              attendance.statusAbsensi,
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          attendance.statusAbsensi,
+                          style: AppTypography.labelSmall.copyWith(
+                            color: _getStatusColor(
+                              attendance.statusAbsensi,
+                            ),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
+                  const SizedBox(height: AppSpacing.medium),
+    
+                  // Clock In
+                  _AttendanceTimeRow(
+                    icon: Icons.login,
+                    label: 'Masuk',
+                    time: _formatTime(attendance.jamMasuk),
+                    status: attendance.statusMasuk ?? '-',
+                    statusColor: _getDetailStatusColor(
+                      attendance.statusMasuk,
+                    ),
+                  ),
+    
+                  const SizedBox(height: AppSpacing.small),
+                  const Divider(),
+                  const SizedBox(height: AppSpacing.small),
+    
+                  // Clock Out
+                  _AttendanceTimeRow(
+                    icon: Icons.logout,
+                    label: 'Pulang',
+                    time: _formatTime(attendance.jamPulang),
+                    status: attendance.statusPulang ?? '-',
+                    statusColor: _getDetailStatusColor(
+                      attendance.statusPulang,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

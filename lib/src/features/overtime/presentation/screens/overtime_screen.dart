@@ -9,6 +9,7 @@ import 'package:quanta_hris/src/features/overtime/presentation/bloc/overtime_sta
 import 'package:quanta_hris/src/shared/styles/app_colors.dart';
 import 'package:quanta_hris/src/shared/styles/app_measures.dart';
 import 'package:quanta_hris/src/shared/styles/app_typography.dart';
+import 'package:quanta_hris/src/shared/widgets/primary_button.dart';
 
 class OvertimeScreen extends StatelessWidget {
   const OvertimeScreen({super.key});
@@ -69,89 +70,34 @@ class _OvertimeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final eligibleCount = histories.where((item) => item.eligibleLembur).length;
+    final eligibleHistories = histories
+        .where((item) => item.eligibleLembur)
+        .toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _OvertimeHeader(total: histories.length, eligible: eligibleCount),
-        const SizedBox(height: AppSpacing.large),
-        Text('Detail Riwayat', style: AppTypography.heading2),
-        const SizedBox(height: AppSpacing.medium),
         Expanded(
-          child: RefreshIndicator(
-            onRefresh: () async {
-              context.read<OvertimeBloc>().add(
-                const OvertimeEvent.fetchHistory(),
-              );
-            },
-            child: ListView.builder(
-              itemCount: histories.length,
-              itemBuilder: (context, index) {
-                final item = histories[index];
-                return _OvertimeHistoryCard(item: item);
-              },
-            ),
-          ),
+          child: eligibleHistories.isEmpty
+              ? const _OvertimeEmpty(
+                  message: 'Belum ada data lembur yang eligible.',
+                )
+              : RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<OvertimeBloc>().add(
+                      const OvertimeEvent.fetchHistory(),
+                    );
+                  },
+                  child: ListView.builder(
+                    itemCount: eligibleHistories.length,
+                    itemBuilder: (context, index) {
+                      final item = eligibleHistories[index];
+                      return _OvertimeHistoryCard(item: item);
+                    },
+                  ),
+                ),
         ),
       ],
-    );
-  }
-}
-
-class _OvertimeHeader extends StatelessWidget {
-  final int total;
-  final int eligible;
-
-  const _OvertimeHeader({required this.total, required this.eligible});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.large),
-      decoration: BoxDecoration(
-        color: AppColors.primary10,
-        borderRadius: BorderRadius.circular(AppRadius.large),
-        border: Border.all(color: AppColors.primary200),
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Icon(Icons.access_time, color: AppColors.primary, size: 40),
-              const SizedBox(width: AppSpacing.medium),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Total Hari Tercatat',
-                      style: AppTypography.labelLarge.copyWith(
-                        color: AppColors.primary500,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.xs),
-                    Text(
-                      '$total Hari',
-                      style: AppTypography.heading1.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.xs),
-                    Text(
-                      'Eligible lembur: $eligible hari',
-                      style: AppTypography.labelMedium.copyWith(
-                        color: AppColors.neutral600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }
@@ -201,24 +147,11 @@ class _OvertimeHistoryCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (item.eligibleLembur)
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.medium,
-                      vertical: AppSpacing.xs,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.successLight,
-                      borderRadius: BorderRadius.circular(AppRadius.medium),
-                    ),
-                    child: Text(
-                      'Eligible',
-                      style: AppTypography.labelMedium.copyWith(
-                        color: AppColors.success,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
+                const _StatusChip(
+                  label: 'Eligible',
+                  color: AppColors.success,
+                  icon: Icons.check_circle,
+                ),
               ],
             ),
             const SizedBox(height: AppSpacing.medium),
@@ -247,55 +180,118 @@ class _OvertimeHistoryCard extends StatelessWidget {
               label: 'Jam Pulang Perusahaan',
               value: item.jamPulangPerusahaan,
             ),
-            if (item.lemburPengajuan != null) ...[
-              const SizedBox(height: AppSpacing.medium),
-              Container(
-                padding: const EdgeInsets.all(AppSpacing.medium),
-                decoration: BoxDecoration(
-                  color: AppColors.neutral100,
-                  borderRadius: BorderRadius.circular(AppRadius.medium),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Pengajuan Lembur',
-                      style: AppTypography.labelLarge.copyWith(
-                        fontWeight: FontWeight.w600,
+            const SizedBox(height: AppSpacing.medium),
+            if (item.lemburPengajuan != null)
+              _OvertimeSubmissionSummary(submission: item.lemburPengajuan!)
+            else
+              PrimaryButton(
+                text: 'Ajukan Lembur',
+                variant: PrimaryButtonVariant.outline,
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Form pengajuan lembur belum tersedia untuk versi ini.',
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.xs),
-                    Text(
-                      'ID: ${item.lemburPengajuan!.lemburId}',
-                      style: AppTypography.labelSmall.copyWith(
-                        color: AppColors.neutral600,
-                      ),
-                    ),
-                    _OvertimeDetailRow(
-                      icon: Icons.av_timer,
-                      label: 'Durasi Lembur',
-                      value: item.lemburPengajuan!.durasiLembur,
-                    ),
-                    _OvertimeDetailRow(
-                      icon: Icons.payments,
-                      label: 'Upah Lembur',
-                      value: NumberFormat.currency(
-                        locale: 'id_ID',
-                        symbol: 'Rp',
-                        decimalDigits: 0,
-                      ).format(item.lemburPengajuan!.upahLembur),
-                    ),
-                    _OvertimeDetailRow(
-                      icon: Icons.update,
-                      label: 'Status',
-                      value: item.lemburPengajuan!.statusLembur,
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
-            ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _OvertimeSubmissionSummary extends StatelessWidget {
+  final OvertimeSubmissionEntity submission;
+
+  const _OvertimeSubmissionSummary({required this.submission});
+
+  Color _statusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'disetujui':
+        return AppColors.success;
+      case 'ditolak':
+        return AppColors.error;
+      default:
+        return AppColors.warning;
+    }
+  }
+
+  IconData _statusIcon(String status) {
+    switch (status.toLowerCase()) {
+      case 'disetujui':
+        return Icons.check_circle;
+      case 'ditolak':
+        return Icons.cancel;
+      default:
+        return Icons.schedule;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final statusColor = _statusColor(submission.statusLembur);
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppSpacing.medium),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [AppColors.primary10, AppColors.primary10.withOpacity(0.4)],
+        ),
+        borderRadius: BorderRadius.circular(AppRadius.large),
+        border: Border.all(color: AppColors.primary200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Pengajuan Lembur',
+                style: AppTypography.heading3.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              _StatusChip(
+                label: submission.statusLembur,
+                color: statusColor,
+                icon: _statusIcon(submission.statusLembur),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.small),
+          Text(
+            'ID: ${submission.lemburId}',
+            style: AppTypography.labelSmall.copyWith(
+              color: AppColors.neutral600,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.small),
+          _OvertimeDetailRow(
+            icon: Icons.av_timer,
+            label: 'Durasi Lembur',
+            value: submission.durasiLembur,
+          ),
+          _OvertimeDetailRow(
+            icon: Icons.payments,
+            label: 'Upah Lembur',
+            value: NumberFormat.currency(
+              locale: 'id_ID',
+              symbol: 'Rp',
+              decimalDigits: 0,
+            ).format(submission.upahLembur),
+          ),
+          if (submission.processedAt != null)
+            _OvertimeDetailRow(
+              icon: Icons.update,
+              label: 'Diproses pada',
+              value: submission.processedAt!,
+            ),
+        ],
       ),
     );
   }
@@ -344,6 +340,46 @@ class _OvertimeDetailRow extends StatelessWidget {
   }
 }
 
+class _StatusChip extends StatelessWidget {
+  final String label;
+  final Color color;
+  final IconData icon;
+
+  const _StatusChip({
+    required this.label,
+    required this.color,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.medium,
+        vertical: AppSpacing.xs,
+      ),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(AppRadius.medium),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: color, size: AppSizes.iconSmall),
+          const SizedBox(width: AppSpacing.xs),
+          Text(
+            label,
+            style: AppTypography.labelMedium.copyWith(
+              color: color,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _OvertimeError extends StatelessWidget {
   final String message;
   final VoidCallback onRetry;
@@ -370,13 +406,15 @@ class _OvertimeError extends StatelessWidget {
 }
 
 class _OvertimeEmpty extends StatelessWidget {
-  const _OvertimeEmpty();
+  final String? message;
+
+  const _OvertimeEmpty({this.message});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        'Belum ada data lembur.',
+        message ?? 'Belum ada data lembur.',
         style: AppTypography.bodyMedium.copyWith(color: AppColors.neutral600),
       ),
     );

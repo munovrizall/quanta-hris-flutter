@@ -629,9 +629,12 @@ class _HomeViewState extends State<_HomeView> {
         // Already on home screen
         break;
       case 1:
-        context.go('/payroll');
+        context.go('/history');
         break;
       case 2:
+        context.go('/payroll');
+        break;
+      case 3:
         context.go('/profile');
         break;
     }

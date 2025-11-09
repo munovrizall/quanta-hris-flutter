@@ -58,7 +58,7 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: MainBottomNavBar(
-          currentIndex: 2,
+          currentIndex: 3,
           onTap: (index) => _handleNavigationTap(context, index),
         ),
       ),
@@ -71,9 +71,12 @@ class ProfileScreen extends StatelessWidget {
         context.go('/home');
         break;
       case 1:
-        context.go('/payroll');
+        context.go('/history');
         break;
       case 2:
+        context.go('/payroll');
+        break;
+      case 3:
         // Already on profile screen.
         break;
     }
