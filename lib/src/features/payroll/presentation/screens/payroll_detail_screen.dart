@@ -80,7 +80,7 @@ class _PayrollDetailView extends StatelessWidget {
         appBar: AppBar(title: Text(title)),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.large),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.large),
             child: BlocBuilder<PayrollBloc, PayrollState>(
               builder: (context, state) {
                 if (state.isLoadingSlipGajiDetail) {
@@ -159,6 +159,7 @@ class _PayrollDetailContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: AppSpacing.large),
           _SummaryCard(
             detail: detail,
             periodeLabel: displayPeriode,
@@ -178,12 +179,6 @@ class _PayrollDetailContent extends StatelessWidget {
                   label: 'Total Tunjangan',
                   value: _currency(detail.tunjanganBreakdown.total),
                 ),
-                _InfoRow(
-                  label: 'Penghasilan Bruto',
-                  value: _currency(detail.penghasilanBruto),
-                ),
-                const SizedBox(height: AppSpacing.small),
-                _ComplianceBanner(detail: detail.tunjanganBreakdown.compliance),
                 const SizedBox(height: AppSpacing.small),
                 ...detail.tunjanganBreakdown.breakdown.map(
                   (item) => _BreakdownTile(
@@ -205,6 +200,11 @@ class _PayrollDetailContent extends StatelessWidget {
                   label: 'Catatan Penyesuaian',
                   value: detail.catatanPenyesuaian ?? '-',
                 ),
+                const Divider(height: AppSpacing.xl),
+                _InfoRow(
+                  label: 'Penghasilan Bruto',
+                  value: _currency(detail.penghasilanBruto),
+                ),
               ],
             ),
           ),
@@ -214,10 +214,6 @@ class _PayrollDetailContent extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _InfoRow(
-                  label: 'Total Potongan',
-                  value: _currency(detail.potonganTotal),
-                ),
                 _InfoRow(
                   label: 'Potongan Alfa',
                   value:
@@ -253,8 +249,8 @@ class _PayrollDetailContent extends StatelessWidget {
                 ),
                 const Divider(),
                 _InfoRow(
-                  label: 'Total BPJS',
-                  value: _currency(detail.bpjsBreakdown.totalAmount),
+                  label: 'Total Potongan',
+                  value: _currency(detail.potonganTotal),
                 ),
               ],
             ),
@@ -296,37 +292,6 @@ class _PayrollDetailContent extends StatelessWidget {
               },
             ),
           ),
-          _SectionCard(
-            title: 'Detail PPh21',
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _InfoRow(
-                  label: 'Jumlah PPh21',
-                  value: _currency(detail.pph21Detail.jumlah),
-                ),
-                _InfoRow(label: 'Tarif', value: detail.pph21Detail.tarifPersen),
-                _InfoRow(
-                  label: 'Golongan PTKP',
-                  value: detail.pph21Detail.golonganPtkp,
-                ),
-                _InfoRow(
-                  label: 'Kategori TER',
-                  value: detail.pph21Detail.kategoriTer,
-                ),
-                _InfoRow(
-                  label: 'Penghasilan Bruto',
-                  value: _currency(detail.pph21Detail.penghasilanBruto),
-                ),
-              ],
-            ),
-          ),
-          _TotalTakeHomeCard(
-            totalGaji: _currency(detail.totalGaji),
-            subtitle:
-                'Total diterima setelah seluruh pendapatan dan potongan dihitung.',
-          ),
-          const SizedBox(height: AppSpacing.xl),
         ],
       ),
     );
@@ -399,16 +364,16 @@ class _SummaryCard extends StatelessWidget {
             runSpacing: AppSpacing.small,
             children: [
               _HighlightValue(
-                label: 'Gaji Pokok',
-                value: currencyFormatter(detail.gajiPokok),
-              ),
-              _HighlightValue(
-                label: 'Tunjangan',
-                value: currencyFormatter(detail.tunjanganBreakdown.total),
+                label: 'Penghasilan',
+                value: currencyFormatter(detail.penghasilanBruto),
               ),
               _HighlightValue(
                 label: 'Potongan',
                 value: currencyFormatter(detail.potonganTotal),
+              ),
+              _HighlightValue(
+                label: 'Gaji Bersih',
+                value: currencyFormatter(detail.totalGaji),
               ),
             ],
           ),
@@ -645,43 +610,6 @@ class _BreakdownTile extends StatelessWidget {
               color: AppColors.neutral900,
               fontWeight: FontWeight.bold,
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ComplianceBanner extends StatelessWidget {
-  final TunjanganComplianceEntity detail;
-
-  const _ComplianceBanner({required this.detail});
-
-  @override
-  Widget build(BuildContext context) {
-    final color = detail.isCompliant ? AppColors.success : AppColors.warning;
-    final bgColor = detail.isCompliant
-        ? AppColors.successLight
-        : AppColors.warningLight;
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(AppSpacing.medium),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(AppRadius.medium),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Compliance ${detail.percentage}%',
-            style: AppTypography.bodyMedium.copyWith(color: color),
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            detail.message,
-            style: AppTypography.bodySmall.copyWith(color: color),
           ),
         ],
       ),
