@@ -519,7 +519,7 @@ class _HomeViewState extends State<_HomeView> {
                               label: AppStrings.home.overtimeRequestLabel,
                               color: AppColors.green200,
                               onTap: () {
-                                // TODO: Navigate to overtime request
+                                context.push('/overtime');
                               },
                             ),
                           ),

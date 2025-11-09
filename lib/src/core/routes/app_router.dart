@@ -7,10 +7,12 @@ import 'package:quanta_hris/src/features/attendance/presentation/screens/attenda
 import 'package:quanta_hris/src/features/authentication/presentation/screens/login_screen.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/screens/register_face_screen.dart';
 import 'package:quanta_hris/src/features/home/presentation/screens/home_screen.dart'; // Akan kita buat
+import 'package:quanta_hris/src/features/history/presentation/screens/history_screen.dart';
 import 'package:quanta_hris/src/features/leave/presentation/screens/leave_screen.dart';
 import 'package:quanta_hris/src/features/leave/presentation/screens/submit_leave_form_screen.dart';
 import 'package:quanta_hris/src/features/payroll/presentation/screens/payroll_detail_screen.dart';
 import 'package:quanta_hris/src/features/payroll/presentation/screens/payroll_screen.dart';
+import 'package:quanta_hris/src/features/overtime/presentation/screens/overtime_screen.dart';
 import 'package:quanta_hris/src/features/permission/presentation/screens/permission_screen.dart';
 import 'package:quanta_hris/src/features/permission/presentation/screens/submit_permission_form_screen.dart';
 import 'package:quanta_hris/src/features/profile/presentation/screens/profile_screen.dart';
@@ -72,10 +74,24 @@ final GoRouter appRouter = GoRouter(
       },
     ),
     GoRoute(
+      name: 'overtime',
+      path: '/overtime',
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        return const NoTransitionPage(child: OvertimeScreen());
+      },
+    ),
+    GoRoute(
       name: 'permission',
       path: '/permission',
       pageBuilder: (BuildContext context, GoRouterState state) {
         return const NoTransitionPage(child: PermissionScreen());
+      },
+    ),
+    GoRoute(
+      name: 'history',
+      path: '/history',
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        return const NoTransitionPage(child: HistoryScreen());
       },
     ),
     GoRoute(

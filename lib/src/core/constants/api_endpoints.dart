@@ -16,6 +16,7 @@ class ApiEndpoints {
   static const LeaveEndpoints cuti = LeaveEndpoints();
 
   static const PermissionEndpoints izin = PermissionEndpoints();
+  static const OvertimeEndpoints lembur = OvertimeEndpoints();
 }
 
 // Class khusus untuk endpoint Autentikasi
@@ -56,7 +57,8 @@ class PayrollEndpoints {
 
   final String getSlipGaji = '/slip-gaji';
   String getSlipGajiDetail(int tahun, int bulan) => '/slip-gaji/$tahun/$bulan';
-  String downloadSlipGaji(int tahun, int bulan) => '/slip-gaji/$tahun/$bulan/download';
+  String downloadSlipGaji(int tahun, int bulan) =>
+      '/slip-gaji/$tahun/$bulan/download';
 }
 
 class LeaveEndpoints {
@@ -71,4 +73,10 @@ class PermissionEndpoints {
 
   final String getIzin = '/izin';
   final String postIzin = '/izin';
+}
+
+class OvertimeEndpoints {
+  const OvertimeEndpoints();
+
+  final String getHistory = '/lembur/history';
 }

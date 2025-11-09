@@ -39,7 +39,6 @@ import 'package:quanta_hris/src/features/payroll/data/datasources/payroll_remote
 import 'package:quanta_hris/src/features/payroll/data/repositories/payroll_repository_impl.dart';
 import 'package:quanta_hris/src/features/payroll/domain/repositories/payroll_repository.dart';
 import 'package:quanta_hris/src/features/payroll/domain/usecases/download_slip_gaji_usecase.dart';
-import 'package:quanta_hris/src/features/payroll/domain/usecases/download_slip_gaji_usecase.dart';
 import 'package:quanta_hris/src/features/payroll/domain/usecases/get_slip_gaji_detail_usecase.dart';
 import 'package:quanta_hris/src/features/payroll/domain/usecases/get_slip_gaji_usecase.dart';
 import 'package:quanta_hris/src/features/payroll/presentation/bloc/payroll_bloc.dart';
@@ -49,6 +48,11 @@ import 'package:quanta_hris/src/features/permission/domain/repositories/permissi
 import 'package:quanta_hris/src/features/permission/domain/usecases/get_permission_history_usecase.dart';
 import 'package:quanta_hris/src/features/permission/domain/usecases/submit_permission_usecase.dart';
 import 'package:quanta_hris/src/features/permission/presentation/bloc/permission_bloc.dart';
+import 'package:quanta_hris/src/features/overtime/data/datasources/overtime_remote_data_source.dart';
+import 'package:quanta_hris/src/features/overtime/data/repositories/overtime_repository_impl.dart';
+import 'package:quanta_hris/src/features/overtime/domain/repositories/overtime_repository.dart';
+import 'package:quanta_hris/src/features/overtime/domain/usecases/get_overtime_history_usecase.dart';
+import 'package:quanta_hris/src/features/overtime/presentation/bloc/overtime_bloc.dart';
 import 'package:quanta_hris/src/features/splash/domain/usecases/check_session_usecase.dart';
 import 'package:quanta_hris/src/features/leave/data/datasources/leave_remote_data_source.dart';
 import 'package:quanta_hris/src/features/leave/data/repositories/leave_repository_impl.dart';
@@ -56,6 +60,11 @@ import 'package:quanta_hris/src/features/leave/domain/repositories/leave_reposit
 import 'package:quanta_hris/src/features/leave/domain/usecases/get_leave_history_usecase.dart';
 import 'package:quanta_hris/src/features/leave/domain/usecases/submit_leave_usecase.dart';
 import 'package:quanta_hris/src/features/leave/presentation/bloc/leave_bloc.dart';
+import 'package:quanta_hris/src/features/history/data/datasources/history_remote_data_source.dart';
+import 'package:quanta_hris/src/features/history/data/repositories/history_repository_impl.dart';
+import 'package:quanta_hris/src/features/history/domain/repositories/history_repository.dart';
+import 'package:quanta_hris/src/features/history/domain/usecases/get_attendance_history_usecase.dart';
+import 'package:quanta_hris/src/features/history/presentation/bloc/history_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -68,7 +77,9 @@ void configureDependencies(FlavorConfig config) {
   _registerPayroll();
   _registerAttendance();
   _registerLeave();
+  _registerHistory();
   _registerPermission();
+  _registerOvertime();
   _configureDioInterceptors();
 }
 
@@ -325,6 +336,28 @@ void _registerLeave() {
   );
 }
 
+void _registerHistory() {
+  AppLogger.i('📅 Registering history dependencies...');
+
+  getIt.registerLazySingleton<HistoryRemoteDataSource>(
+    () => HistoryRemoteDataSourceImpl(getIt<Dio>()),
+  );
+
+  getIt.registerLazySingleton<HistoryRepository>(
+    () => HistoryRepositoryImpl(getIt<HistoryRemoteDataSource>()),
+  );
+
+  getIt.registerFactory(
+    () => GetAttendanceHistoryUseCase(getIt<HistoryRepository>()),
+  );
+
+  getIt.registerFactory(
+    () => HistoryBloc(
+      getAttendanceHistoryUseCase: getIt<GetAttendanceHistoryUseCase>(),
+    ),
+  );
+}
+
 void _registerPermission() {
   AppLogger.i('🗂️ Registering permission dependencies...');
 
@@ -347,6 +380,28 @@ void _registerPermission() {
     () => PermissionBloc(
       getPermissionHistoryUseCase: getIt<GetPermissionHistoryUseCase>(),
       submitPermissionUseCase: getIt<SubmitPermissionUseCase>(),
+    ),
+  );
+}
+
+void _registerOvertime() {
+  AppLogger.i('⏱️ Registering overtime dependencies...');
+
+  getIt.registerLazySingleton<OvertimeRemoteDataSource>(
+    () => OvertimeRemoteDataSourceImpl(getIt<Dio>()),
+  );
+
+  getIt.registerLazySingleton<OvertimeRepository>(
+    () => OvertimeRepositoryImpl(getIt<OvertimeRemoteDataSource>()),
+  );
+
+  getIt.registerFactory(
+    () => GetOvertimeHistoryUseCase(getIt<OvertimeRepository>()),
+  );
+
+  getIt.registerFactory(
+    () => OvertimeBloc(
+      getOvertimeHistoryUseCase: getIt<GetOvertimeHistoryUseCase>(),
     ),
   );
 }
