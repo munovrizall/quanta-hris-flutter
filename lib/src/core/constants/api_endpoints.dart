@@ -78,5 +78,5 @@ class PermissionEndpoints {
 class OvertimeEndpoints {
   const OvertimeEndpoints();
 
-  final String getHistory = '/lembur/history';
+  final String getHistory = '/lembur';
 }
