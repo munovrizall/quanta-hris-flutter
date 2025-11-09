@@ -238,12 +238,7 @@ class _OvertimeSubmissionSummary extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.medium),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            AppColors.primary10,
-            AppColors.primary10.withValues(alpha: 0.4),
-          ],
-        ),
+        color: AppColors.primary10,
         borderRadius: BorderRadius.circular(AppRadius.large),
         border: Border.all(color: AppColors.primary200),
       ),
@@ -279,6 +274,7 @@ class _OvertimeSubmissionSummary extends StatelessWidget {
             label: 'Durasi Lembur',
             value: submission.durasiLembur,
           ),
+          const SizedBox(height: AppSpacing.small),
           _OvertimeDetailRow(
             icon: Icons.payments,
             label: 'Upah Lembur',
@@ -328,7 +324,6 @@ class _OvertimeDetailRow extends StatelessWidget {
                   color: AppColors.neutral500,
                 ),
               ),
-              const SizedBox(height: AppSpacing.xs),
               Text(
                 value,
                 style: AppTypography.bodyMedium.copyWith(
