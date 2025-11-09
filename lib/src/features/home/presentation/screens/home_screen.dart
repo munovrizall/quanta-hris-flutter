@@ -486,20 +486,9 @@ class _HomeViewState extends State<_HomeView> {
                         children: [
                           Expanded(
                             child: MenuCard(
-                              icon: Icons.event_available,
-                              label: AppStrings.home.leaveRequestLabel,
-                              color: AppColors.primary,
-                              onTap: () {
-                                context.push('/leave');
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: AppSpacing.medium),
-                          Expanded(
-                            child: MenuCard(
                               icon: Icons.access_time_filled,
                               label: AppStrings.home.overtimeRequestLabel,
-                              color: AppColors.secondary,
+                              color: AppColors.green200,
                               onTap: () {
                                 // TODO: Navigate to overtime request
                               },
@@ -508,9 +497,20 @@ class _HomeViewState extends State<_HomeView> {
                           const SizedBox(width: AppSpacing.medium),
                           Expanded(
                             child: MenuCard(
+                              icon: Icons.event_available,
+                              label: AppStrings.home.leaveRequestLabel,
+                              color: AppColors.warning,
+                              onTap: () {
+                                context.push('/leave');
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.medium),
+                          Expanded(
+                            child: MenuCard(
                               icon: Icons.assignment,
                               label: AppStrings.home.permissionRequestLabel,
-                              color: AppColors.warning,
+                              color: AppColors.secondary,
                               onTap: () {
                                 context.push('/permission');
                               },
