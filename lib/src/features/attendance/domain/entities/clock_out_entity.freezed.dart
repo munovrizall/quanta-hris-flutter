@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ClockOutEntity {
 
- String get absensiId; String get karyawanId; String get tanggal; String get waktuPulang; String get statusPulang; String get statusAbsensi; String get durasiPulangCepat; String get fotoPulang; ClockOutBranchEntity get cabang; String get distanceFromBranch;
+ String get absensiId; String get karyawanId; String get tanggal; String get waktuPulang; String get statusPulang; String get statusAbsensi; String get durasiPulangCepat; String get fotoPulang; ClockOutBranchEntity get cabang; String get distanceFromBranch; bool get isEligibleLembur;
 /// Create a copy of ClockOutEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ClockOutEntityCopyWith<ClockOutEntity> get copyWith => _$ClockOutEntityCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClockOutEntity&&(identical(other.absensiId, absensiId) || other.absensiId == absensiId)&&(identical(other.karyawanId, karyawanId) || other.karyawanId == karyawanId)&&(identical(other.tanggal, tanggal) || other.tanggal == tanggal)&&(identical(other.waktuPulang, waktuPulang) || other.waktuPulang == waktuPulang)&&(identical(other.statusPulang, statusPulang) || other.statusPulang == statusPulang)&&(identical(other.statusAbsensi, statusAbsensi) || other.statusAbsensi == statusAbsensi)&&(identical(other.durasiPulangCepat, durasiPulangCepat) || other.durasiPulangCepat == durasiPulangCepat)&&(identical(other.fotoPulang, fotoPulang) || other.fotoPulang == fotoPulang)&&(identical(other.cabang, cabang) || other.cabang == cabang)&&(identical(other.distanceFromBranch, distanceFromBranch) || other.distanceFromBranch == distanceFromBranch));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClockOutEntity&&(identical(other.absensiId, absensiId) || other.absensiId == absensiId)&&(identical(other.karyawanId, karyawanId) || other.karyawanId == karyawanId)&&(identical(other.tanggal, tanggal) || other.tanggal == tanggal)&&(identical(other.waktuPulang, waktuPulang) || other.waktuPulang == waktuPulang)&&(identical(other.statusPulang, statusPulang) || other.statusPulang == statusPulang)&&(identical(other.statusAbsensi, statusAbsensi) || other.statusAbsensi == statusAbsensi)&&(identical(other.durasiPulangCepat, durasiPulangCepat) || other.durasiPulangCepat == durasiPulangCepat)&&(identical(other.fotoPulang, fotoPulang) || other.fotoPulang == fotoPulang)&&(identical(other.cabang, cabang) || other.cabang == cabang)&&(identical(other.distanceFromBranch, distanceFromBranch) || other.distanceFromBranch == distanceFromBranch)&&(identical(other.isEligibleLembur, isEligibleLembur) || other.isEligibleLembur == isEligibleLembur));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,absensiId,karyawanId,tanggal,waktuPulang,statusPulang,statusAbsensi,durasiPulangCepat,fotoPulang,cabang,distanceFromBranch);
+int get hashCode => Object.hash(runtimeType,absensiId,karyawanId,tanggal,waktuPulang,statusPulang,statusAbsensi,durasiPulangCepat,fotoPulang,cabang,distanceFromBranch,isEligibleLembur);
 
 @override
 String toString() {
-  return 'ClockOutEntity(absensiId: $absensiId, karyawanId: $karyawanId, tanggal: $tanggal, waktuPulang: $waktuPulang, statusPulang: $statusPulang, statusAbsensi: $statusAbsensi, durasiPulangCepat: $durasiPulangCepat, fotoPulang: $fotoPulang, cabang: $cabang, distanceFromBranch: $distanceFromBranch)';
+  return 'ClockOutEntity(absensiId: $absensiId, karyawanId: $karyawanId, tanggal: $tanggal, waktuPulang: $waktuPulang, statusPulang: $statusPulang, statusAbsensi: $statusAbsensi, durasiPulangCepat: $durasiPulangCepat, fotoPulang: $fotoPulang, cabang: $cabang, distanceFromBranch: $distanceFromBranch, isEligibleLembur: $isEligibleLembur)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ClockOutEntityCopyWith<$Res>  {
   factory $ClockOutEntityCopyWith(ClockOutEntity value, $Res Function(ClockOutEntity) _then) = _$ClockOutEntityCopyWithImpl;
 @useResult
 $Res call({
- String absensiId, String karyawanId, String tanggal, String waktuPulang, String statusPulang, String statusAbsensi, String durasiPulangCepat, String fotoPulang, ClockOutBranchEntity cabang, String distanceFromBranch
+ String absensiId, String karyawanId, String tanggal, String waktuPulang, String statusPulang, String statusAbsensi, String durasiPulangCepat, String fotoPulang, ClockOutBranchEntity cabang, String distanceFromBranch, bool isEligibleLembur
 });
 
 
@@ -62,7 +62,7 @@ class _$ClockOutEntityCopyWithImpl<$Res>
 
 /// Create a copy of ClockOutEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? absensiId = null,Object? karyawanId = null,Object? tanggal = null,Object? waktuPulang = null,Object? statusPulang = null,Object? statusAbsensi = null,Object? durasiPulangCepat = null,Object? fotoPulang = null,Object? cabang = null,Object? distanceFromBranch = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? absensiId = null,Object? karyawanId = null,Object? tanggal = null,Object? waktuPulang = null,Object? statusPulang = null,Object? statusAbsensi = null,Object? durasiPulangCepat = null,Object? fotoPulang = null,Object? cabang = null,Object? distanceFromBranch = null,Object? isEligibleLembur = null,}) {
   return _then(_self.copyWith(
 absensiId: null == absensiId ? _self.absensiId : absensiId // ignore: cast_nullable_to_non_nullable
 as String,karyawanId: null == karyawanId ? _self.karyawanId : karyawanId // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,8 @@ as String,durasiPulangCepat: null == durasiPulangCepat ? _self.durasiPulangCepat
 as String,fotoPulang: null == fotoPulang ? _self.fotoPulang : fotoPulang // ignore: cast_nullable_to_non_nullable
 as String,cabang: null == cabang ? _self.cabang : cabang // ignore: cast_nullable_to_non_nullable
 as ClockOutBranchEntity,distanceFromBranch: null == distanceFromBranch ? _self.distanceFromBranch : distanceFromBranch // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isEligibleLembur: null == isEligibleLembur ? _self.isEligibleLembur : isEligibleLembur // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 /// Create a copy of ClockOutEntity
@@ -168,10 +169,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String absensiId,  String karyawanId,  String tanggal,  String waktuPulang,  String statusPulang,  String statusAbsensi,  String durasiPulangCepat,  String fotoPulang,  ClockOutBranchEntity cabang,  String distanceFromBranch)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String absensiId,  String karyawanId,  String tanggal,  String waktuPulang,  String statusPulang,  String statusAbsensi,  String durasiPulangCepat,  String fotoPulang,  ClockOutBranchEntity cabang,  String distanceFromBranch,  bool isEligibleLembur)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ClockOutEntity() when $default != null:
-return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuPulang,_that.statusPulang,_that.statusAbsensi,_that.durasiPulangCepat,_that.fotoPulang,_that.cabang,_that.distanceFromBranch);case _:
+return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuPulang,_that.statusPulang,_that.statusAbsensi,_that.durasiPulangCepat,_that.fotoPulang,_that.cabang,_that.distanceFromBranch,_that.isEligibleLembur);case _:
   return orElse();
 
 }
@@ -189,10 +190,10 @@ return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuPulang
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String absensiId,  String karyawanId,  String tanggal,  String waktuPulang,  String statusPulang,  String statusAbsensi,  String durasiPulangCepat,  String fotoPulang,  ClockOutBranchEntity cabang,  String distanceFromBranch)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String absensiId,  String karyawanId,  String tanggal,  String waktuPulang,  String statusPulang,  String statusAbsensi,  String durasiPulangCepat,  String fotoPulang,  ClockOutBranchEntity cabang,  String distanceFromBranch,  bool isEligibleLembur)  $default,) {final _that = this;
 switch (_that) {
 case _ClockOutEntity():
-return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuPulang,_that.statusPulang,_that.statusAbsensi,_that.durasiPulangCepat,_that.fotoPulang,_that.cabang,_that.distanceFromBranch);case _:
+return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuPulang,_that.statusPulang,_that.statusAbsensi,_that.durasiPulangCepat,_that.fotoPulang,_that.cabang,_that.distanceFromBranch,_that.isEligibleLembur);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -209,10 +210,10 @@ return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuPulang
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String absensiId,  String karyawanId,  String tanggal,  String waktuPulang,  String statusPulang,  String statusAbsensi,  String durasiPulangCepat,  String fotoPulang,  ClockOutBranchEntity cabang,  String distanceFromBranch)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String absensiId,  String karyawanId,  String tanggal,  String waktuPulang,  String statusPulang,  String statusAbsensi,  String durasiPulangCepat,  String fotoPulang,  ClockOutBranchEntity cabang,  String distanceFromBranch,  bool isEligibleLembur)?  $default,) {final _that = this;
 switch (_that) {
 case _ClockOutEntity() when $default != null:
-return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuPulang,_that.statusPulang,_that.statusAbsensi,_that.durasiPulangCepat,_that.fotoPulang,_that.cabang,_that.distanceFromBranch);case _:
+return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuPulang,_that.statusPulang,_that.statusAbsensi,_that.durasiPulangCepat,_that.fotoPulang,_that.cabang,_that.distanceFromBranch,_that.isEligibleLembur);case _:
   return null;
 
 }
@@ -224,7 +225,7 @@ return $default(_that.absensiId,_that.karyawanId,_that.tanggal,_that.waktuPulang
 
 
 class _ClockOutEntity implements ClockOutEntity {
-  const _ClockOutEntity({required this.absensiId, required this.karyawanId, required this.tanggal, required this.waktuPulang, required this.statusPulang, required this.statusAbsensi, required this.durasiPulangCepat, required this.fotoPulang, required this.cabang, required this.distanceFromBranch});
+  const _ClockOutEntity({required this.absensiId, required this.karyawanId, required this.tanggal, required this.waktuPulang, required this.statusPulang, required this.statusAbsensi, required this.durasiPulangCepat, required this.fotoPulang, required this.cabang, required this.distanceFromBranch, required this.isEligibleLembur});
   
 
 @override final  String absensiId;
@@ -237,6 +238,7 @@ class _ClockOutEntity implements ClockOutEntity {
 @override final  String fotoPulang;
 @override final  ClockOutBranchEntity cabang;
 @override final  String distanceFromBranch;
+@override final  bool isEligibleLembur;
 
 /// Create a copy of ClockOutEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -248,16 +250,16 @@ _$ClockOutEntityCopyWith<_ClockOutEntity> get copyWith => __$ClockOutEntityCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ClockOutEntity&&(identical(other.absensiId, absensiId) || other.absensiId == absensiId)&&(identical(other.karyawanId, karyawanId) || other.karyawanId == karyawanId)&&(identical(other.tanggal, tanggal) || other.tanggal == tanggal)&&(identical(other.waktuPulang, waktuPulang) || other.waktuPulang == waktuPulang)&&(identical(other.statusPulang, statusPulang) || other.statusPulang == statusPulang)&&(identical(other.statusAbsensi, statusAbsensi) || other.statusAbsensi == statusAbsensi)&&(identical(other.durasiPulangCepat, durasiPulangCepat) || other.durasiPulangCepat == durasiPulangCepat)&&(identical(other.fotoPulang, fotoPulang) || other.fotoPulang == fotoPulang)&&(identical(other.cabang, cabang) || other.cabang == cabang)&&(identical(other.distanceFromBranch, distanceFromBranch) || other.distanceFromBranch == distanceFromBranch));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ClockOutEntity&&(identical(other.absensiId, absensiId) || other.absensiId == absensiId)&&(identical(other.karyawanId, karyawanId) || other.karyawanId == karyawanId)&&(identical(other.tanggal, tanggal) || other.tanggal == tanggal)&&(identical(other.waktuPulang, waktuPulang) || other.waktuPulang == waktuPulang)&&(identical(other.statusPulang, statusPulang) || other.statusPulang == statusPulang)&&(identical(other.statusAbsensi, statusAbsensi) || other.statusAbsensi == statusAbsensi)&&(identical(other.durasiPulangCepat, durasiPulangCepat) || other.durasiPulangCepat == durasiPulangCepat)&&(identical(other.fotoPulang, fotoPulang) || other.fotoPulang == fotoPulang)&&(identical(other.cabang, cabang) || other.cabang == cabang)&&(identical(other.distanceFromBranch, distanceFromBranch) || other.distanceFromBranch == distanceFromBranch)&&(identical(other.isEligibleLembur, isEligibleLembur) || other.isEligibleLembur == isEligibleLembur));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,absensiId,karyawanId,tanggal,waktuPulang,statusPulang,statusAbsensi,durasiPulangCepat,fotoPulang,cabang,distanceFromBranch);
+int get hashCode => Object.hash(runtimeType,absensiId,karyawanId,tanggal,waktuPulang,statusPulang,statusAbsensi,durasiPulangCepat,fotoPulang,cabang,distanceFromBranch,isEligibleLembur);
 
 @override
 String toString() {
-  return 'ClockOutEntity(absensiId: $absensiId, karyawanId: $karyawanId, tanggal: $tanggal, waktuPulang: $waktuPulang, statusPulang: $statusPulang, statusAbsensi: $statusAbsensi, durasiPulangCepat: $durasiPulangCepat, fotoPulang: $fotoPulang, cabang: $cabang, distanceFromBranch: $distanceFromBranch)';
+  return 'ClockOutEntity(absensiId: $absensiId, karyawanId: $karyawanId, tanggal: $tanggal, waktuPulang: $waktuPulang, statusPulang: $statusPulang, statusAbsensi: $statusAbsensi, durasiPulangCepat: $durasiPulangCepat, fotoPulang: $fotoPulang, cabang: $cabang, distanceFromBranch: $distanceFromBranch, isEligibleLembur: $isEligibleLembur)';
 }
 
 
@@ -268,7 +270,7 @@ abstract mixin class _$ClockOutEntityCopyWith<$Res> implements $ClockOutEntityCo
   factory _$ClockOutEntityCopyWith(_ClockOutEntity value, $Res Function(_ClockOutEntity) _then) = __$ClockOutEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String absensiId, String karyawanId, String tanggal, String waktuPulang, String statusPulang, String statusAbsensi, String durasiPulangCepat, String fotoPulang, ClockOutBranchEntity cabang, String distanceFromBranch
+ String absensiId, String karyawanId, String tanggal, String waktuPulang, String statusPulang, String statusAbsensi, String durasiPulangCepat, String fotoPulang, ClockOutBranchEntity cabang, String distanceFromBranch, bool isEligibleLembur
 });
 
 
@@ -285,7 +287,7 @@ class __$ClockOutEntityCopyWithImpl<$Res>
 
 /// Create a copy of ClockOutEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? absensiId = null,Object? karyawanId = null,Object? tanggal = null,Object? waktuPulang = null,Object? statusPulang = null,Object? statusAbsensi = null,Object? durasiPulangCepat = null,Object? fotoPulang = null,Object? cabang = null,Object? distanceFromBranch = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? absensiId = null,Object? karyawanId = null,Object? tanggal = null,Object? waktuPulang = null,Object? statusPulang = null,Object? statusAbsensi = null,Object? durasiPulangCepat = null,Object? fotoPulang = null,Object? cabang = null,Object? distanceFromBranch = null,Object? isEligibleLembur = null,}) {
   return _then(_ClockOutEntity(
 absensiId: null == absensiId ? _self.absensiId : absensiId // ignore: cast_nullable_to_non_nullable
 as String,karyawanId: null == karyawanId ? _self.karyawanId : karyawanId // ignore: cast_nullable_to_non_nullable
@@ -297,7 +299,8 @@ as String,durasiPulangCepat: null == durasiPulangCepat ? _self.durasiPulangCepat
 as String,fotoPulang: null == fotoPulang ? _self.fotoPulang : fotoPulang // ignore: cast_nullable_to_non_nullable
 as String,cabang: null == cabang ? _self.cabang : cabang // ignore: cast_nullable_to_non_nullable
 as ClockOutBranchEntity,distanceFromBranch: null == distanceFromBranch ? _self.distanceFromBranch : distanceFromBranch // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isEligibleLembur: null == isEligibleLembur ? _self.isEligibleLembur : isEligibleLembur // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

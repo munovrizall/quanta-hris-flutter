@@ -22,7 +22,6 @@ class AbsenteeCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.medium),
       decoration: BoxDecoration(
-        color: AppColors.surface,
         borderRadius: BorderRadius.circular(AppRadius.medium),
         border: Border.all(color: AppColors.border),
       ),
@@ -32,7 +31,7 @@ class AbsenteeCard extends StatelessWidget {
             width: AppSizes.avatarMedium,
             height: AppSizes.avatarMedium,
             decoration: BoxDecoration(
-              color: AppColors.primary10,
+              color: AppColors.neutral100,
               shape: BoxShape.circle,
             ),
             child: Icon(Icons.person, color: color),
@@ -58,7 +57,7 @@ class AbsenteeCard extends StatelessWidget {
                         vertical: AppSpacing.xxs,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.primary10,
+                        color: AppColors.neutral100,
                         borderRadius: BorderRadius.circular(AppRadius.small),
                       ),
                       child: Text(

@@ -8,7 +8,7 @@ abstract class OvertimeHistoryResponse with _$OvertimeHistoryResponse {
   @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
   const factory OvertimeHistoryResponse({
     required String tanggal,
-    String? absensiId,
+    @JsonKey(name: 'absensi_id') String? absensiId,
     String? jamMasuk,
     String? statusMasuk,
     String? jamPulang,

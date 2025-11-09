@@ -155,6 +155,7 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
         durasiPulangCepat: data.durasiPulangCepat ?? '00:00:00',
         fotoPulang: data.fotoPulang ?? '',
         distanceFromBranch: data.distanceFromBranch ?? '0m',
+        isEligibleLembur: data.isEligibleLembur ?? false,
         cabang: ClockOutBranchEntity(
           cabangId: data.cabang?.cabangId ?? '',
           namaCabang: data.cabang?.namaCabang ?? '',

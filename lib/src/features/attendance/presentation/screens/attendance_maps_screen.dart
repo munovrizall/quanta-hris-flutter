@@ -180,10 +180,38 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
 
   void _handleConfirmPresence() {
     final branch = _selectedBranch;
-    if (branch == null) return;
+    final user = _userLocation;
 
+    // Validasi: harus ada branch dan lokasi user
+    if (branch == null || user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Lokasi Anda belum tersedia atau tidak ada cabang terpilih',
+          ),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    // Cek apakah dalam radius
+    if (!_isWithinSelectedBranchRadius) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Anda berada di luar lokasi yang ditentukan'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    // Verifikasi berhasil
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Berhasil memilih cabang ${branch.branchName}.')),
+      const SnackBar(
+        content: Text('Verifikasi Lokasi Berhasil'),
+        backgroundColor: AppColors.success,
+      ),
     );
 
     // Navigate to attendance screen with type parameter
@@ -193,10 +221,7 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
 
     context.push(
       '/attendance?type=$typeParam',
-      extra: {
-        'latitude': _userLocation!.latitude,
-        'longitude': _userLocation!.longitude,
-      },
+      extra: {'latitude': user.latitude, 'longitude': user.longitude},
     );
   }
 
@@ -372,9 +397,7 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
                   hasLocation: _userLocation != null,
                   isWithinRadius: _isWithinSelectedBranchRadius,
                   isTracking: _positionStreamSubscription != null,
-                  onConfirm: _isWithinSelectedBranchRadius
-                      ? _handleConfirmPresence
-                      : null,
+                  onConfirm: _handleConfirmPresence,
                   onLocateMe: _userLocation != null
                       ? () => _moveTo(_userLocation!)
                       : null,
@@ -464,7 +487,7 @@ class _BranchInfoPanel extends StatelessWidget {
           else
             Text('Menunggu lokasi Anda...', style: AppTypography.bodyLarge),
           const SizedBox(height: 16),
-          PrimaryButton(text: 'Absen Sekarang', onPressed: onConfirm),
+          PrimaryButton(text: 'Verifikasi Lokasi', onPressed: onConfirm),
         ],
       ),
     );

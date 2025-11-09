@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$OvertimeHistoryResponse {
 
- String get tanggal; String? get absensiId; String? get jamMasuk; String? get statusMasuk; String? get jamPulang; String? get statusPulang; String get statusAbsensi; bool get eligibleLembur; String? get durasiLemburTerhitung; String get jamPulangPerusahaan; OvertimeSubmissionResponse? get lemburPengajuan;
+ String get tanggal;@JsonKey(name: 'absensi_id') String? get absensiId; String? get jamMasuk; String? get statusMasuk; String? get jamPulang; String? get statusPulang; String get statusAbsensi; bool get eligibleLembur; String? get durasiLemburTerhitung; String get jamPulangPerusahaan; OvertimeSubmissionResponse? get lemburPengajuan;
 /// Create a copy of OvertimeHistoryResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $OvertimeHistoryResponseCopyWith<$Res>  {
   factory $OvertimeHistoryResponseCopyWith(OvertimeHistoryResponse value, $Res Function(OvertimeHistoryResponse) _then) = _$OvertimeHistoryResponseCopyWithImpl;
 @useResult
 $Res call({
- String tanggal, String? absensiId, String? jamMasuk, String? statusMasuk, String? jamPulang, String? statusPulang, String statusAbsensi, bool eligibleLembur, String? durasiLemburTerhitung, String jamPulangPerusahaan, OvertimeSubmissionResponse? lemburPengajuan
+ String tanggal,@JsonKey(name: 'absensi_id') String? absensiId, String? jamMasuk, String? statusMasuk, String? jamPulang, String? statusPulang, String statusAbsensi, bool eligibleLembur, String? durasiLemburTerhitung, String jamPulangPerusahaan, OvertimeSubmissionResponse? lemburPengajuan
 });
 
 
@@ -175,7 +175,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String tanggal,  String? absensiId,  String? jamMasuk,  String? statusMasuk,  String? jamPulang,  String? statusPulang,  String statusAbsensi,  bool eligibleLembur,  String? durasiLemburTerhitung,  String jamPulangPerusahaan,  OvertimeSubmissionResponse? lemburPengajuan)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String tanggal, @JsonKey(name: 'absensi_id')  String? absensiId,  String? jamMasuk,  String? statusMasuk,  String? jamPulang,  String? statusPulang,  String statusAbsensi,  bool eligibleLembur,  String? durasiLemburTerhitung,  String jamPulangPerusahaan,  OvertimeSubmissionResponse? lemburPengajuan)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _OvertimeHistoryResponse() when $default != null:
 return $default(_that.tanggal,_that.absensiId,_that.jamMasuk,_that.statusMasuk,_that.jamPulang,_that.statusPulang,_that.statusAbsensi,_that.eligibleLembur,_that.durasiLemburTerhitung,_that.jamPulangPerusahaan,_that.lemburPengajuan);case _:
@@ -196,7 +196,7 @@ return $default(_that.tanggal,_that.absensiId,_that.jamMasuk,_that.statusMasuk,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String tanggal,  String? absensiId,  String? jamMasuk,  String? statusMasuk,  String? jamPulang,  String? statusPulang,  String statusAbsensi,  bool eligibleLembur,  String? durasiLemburTerhitung,  String jamPulangPerusahaan,  OvertimeSubmissionResponse? lemburPengajuan)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String tanggal, @JsonKey(name: 'absensi_id')  String? absensiId,  String? jamMasuk,  String? statusMasuk,  String? jamPulang,  String? statusPulang,  String statusAbsensi,  bool eligibleLembur,  String? durasiLemburTerhitung,  String jamPulangPerusahaan,  OvertimeSubmissionResponse? lemburPengajuan)  $default,) {final _that = this;
 switch (_that) {
 case _OvertimeHistoryResponse():
 return $default(_that.tanggal,_that.absensiId,_that.jamMasuk,_that.statusMasuk,_that.jamPulang,_that.statusPulang,_that.statusAbsensi,_that.eligibleLembur,_that.durasiLemburTerhitung,_that.jamPulangPerusahaan,_that.lemburPengajuan);case _:
@@ -216,7 +216,7 @@ return $default(_that.tanggal,_that.absensiId,_that.jamMasuk,_that.statusMasuk,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String tanggal,  String? absensiId,  String? jamMasuk,  String? statusMasuk,  String? jamPulang,  String? statusPulang,  String statusAbsensi,  bool eligibleLembur,  String? durasiLemburTerhitung,  String jamPulangPerusahaan,  OvertimeSubmissionResponse? lemburPengajuan)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String tanggal, @JsonKey(name: 'absensi_id')  String? absensiId,  String? jamMasuk,  String? statusMasuk,  String? jamPulang,  String? statusPulang,  String statusAbsensi,  bool eligibleLembur,  String? durasiLemburTerhitung,  String jamPulangPerusahaan,  OvertimeSubmissionResponse? lemburPengajuan)?  $default,) {final _that = this;
 switch (_that) {
 case _OvertimeHistoryResponse() when $default != null:
 return $default(_that.tanggal,_that.absensiId,_that.jamMasuk,_that.statusMasuk,_that.jamPulang,_that.statusPulang,_that.statusAbsensi,_that.eligibleLembur,_that.durasiLemburTerhitung,_that.jamPulangPerusahaan,_that.lemburPengajuan);case _:
@@ -231,11 +231,11 @@ return $default(_that.tanggal,_that.absensiId,_that.jamMasuk,_that.statusMasuk,_
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class _OvertimeHistoryResponse implements OvertimeHistoryResponse {
-  const _OvertimeHistoryResponse({required this.tanggal, this.absensiId, this.jamMasuk, this.statusMasuk, this.jamPulang, this.statusPulang, required this.statusAbsensi, required this.eligibleLembur, this.durasiLemburTerhitung, required this.jamPulangPerusahaan, this.lemburPengajuan});
+  const _OvertimeHistoryResponse({required this.tanggal, @JsonKey(name: 'absensi_id') this.absensiId, this.jamMasuk, this.statusMasuk, this.jamPulang, this.statusPulang, required this.statusAbsensi, required this.eligibleLembur, this.durasiLemburTerhitung, required this.jamPulangPerusahaan, this.lemburPengajuan});
   factory _OvertimeHistoryResponse.fromJson(Map<String, dynamic> json) => _$OvertimeHistoryResponseFromJson(json);
 
 @override final  String tanggal;
-@override final  String? absensiId;
+@override@JsonKey(name: 'absensi_id') final  String? absensiId;
 @override final  String? jamMasuk;
 @override final  String? statusMasuk;
 @override final  String? jamPulang;
@@ -279,7 +279,7 @@ abstract mixin class _$OvertimeHistoryResponseCopyWith<$Res> implements $Overtim
   factory _$OvertimeHistoryResponseCopyWith(_OvertimeHistoryResponse value, $Res Function(_OvertimeHistoryResponse) _then) = __$OvertimeHistoryResponseCopyWithImpl;
 @override @useResult
 $Res call({
- String tanggal, String? absensiId, String? jamMasuk, String? statusMasuk, String? jamPulang, String? statusPulang, String statusAbsensi, bool eligibleLembur, String? durasiLemburTerhitung, String jamPulangPerusahaan, OvertimeSubmissionResponse? lemburPengajuan
+ String tanggal,@JsonKey(name: 'absensi_id') String? absensiId, String? jamMasuk, String? statusMasuk, String? jamPulang, String? statusPulang, String statusAbsensi, bool eligibleLembur, String? durasiLemburTerhitung, String jamPulangPerusahaan, OvertimeSubmissionResponse? lemburPengajuan
 });
 
 

@@ -17,6 +17,7 @@ abstract class PostClockOutResponse with _$PostClockOutResponse {
     String? fotoPulang,
     ClockOutBranchResponse? cabang,
     String? distanceFromBranch,
+    bool? isEligibleLembur,
   }) = _PostClockOutResponse;
 
   factory PostClockOutResponse.fromJson(Map<String, dynamic> json) =>

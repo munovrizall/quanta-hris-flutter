@@ -55,11 +55,12 @@ extension OvertimeEventPatterns on OvertimeEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchHistory value)?  fetchHistory,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _FetchHistory value)?  fetchHistory,TResult Function( _SubmitOvertime value)?  submitOvertime,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _FetchHistory() when fetchHistory != null:
-return fetchHistory(_that);case _:
+return fetchHistory(_that);case _SubmitOvertime() when submitOvertime != null:
+return submitOvertime(_that);case _:
   return orElse();
 
 }
@@ -77,11 +78,12 @@ return fetchHistory(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchHistory value)  fetchHistory,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _FetchHistory value)  fetchHistory,required TResult Function( _SubmitOvertime value)  submitOvertime,}){
 final _that = this;
 switch (_that) {
 case _FetchHistory():
-return fetchHistory(_that);case _:
+return fetchHistory(_that);case _SubmitOvertime():
+return submitOvertime(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -98,11 +100,12 @@ return fetchHistory(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchHistory value)?  fetchHistory,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _FetchHistory value)?  fetchHistory,TResult? Function( _SubmitOvertime value)?  submitOvertime,}){
 final _that = this;
 switch (_that) {
 case _FetchHistory() when fetchHistory != null:
-return fetchHistory(_that);case _:
+return fetchHistory(_that);case _SubmitOvertime() when submitOvertime != null:
+return submitOvertime(_that);case _:
   return null;
 
 }
@@ -119,10 +122,11 @@ return fetchHistory(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchHistory,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  fetchHistory,TResult Function( SubmitOvertimeParams params)?  submitOvertime,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FetchHistory() when fetchHistory != null:
-return fetchHistory();case _:
+return fetchHistory();case _SubmitOvertime() when submitOvertime != null:
+return submitOvertime(_that.params);case _:
   return orElse();
 
 }
@@ -140,10 +144,11 @@ return fetchHistory();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchHistory,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  fetchHistory,required TResult Function( SubmitOvertimeParams params)  submitOvertime,}) {final _that = this;
 switch (_that) {
 case _FetchHistory():
-return fetchHistory();case _:
+return fetchHistory();case _SubmitOvertime():
+return submitOvertime(_that.params);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -160,10 +165,11 @@ return fetchHistory();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchHistory,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  fetchHistory,TResult? Function( SubmitOvertimeParams params)?  submitOvertime,}) {final _that = this;
 switch (_that) {
 case _FetchHistory() when fetchHistory != null:
-return fetchHistory();case _:
+return fetchHistory();case _SubmitOvertime() when submitOvertime != null:
+return submitOvertime(_that.params);case _:
   return null;
 
 }
@@ -202,5 +208,80 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _SubmitOvertime implements OvertimeEvent {
+  const _SubmitOvertime({required this.params});
+  
+
+ final  SubmitOvertimeParams params;
+
+/// Create a copy of OvertimeEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SubmitOvertimeCopyWith<_SubmitOvertime> get copyWith => __$SubmitOvertimeCopyWithImpl<_SubmitOvertime>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubmitOvertime&&(identical(other.params, params) || other.params == params));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,params);
+
+@override
+String toString() {
+  return 'OvertimeEvent.submitOvertime(params: $params)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SubmitOvertimeCopyWith<$Res> implements $OvertimeEventCopyWith<$Res> {
+  factory _$SubmitOvertimeCopyWith(_SubmitOvertime value, $Res Function(_SubmitOvertime) _then) = __$SubmitOvertimeCopyWithImpl;
+@useResult
+$Res call({
+ SubmitOvertimeParams params
+});
+
+
+$SubmitOvertimeParamsCopyWith<$Res> get params;
+
+}
+/// @nodoc
+class __$SubmitOvertimeCopyWithImpl<$Res>
+    implements _$SubmitOvertimeCopyWith<$Res> {
+  __$SubmitOvertimeCopyWithImpl(this._self, this._then);
+
+  final _SubmitOvertime _self;
+  final $Res Function(_SubmitOvertime) _then;
+
+/// Create a copy of OvertimeEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? params = null,}) {
+  return _then(_SubmitOvertime(
+params: null == params ? _self.params : params // ignore: cast_nullable_to_non_nullable
+as SubmitOvertimeParams,
+  ));
+}
+
+/// Create a copy of OvertimeEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SubmitOvertimeParamsCopyWith<$Res> get params {
+  
+  return $SubmitOvertimeParamsCopyWith<$Res>(_self.params, (value) {
+    return _then(_self.copyWith(params: value));
+  });
+}
+}
 
 // dart format on

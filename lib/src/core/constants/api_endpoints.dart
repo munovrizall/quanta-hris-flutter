@@ -16,6 +16,7 @@ class ApiEndpoints {
   static const LeaveEndpoints cuti = LeaveEndpoints();
 
   static const PermissionEndpoints izin = PermissionEndpoints();
+
   static const OvertimeEndpoints lembur = OvertimeEndpoints();
 }
 
@@ -78,6 +79,6 @@ class PermissionEndpoints {
 class OvertimeEndpoints {
   const OvertimeEndpoints();
 
-  final String getHistory = '/lembur/history';
+  final String getHistory = '/lembur';
   final String postLembur = '/lembur';
 }

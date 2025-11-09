@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:quanta_hris/src/core/di/injector.dart';
 import 'package:quanta_hris/src/features/overtime/domain/entities/overtime_history_entity.dart';
@@ -147,11 +148,6 @@ class _OvertimeHistoryCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const _StatusChip(
-                  label: 'Eligible',
-                  color: AppColors.success,
-                  icon: Icons.check_circle,
-                ),
               ],
             ),
             const SizedBox(height: AppSpacing.medium),
@@ -174,28 +170,32 @@ class _OvertimeHistoryCard extends StatelessWidget {
               label: 'Durasi Lembur Terhitung',
               value: item.durasiLemburTerhitung ?? '-',
             ),
-            const SizedBox(height: AppSpacing.small),
-            _OvertimeDetailRow(
-              icon: Icons.apartment,
-              label: 'Jam Pulang Perusahaan',
-              value: item.jamPulangPerusahaan,
-            ),
             const SizedBox(height: AppSpacing.medium),
             if (item.lemburPengajuan != null)
               _OvertimeSubmissionSummary(submission: item.lemburPengajuan!)
-            else
+            else if (item.absensiId != null && item.absensiId!.isNotEmpty)
               PrimaryButton(
                 text: 'Ajukan Lembur',
                 variant: PrimaryButtonVariant.outline,
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Form pengajuan lembur belum tersedia untuk versi ini.',
-                      ),
-                    ),
+                onPressed: () async {
+                  final shouldRefresh = await context.push<bool>(
+                    '/overtime/submit',
+                    extra: item,
                   );
+                  if (!context.mounted) return;
+                  if (shouldRefresh == true) {
+                    context.read<OvertimeBloc>().add(
+                      const OvertimeEvent.fetchHistory(),
+                    );
+                  }
                 },
+              )
+            else
+              Text(
+                'ID absensi tidak tersedia, hubungi admin.',
+                style: AppTypography.labelSmall.copyWith(
+                  color: AppColors.error,
+                ),
               ),
           ],
         ),
@@ -239,7 +239,10 @@ class _OvertimeSubmissionSummary extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.medium),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.primary10, AppColors.primary10.withOpacity(0.4)],
+          colors: [
+            AppColors.primary10,
+            AppColors.primary10.withValues(alpha: 0.4),
+          ],
         ),
         borderRadius: BorderRadius.circular(AppRadius.large),
         border: Border.all(color: AppColors.primary200),
@@ -359,7 +362,7 @@ class _StatusChip extends StatelessWidget {
         vertical: AppSpacing.xs,
       ),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(AppRadius.medium),
       ),
       child: Row(

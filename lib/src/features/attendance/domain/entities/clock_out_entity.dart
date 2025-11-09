@@ -15,6 +15,7 @@ abstract class ClockOutEntity with _$ClockOutEntity {
     required String fotoPulang,
     required ClockOutBranchEntity cabang,
     required String distanceFromBranch,
+    required bool isEligibleLembur,
   }) = _ClockOutEntity;
 }
 

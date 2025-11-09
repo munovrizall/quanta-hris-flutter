@@ -21,6 +21,7 @@ _PostClockOutResponse _$PostClockOutResponseFromJson(
       ? null
       : ClockOutBranchResponse.fromJson(json['cabang'] as Map<String, dynamic>),
   distanceFromBranch: json['distance_from_branch'] as String?,
+  isEligibleLembur: json['is_eligible_lembur'] as bool?,
 );
 
 Map<String, dynamic> _$PostClockOutResponseToJson(
@@ -36,6 +37,7 @@ Map<String, dynamic> _$PostClockOutResponseToJson(
   'foto_pulang': instance.fotoPulang,
   'cabang': instance.cabang,
   'distance_from_branch': instance.distanceFromBranch,
+  'is_eligible_lembur': instance.isEligibleLembur,
 };
 
 _ClockOutBranchResponse _$ClockOutBranchResponseFromJson(

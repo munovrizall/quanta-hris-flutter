@@ -32,7 +32,7 @@ class _HistoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Riwayat Absensi')),
+      appBar: AppBar(title: const Text('Histori Absensi')),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.large),

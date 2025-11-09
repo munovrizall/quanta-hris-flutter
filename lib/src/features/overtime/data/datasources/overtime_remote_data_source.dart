@@ -3,9 +3,14 @@ import 'package:quanta_hris/src/core/constants/api_endpoints.dart';
 import 'package:quanta_hris/src/core/error/error_handler.dart';
 import 'package:quanta_hris/src/core/network/api_response_model.dart';
 import 'package:quanta_hris/src/features/overtime/data/models/get_overtime_history_response.dart';
+import 'package:quanta_hris/src/features/overtime/data/models/submit_overtime_request.dart';
+import 'package:quanta_hris/src/features/overtime/data/models/submit_overtime_response.dart';
 
 abstract class OvertimeRemoteDataSource {
   Future<ApiResponseModel<List<OvertimeHistoryResponse>>> getOvertimeHistory();
+  Future<ApiResponseModel<SubmitOvertimeResponse>> submitOvertime({
+    required SubmitOvertimeRequest request,
+  });
 }
 
 class OvertimeRemoteDataSourceImpl implements OvertimeRemoteDataSource {
@@ -27,6 +32,26 @@ class OvertimeRemoteDataSourceImpl implements OvertimeRemoteDataSource {
               ),
             )
             .toList(),
+      );
+    } catch (error) {
+      throw ErrorHandler.handle(error);
+    }
+  }
+
+  @override
+  Future<ApiResponseModel<SubmitOvertimeResponse>> submitOvertime({
+    required SubmitOvertimeRequest request,
+  }) async {
+    try {
+      final response = await _dio.post(
+        ApiEndpoints.lembur.postLembur,
+        data: await request.toFormData(),
+        options: Options(contentType: 'multipart/form-data'),
+      );
+
+      return ApiResponseModel.fromJson(
+        response.data as Map<String, dynamic>,
+        (json) => SubmitOvertimeResponse.fromJson(json as Map<String, dynamic>),
       );
     } catch (error) {
       throw ErrorHandler.handle(error);
