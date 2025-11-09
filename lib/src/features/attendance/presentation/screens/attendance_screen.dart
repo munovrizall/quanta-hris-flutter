@@ -16,8 +16,10 @@ import 'package:quanta_hris/src/core/ml/recognizer.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_bloc.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_event.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_state.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/widgets/attendance_overtime_dialog.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/widgets/attendance_success_dialog.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/widgets/face_detector_painter.dart';
+import 'package:quanta_hris/src/features/overtime/domain/entities/overtime_history_entity.dart';
 import 'package:quanta_hris/src/shared/styles/app_colors.dart';
 
 enum AttendanceType { clockIn, clockOut }
@@ -437,8 +439,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           setState(() {
             isFaceRegistered = isValid;
             faceStatusMessage = isValid
-                ? 'Wajah sudah terdaftar'
-                : 'Wajah belum terdaftar';
+                ? 'Wajah terdaftar, verifikasi berhasil'
+                : 'Wajah tidak terdaftar';
           });
         }
       }
@@ -698,42 +700,118 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       );
     } else {
       final clockOutData = state.clockOutData!;
+      final isEligibleLembur = clockOutData.isEligibleLembur;
 
       // Show dialog for clock out
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (dialogContext) => AttendanceSuccessDialog(
-          title: 'Absensi Pulang Berhasil!',
-          message:
-              state.clockOutSuccessMessage ?? 'Absensi pulang berhasil dicatat',
-          waktuAbsensi: clockOutData.waktuPulang,
-          statusTerlambat: clockOutData.statusPulang,
-          durasiTerlambat: clockOutData.durasiPulangCepat != '00:00:00'
-              ? clockOutData.durasiPulangCepat
-              : null,
-          jarak: clockOutData.distanceFromBranch,
-          icon: Icons.check_circle,
-          iconColor: AppColors.success,
-        ),
-      );
+      if (isEligibleLembur) {
+        // Show overtime dialog with options
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (dialogContext) => AttendanceOvertimeDialog(
+            message:
+                state.clockOutSuccessMessage ??
+                'Absensi pulang berhasil dicatat',
+            waktuAbsensi: clockOutData.waktuPulang,
+            statusTerlambat: clockOutData.statusPulang,
+            durasiTerlambat: clockOutData.durasiPulangCepat != '00:00:00'
+                ? clockOutData.durasiPulangCepat
+                : null,
+            jarak: clockOutData.distanceFromBranch,
+            onSubmitOvertime: () {
+              // Close dialog
+              Navigator.of(dialogContext).pop();
+
+              // Create OvertimeHistoryEntity from clock out data
+              final overtimeHistory = OvertimeHistoryEntity(
+                tanggal: clockOutData.tanggal,
+                absensiId: clockOutData.absensiId,
+                jamMasuk: null, // Not available in clock out data
+                statusMasuk: null,
+                jamPulang: clockOutData.waktuPulang,
+                statusPulang: clockOutData.statusPulang,
+                statusAbsensi: clockOutData.statusAbsensi,
+                eligibleLembur: true,
+                durasiLemburTerhitung: null, // Will be calculated in form
+                jamPulangPerusahaan: '', // Not available, will use default
+                lemburPengajuan: null,
+              );
+
+              // Pop back to maps screen, then pop again to home screen
+              context.pop(); // Pop from attendance screen to maps screen
+              context.pop(); // Pop from maps screen to home screen
+
+              // Navigate to overtime submit screen
+              context.push('/overtime/submit', extra: overtimeHistory);
+            },
+            onDismiss: () {
+              // Close dialog
+              Navigator.of(dialogContext).pop();
+
+              // Pop back to maps screen, then pop again to home screen
+              context.pop(); // Pop from attendance screen to maps screen
+              context.pop(); // Pop from maps screen to home screen
+            },
+          ),
+        );
+      } else {
+        // Show regular success dialog
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (dialogContext) => AttendanceSuccessDialog(
+            title: 'Absensi Pulang Berhasil!',
+            message:
+                state.clockOutSuccessMessage ??
+                'Absensi pulang berhasil dicatat',
+            waktuAbsensi: clockOutData.waktuPulang,
+            statusTerlambat: clockOutData.statusPulang,
+            durasiTerlambat: clockOutData.durasiPulangCepat != '00:00:00'
+                ? clockOutData.durasiPulangCepat
+                : null,
+            jarak: clockOutData.distanceFromBranch,
+            icon: Icons.check_circle,
+            iconColor: AppColors.success,
+          ),
+        );
+
+        // Wait for 4 seconds for non-eligible overtime case
+        await Future.delayed(const Duration(seconds: 4));
+
+        // Close dialog
+        if (!mounted) return;
+        Navigator.of(context).pop(); // Close dialog
+
+        if (!mounted) return;
+
+        // Pop back to maps screen, then pop again to home screen
+        context.pop(); // Pop from attendance screen to maps screen
+
+        if (!mounted) return;
+        context.pop(); // Pop from maps screen to home screen
+      }
+
+      // Return early for eligible lembur case (no auto-dismiss)
+      if (isEligibleLembur) return;
     }
 
-    // Wait for 4 seconds
-    await Future.delayed(const Duration(seconds: 4));
+    // Wait for 4 seconds (for clock in case only now)
+    if (isClockIn) {
+      await Future.delayed(const Duration(seconds: 4));
 
-    // Close dialog
-    if (!mounted) return;
-    Navigator.of(context).pop(); // Close dialog
+      // Close dialog
+      if (!mounted) return;
+      Navigator.of(context).pop(); // Close dialog
 
-    if (!mounted) return;
+      if (!mounted) return;
 
-    // Pop back to maps screen, then pop again to home screen
-    // This ensures the refetch code in home screen's _handleMainButtonTap is executed
-    context.pop(); // Pop from attendance screen to maps screen
+      // Pop back to maps screen, then pop again to home screen
+      // This ensures the refetch code in home screen's _handleMainButtonTap is executed
+      context.pop(); // Pop from attendance screen to maps screen
 
-    if (!mounted) return;
-    context.pop(); // Pop from maps screen to home screen
+      if (!mounted) return;
+      context.pop(); // Pop from maps screen to home screen
+    }
   }
 
   @override
@@ -874,16 +952,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                   style: const TextStyle(
                                     color: AppColors.white,
                                     fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                Text(
-                                  _isFetchingLocation
-                                      ? 'Mendapatkan lokasi...'
-                                      : latitude != null
-                                      ? 'Lokasi tersedia'
-                                      : 'Lokasi tidak tersedia',
-                                  style: const TextStyle(
-                                    color: AppColors.white,
                                   ),
                                 ),
                               ],

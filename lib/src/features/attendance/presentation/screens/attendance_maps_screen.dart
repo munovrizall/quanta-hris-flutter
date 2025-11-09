@@ -14,6 +14,7 @@ import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_state.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/screens/attendance_screen.dart';
 import 'package:quanta_hris/src/shared/styles/app_colors.dart';
+import 'package:quanta_hris/src/shared/styles/app_measures.dart';
 import 'package:quanta_hris/src/shared/styles/app_typography.dart';
 import 'package:quanta_hris/src/shared/widgets/primary_button.dart';
 
@@ -179,24 +180,10 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
   }
 
   void _handleConfirmPresence() {
-    final branch = _selectedBranch;
     final user = _userLocation;
 
-    // Validasi: harus ada branch dan lokasi user
-    if (branch == null || user == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Lokasi Anda belum tersedia atau tidak ada cabang terpilih',
-          ),
-          backgroundColor: AppColors.error,
-        ),
-      );
-      return;
-    }
-
     // Cek apakah dalam radius
-    if (!_isWithinSelectedBranchRadius) {
+    if (!_isWithinSelectedBranchRadius || user == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Anda berada di luar lokasi yang ditentukan'),
@@ -441,53 +428,13 @@ class _BranchInfoPanel extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: PrimaryButton(
-                  text: 'Lokasi Saya',
-                  onPressed: onLocateMe,
-                  variant: PrimaryButtonVariant.outline,
-                  size: PrimaryButtonSize.medium,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          if (selectedBranch != null) ...[
-            Text(
-              selectedBranch!.branchName,
-              style: AppTypography.heading3.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              'Radius ${selectedBranch!.radiusLocation} meter',
-              style: AppTypography.bodySmall,
-            ),
-            const SizedBox(height: 8),
-            if (!hasLocation)
-              Text(
-                'Lokasi Anda belum tersedia.',
-                style: AppTypography.bodySmall.copyWith(
-                  color: AppColors.warning,
-                ),
-              )
-            else if (!isWithinRadius)
-              Text(
-                'Anda berada di luar radius cabang ini.',
-                style: AppTypography.bodySmall.copyWith(color: AppColors.error),
-              ),
-          ] else if (hasLocation)
-            Text(
-              'Anda berada di luar radius cabang mana pun.',
-              style: AppTypography.bodyLarge,
-            )
-          else
-            Text('Menunggu lokasi Anda...', style: AppTypography.bodyLarge),
-          const SizedBox(height: 16),
           PrimaryButton(text: 'Verifikasi Lokasi', onPressed: onConfirm),
+          const SizedBox(height: AppSpacing.medium),
+          PrimaryButton(
+            text: 'Lokasi Saya',
+            onPressed: onLocateMe,
+            variant: PrimaryButtonVariant.outline,
+          ),
         ],
       ),
     );
