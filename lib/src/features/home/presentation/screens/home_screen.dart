@@ -113,16 +113,12 @@ class _HomeViewState extends State<_HomeView> {
   }
 
   Future<void> _loadSessionUser() async {
-    AppLogger.d('🔄 Loading session user...');
     try {
       final user = await _sessionStorageRepository.getUser();
-      AppLogger.d('👤 User loaded: ${user?.namaLengkap}');
-      AppLogger.d('🎭 Face embedding: ${user?.faceEmbedding}');
 
       if (!mounted) return;
 
       final isValid = _isValidFaceEmbedding(user?.faceEmbedding);
-      AppLogger.d('✅ Face embedding valid: $isValid');
 
       setState(() {
         _hasFaceEmbedding = isValid;
@@ -145,14 +141,10 @@ class _HomeViewState extends State<_HomeView> {
   }
 
   Future<void> _handleMainButtonTap(BuildContext context) async {
-    AppLogger.d('🔘 Main button tapped');
-    AppLogger.d('📋 _hasFaceEmbedding: $_hasFaceEmbedding');
 
     // Jika belum punya face embedding, ke register face
     if (!_hasFaceEmbedding) {
-      AppLogger.d('➡️ Navigating to /register-face');
       await context.push('/register-face');
-      AppLogger.d('⬅️ Returned from /register-face');
       await _loadSessionUser();
       return;
     }
@@ -163,12 +155,7 @@ class _HomeViewState extends State<_HomeView> {
     final isClockedIn = attendanceStatus?.isClockedIn ?? false;
     final isClockedOut = attendanceStatus?.isClockedOut ?? false;
 
-    AppLogger.d(
-      '📊 Attendance status - isClockedIn: $isClockedIn, isClockedOut: $isClockedOut',
-    );
-
     if (isClockedIn && isClockedOut) {
-      AppLogger.d('✅ Already completed attendance today');
       if (!mounted) return;
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
@@ -182,17 +169,14 @@ class _HomeViewState extends State<_HomeView> {
 
     if (isClockedIn) {
       // Sudah clock in, maka sekarang clock out
-      AppLogger.d('➡️ Navigating to attendance-maps (clockOut)');
       await context.push('/attendance-maps?type=clockOut');
     } else {
       // Belum clock in, maka sekarang clock in
-      AppLogger.d('➡️ Navigating to attendance-maps (clockIn)');
       await context.push('/attendance-maps?type=clockIn');
     }
 
     // Refetch attendance status after returning from attendance screen
     if (!mounted) return;
-    AppLogger.d('🔄 Refetching attendance status');
     context.read<HomeBloc>().add(const HomeEvent.fetchAttendanceStatusData());
     await _loadSessionUser();
   }
@@ -429,102 +413,112 @@ class _HomeViewState extends State<_HomeView> {
                   padding: const EdgeInsets.symmetric(
                     horizontal: AppSpacing.large,
                   ),
-                  child: Material(
-                    elevation: 4,
-                    borderRadius: BorderRadius.circular(AppRadius.xl),
-                    child: InkWell(
-                      onTap: (hasCompletedAttendance || isButtonLoading)
-                          ? null
-                          : () async {
-                              AppLogger.d('🖱️ InkWell onTap triggered');
-                              AppLogger.d(
-                                '🚦 hasCompletedAttendance: $hasCompletedAttendance',
-                              );
-                              AppLogger.d(
-                                '⏳ isButtonLoading: $isButtonLoading',
-                              );
-                              AppLogger.d(
-                                '🎭 _hasFaceEmbedding: $_hasFaceEmbedding',
-                              );
-                              await _handleMainButtonTap(context);
-                            },
-                      borderRadius: BorderRadius.circular(AppRadius.xl),
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: AppSpacing.large,
-                        ),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: isButtonLoading
-                                ? [AppColors.neutral400, AppColors.neutral300]
-                                : !_hasFaceEmbedding
-                                ? [AppColors.primary, AppColors.primary200]
-                                : hasCompletedAttendance
-                                ? [AppColors.success, AppColors.successLight]
-                                : isClockedIn
-                                ? [AppColors.warning, AppColors.warningLight]
-                                : [AppColors.primary, AppColors.primary200],
-                          ),
+                  child: Builder(
+                    builder: (context) {
+                      // Tentukan apakah button enabled
+                      // Prioritas: Jika belum punya face embedding, SELALU enabled untuk register
+                      // Jika sudah punya face embedding, cek hasCompletedAttendance dan isButtonLoading
+                      final isButtonEnabled =
+                          !_hasFaceEmbedding ||
+                          (!hasCompletedAttendance && !isButtonLoading);
+
+                      return Material(
+                        elevation: 4,
+                        borderRadius: BorderRadius.circular(AppRadius.xl),
+                        child: InkWell(
+                          onTap: !isButtonEnabled
+                              ? null
+                              : () async {
+                                  await _handleMainButtonTap(context);
+                                },
                           borderRadius: BorderRadius.circular(AppRadius.xl),
-                        ),
-                        child: Column(
-                          children: [
-                            if (isButtonLoading)
-                              const SizedBox(
-                                width: AppSizes.iconHuge,
-                                height: AppSizes.iconHuge,
-                                child: CircularProgressIndicator(
-                                  color: AppColors.white,
-                                  strokeWidth: 3,
-                                ),
-                              )
-                            else
-                              Icon(
-                                !_hasFaceEmbedding
-                                    ? Icons.person_add_alt_1
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: AppSpacing.large,
+                            ),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: isButtonLoading
+                                    ? [
+                                        AppColors.neutral400,
+                                        AppColors.neutral300,
+                                      ]
+                                    : !_hasFaceEmbedding
+                                    ? [AppColors.primary, AppColors.primary200]
                                     : hasCompletedAttendance
-                                    ? Icons.bedtime
+                                    ? [
+                                        AppColors.success,
+                                        AppColors.successLight,
+                                      ]
                                     : isClockedIn
-                                    ? Icons.logout
-                                    : Icons.fingerprint,
-                                size: AppSizes.iconHuge,
-                                color: AppColors.white,
+                                    ? [
+                                        AppColors.warning,
+                                        AppColors.warningLight,
+                                      ]
+                                    : [AppColors.primary, AppColors.primary200],
                               ),
-                            const SizedBox(height: AppSpacing.xs),
-                            Text(
-                              isButtonLoading
-                                  ? 'Memuat...'
-                                  : !_hasFaceEmbedding
-                                  ? AppStrings.home.registerFaceButtonText
-                                  : hasCompletedAttendance
-                                  ? 'Selamat beristirahat'
-                                  : isClockedIn
-                                  ? AppStrings.home.checkOutButtonText
-                                  : AppStrings.home.checkInButtonText,
-                              style: AppTypography.buttonLarge.copyWith(
-                                letterSpacing: 1.2,
-                              ),
+                              borderRadius: BorderRadius.circular(AppRadius.xl),
                             ),
-                            const SizedBox(height: AppSpacing.xs),
-                            Text(
-                              isButtonLoading
-                                  ? 'Mohon tunggu sebentar...'
-                                  : !_hasFaceEmbedding
-                                  ? AppStrings.home.registerFaceSubtitle
-                                  : hasCompletedAttendance
-                                  ? 'Anda telah menyelesaikan absensi hari ini'
-                                  : isClockedIn
-                                  ? AppStrings.home.checkOutSubtitle
-                                  : AppStrings.home.checkInSubtitle,
-                              style: AppTypography.bodySmall.copyWith(
-                                color: AppColors.white.withOpacity(0.9),
-                              ),
+                            child: Column(
+                              children: [
+                                if (isButtonLoading)
+                                  const SizedBox(
+                                    width: AppSizes.iconHuge,
+                                    height: AppSizes.iconHuge,
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.white,
+                                      strokeWidth: 3,
+                                    ),
+                                  )
+                                else
+                                  Icon(
+                                    !_hasFaceEmbedding
+                                        ? Icons.person_add_alt_1
+                                        : hasCompletedAttendance
+                                        ? Icons.bedtime
+                                        : isClockedIn
+                                        ? Icons.logout
+                                        : Icons.fingerprint,
+                                    size: AppSizes.iconHuge,
+                                    color: AppColors.white,
+                                  ),
+                                const SizedBox(height: AppSpacing.xs),
+                                Text(
+                                  isButtonLoading
+                                      ? 'Memuat...'
+                                      : !_hasFaceEmbedding
+                                      ? AppStrings.home.registerFaceButtonText
+                                      : hasCompletedAttendance
+                                      ? 'Selamat beristirahat'
+                                      : isClockedIn
+                                      ? AppStrings.home.checkOutButtonText
+                                      : AppStrings.home.checkInButtonText,
+                                  style: AppTypography.buttonLarge.copyWith(
+                                    letterSpacing: 1.2,
+                                  ),
+                                ),
+                                const SizedBox(height: AppSpacing.xs),
+                                Text(
+                                  isButtonLoading
+                                      ? 'Mohon tunggu sebentar...'
+                                      : !_hasFaceEmbedding
+                                      ? AppStrings.home.registerFaceSubtitle
+                                      : hasCompletedAttendance
+                                      ? 'Anda telah menyelesaikan absensi hari ini'
+                                      : isClockedIn
+                                      ? AppStrings.home.checkOutSubtitle
+                                      : AppStrings.home.checkInSubtitle,
+                                  style: AppTypography.bodySmall.copyWith(
+                                    color: AppColors.white.withOpacity(0.9),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ),
 
