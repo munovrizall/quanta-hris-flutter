@@ -10,6 +10,7 @@ import 'package:quanta_hris/src/core/bloc/session_state.dart';
 import 'package:quanta_hris/src/core/constants/app_strings.dart';
 import 'package:quanta_hris/src/core/di/injector.dart';
 import 'package:quanta_hris/src/core/storage/session_storage_repository.dart';
+import 'package:quanta_hris/src/core/utils/app_logger.dart';
 import 'package:quanta_hris/src/core/utils/date_formatter.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:quanta_hris/src/features/authentication/presentation/bloc/auth_state.dart';
@@ -112,14 +113,22 @@ class _HomeViewState extends State<_HomeView> {
   }
 
   Future<void> _loadSessionUser() async {
+    AppLogger.d('🔄 Loading session user...');
     try {
       final user = await _sessionStorageRepository.getUser();
+      AppLogger.d('👤 User loaded: ${user?.namaLengkap}');
+      AppLogger.d('🎭 Face embedding: ${user?.faceEmbedding}');
+
       if (!mounted) return;
 
+      final isValid = _isValidFaceEmbedding(user?.faceEmbedding);
+      AppLogger.d('✅ Face embedding valid: $isValid');
+
       setState(() {
-        _hasFaceEmbedding = _isValidFaceEmbedding(user?.faceEmbedding);
+        _hasFaceEmbedding = isValid;
       });
-    } catch (_) {
+    } catch (e) {
+      AppLogger.e('❌ Error loading session user', error: e);
       if (!mounted) return;
       setState(() {
         _hasFaceEmbedding = false;
@@ -136,9 +145,14 @@ class _HomeViewState extends State<_HomeView> {
   }
 
   Future<void> _handleMainButtonTap(BuildContext context) async {
+    AppLogger.d('🔘 Main button tapped');
+    AppLogger.d('📋 _hasFaceEmbedding: $_hasFaceEmbedding');
+
     // Jika belum punya face embedding, ke register face
     if (!_hasFaceEmbedding) {
+      AppLogger.d('➡️ Navigating to /register-face');
       await context.push('/register-face');
+      AppLogger.d('⬅️ Returned from /register-face');
       await _loadSessionUser();
       return;
     }
@@ -149,7 +163,12 @@ class _HomeViewState extends State<_HomeView> {
     final isClockedIn = attendanceStatus?.isClockedIn ?? false;
     final isClockedOut = attendanceStatus?.isClockedOut ?? false;
 
+    AppLogger.d(
+      '📊 Attendance status - isClockedIn: $isClockedIn, isClockedOut: $isClockedOut',
+    );
+
     if (isClockedIn && isClockedOut) {
+      AppLogger.d('✅ Already completed attendance today');
       if (!mounted) return;
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
@@ -163,14 +182,17 @@ class _HomeViewState extends State<_HomeView> {
 
     if (isClockedIn) {
       // Sudah clock in, maka sekarang clock out
+      AppLogger.d('➡️ Navigating to attendance-maps (clockOut)');
       await context.push('/attendance-maps?type=clockOut');
     } else {
       // Belum clock in, maka sekarang clock in
+      AppLogger.d('➡️ Navigating to attendance-maps (clockIn)');
       await context.push('/attendance-maps?type=clockIn');
     }
 
     // Refetch attendance status after returning from attendance screen
     if (!mounted) return;
+    AppLogger.d('🔄 Refetching attendance status');
     context.read<HomeBloc>().add(const HomeEvent.fetchAttendanceStatusData());
     await _loadSessionUser();
   }
@@ -413,7 +435,19 @@ class _HomeViewState extends State<_HomeView> {
                     child: InkWell(
                       onTap: (hasCompletedAttendance || isButtonLoading)
                           ? null
-                          : () async => _handleMainButtonTap(context),
+                          : () async {
+                              AppLogger.d('🖱️ InkWell onTap triggered');
+                              AppLogger.d(
+                                '🚦 hasCompletedAttendance: $hasCompletedAttendance',
+                              );
+                              AppLogger.d(
+                                '⏳ isButtonLoading: $isButtonLoading',
+                              );
+                              AppLogger.d(
+                                '🎭 _hasFaceEmbedding: $_hasFaceEmbedding',
+                              );
+                              await _handleMainButtonTap(context);
+                            },
                       borderRadius: BorderRadius.circular(AppRadius.xl),
                       child: Container(
                         width: double.infinity,
