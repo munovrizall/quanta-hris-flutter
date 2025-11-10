@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:quanta_hris/src/core/error/app_exception.dart';
+import 'package:quanta_hris/src/core/utils/app_logger.dart';
 import 'package:quanta_hris/src/features/payroll/data/datasources/payroll_remote_data_source.dart';
 import 'package:quanta_hris/src/features/payroll/data/models/get_slip_gaji_detail_response.dart';
 import 'package:quanta_hris/src/features/payroll/domain/entities/slip_gaji_detail_entity.dart';
@@ -62,22 +63,7 @@ class PayrollRepositoryImpl implements PayrollRepository {
   }) async {
     try {
       final bytes = await _remoteDataSource.downloadSlipGaji(tahun, bulan);
-      Directory targetDir;
-      if (Platform.isAndroid) {
-        final defaultDownloadDir = Directory('/storage/emulated/0/Download');
-        if (await defaultDownloadDir.exists()) {
-          targetDir = defaultDownloadDir;
-        } else {
-          final externalDir =
-              await getExternalStorageDirectory() ??
-              await getApplicationDocumentsDirectory();
-          targetDir = Directory(p.join(externalDir.path, 'Download'));
-        }
-      } else {
-        targetDir = await getApplicationDocumentsDirectory();
-      }
-
-      await targetDir.create(recursive: true);
+      final Directory targetDir = await getTemporaryDirectory();
 
       final month = bulan.toString().padLeft(2, '0');
       final fileName = 'Slip_Gaji_$tahun-$month.pdf';
@@ -89,8 +75,12 @@ class PayrollRepositoryImpl implements PayrollRepository {
       return filePath;
     } on ApiException {
       rethrow;
-    } catch (_) {
-      throw ApiException('Gagal mengunduh slip gaji.');
+    } catch (e, s) { 
+      AppLogger.d('🔥 ERROR di PayrollRepositoryImpl.downloadSlipGaji: $e');
+      AppLogger.d('STACK TRACE: $s');
+
+      // Lebih baik teruskan pesan error aslinya
+      throw ApiException('Gagal mengunduh slip gaji: $e');
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:quanta_hris/src/core/error/app_exception.dart';
+import 'package:quanta_hris/src/core/utils/app_logger.dart';
 import 'package:quanta_hris/src/features/payroll/domain/usecases/download_slip_gaji_usecase.dart';
 import 'package:quanta_hris/src/features/payroll/domain/usecases/get_slip_gaji_detail_usecase.dart';
 import 'package:quanta_hris/src/features/payroll/domain/usecases/get_slip_gaji_usecase.dart';
@@ -130,11 +131,16 @@ class PayrollBloc extends Bloc<PayrollEvent, PayrollState> {
           downloadSlipGajiError: error.message,
         ),
       );
-    } catch (_) {
+    } catch (e, s) { 
+      AppLogger.d('🔥 ERROR di PayrollBloc._onDownloadSlipGaji: $e');
+      AppLogger.d('STACK TRACE: $s');
+      // =========================
+
       emit(
         state.copyWith(
           isDownloadingSlipGaji: false,
-          downloadSlipGajiError: 'Gagal mengunduh slip gaji.',
+          // Tampilkan pesan error yang lebih detail ke UI
+          downloadSlipGajiError: 'Terjadi kesalahan: $e',
         ),
       );
     }
