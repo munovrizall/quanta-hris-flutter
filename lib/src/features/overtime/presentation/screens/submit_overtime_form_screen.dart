@@ -76,7 +76,7 @@ class _SubmitOvertimeFormViewState extends State<_SubmitOvertimeFormView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Ajukan Lembur')),
+      appBar: AppBar(title: const Text('Pengajuan Lembur')),
       body: BlocConsumer<OvertimeBloc, OvertimeState>(
         listener: (context, state) {
           if (state.submitSuccessMessage != null) {
@@ -151,7 +151,7 @@ class _SubmitOvertimeFormViewState extends State<_SubmitOvertimeFormView> {
                 child: Padding(
                   padding: const EdgeInsets.all(AppSpacing.large),
                   child: PrimaryButton(
-                    text: 'Kirim Pengajuan',
+                    text: 'Simpan',
                     isLoading: state.isSubmitLoading,
                     onPressed: state.isSubmitLoading ? null : _onSubmit,
                   ),

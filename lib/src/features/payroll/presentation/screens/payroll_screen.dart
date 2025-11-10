@@ -101,49 +101,47 @@ class _PayrollContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: slipGaji.length,
-        itemBuilder: (context, index) {
-          final slip = slipGaji[index];
-          return Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.large),
-            ),
-            elevation: 2,
-            margin: const EdgeInsets.only(bottom: AppSpacing.medium),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(AppRadius.large),
-              onTap: () => _openSlipDetail(context, slip),
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.large),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            slip.periodeLabel,
-                            style: AppTypography.heading3,
-                          ),
+    return ListView.builder(
+      itemCount: slipGaji.length,
+      itemBuilder: (context, index) {
+        final slip = slipGaji[index];
+        return Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.large),
+          ),
+          elevation: 2,
+          margin: const EdgeInsets.only(bottom: AppSpacing.medium),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(AppRadius.large),
+            onTap: () => _openSlipDetail(context, slip),
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.large),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          slip.periodeLabel,
+                          style: AppTypography.heading3,
                         ),
-                        const Icon(Icons.chevron_right),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.small),
-                    _PayrollDetailRow(
-                      label: 'Gaji Bersih',
-                      value: _formatCurrency(slip.gajiBersih),
-                    ),
-                  ],
-                ),
+                      ),
+                      const Icon(Icons.chevron_right),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.small),
+                  _PayrollDetailRow(
+                    label: 'Gaji Bersih',
+                    value: _formatCurrency(slip.gajiBersih),
+                  ),
+                ],
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
