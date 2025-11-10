@@ -69,6 +69,16 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
         desiredAccuracy: LocationAccuracy.high,
       );
 
+      // Check if location is mocked
+      if (position.isMocked) {
+        setState(() {
+          _locationError =
+              'Tidak dapat melakukan absensi karena terdeteksi menggunakan fake GPS';
+          _isFetchingLocation = false;
+        });
+        return;
+      }
+
       final userLatLng = LatLng(position.latitude, position.longitude);
 
       setState(() {
@@ -179,8 +189,39 @@ class _AttendanceMapsScreenState extends State<AttendanceMapsScreen> {
     return distanceInMeters <= branch.radiusLocation;
   }
 
-  void _handleConfirmPresence() {
+  Future<void> _handleConfirmPresence() async {
     final user = _userLocation;
+
+    // Get current position untuk check isMocked
+    try {
+      final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      // Check if using fake GPS
+      if (position.isMocked) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Tidak dapat melakukan absensi karena terdeteksi menggunakan fake GPS',
+            ),
+            backgroundColor: AppColors.error,
+          ),
+        );
+        return;
+      }
+    } catch (e) {
+      AppLogger.d('❌ Error checking location: $e');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Gagal mendapatkan lokasi saat ini'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
 
     // Cek apakah dalam radius
     if (!_isWithinSelectedBranchRadius || user == null) {
