@@ -52,7 +52,7 @@ class _PermissionView extends StatelessWidget {
               }
 
               final history = state.history;
-              if (history == null || history.riwayat.isEmpty) {
+              if (history == null) {
                 return const _PermissionEmpty();
               }
 
@@ -72,6 +72,8 @@ class _PermissionContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasHistory = history.riwayat.isNotEmpty;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -86,13 +88,22 @@ class _PermissionContent extends StatelessWidget {
                 const PermissionEvent.fetchPermissionHistory(),
               );
             },
-            child: ListView.builder(
-              itemCount: history.riwayat.length,
-              itemBuilder: (context, index) {
-                final item = history.riwayat[index];
-                return _PermissionHistoryCard(item: item);
-              },
-            ),
+            child: hasHistory
+                ? ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: history.riwayat.length,
+                    itemBuilder: (context, index) {
+                      final item = history.riwayat[index];
+                      return _PermissionHistoryCard(item: item);
+                    },
+                  )
+                : ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: const [
+                      SizedBox(height: AppSpacing.large),
+                      _PermissionInlineEmptyState(),
+                    ],
+                  ),
           ),
         ),
       ],
@@ -421,6 +432,39 @@ class _PermissionEmpty extends StatelessWidget {
       child: Text(
         'Belum ada pengajuan izin.',
         style: AppTypography.bodyMedium.copyWith(color: AppColors.neutral600),
+      ),
+    );
+  }
+}
+
+class _PermissionInlineEmptyState extends StatelessWidget {
+  const _PermissionInlineEmptyState();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.assignment_turned_in, size: 64, color: AppColors.neutral400),
+          const SizedBox(height: AppSpacing.large),
+          Text(
+            'Belum Ada Riwayat Izin',
+            style: AppTypography.heading3.copyWith(
+              color: AppColors.neutral600,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: AppSpacing.small),
+          Text(
+            'Tekan tombol \"Tambah Pengajuan Izin\" untuk membuat permohonan baru.',
+            style: AppTypography.bodyMedium.copyWith(
+              color: AppColors.neutral500,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

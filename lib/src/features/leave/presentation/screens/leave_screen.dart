@@ -52,7 +52,7 @@ class _LeaveView extends StatelessWidget {
               }
 
               final leaveHistory = state.leaveHistory;
-              if (leaveHistory == null || leaveHistory.riwayat.isEmpty) {
+              if (leaveHistory == null) {
                 return const _LeaveEmpty();
               }
 
@@ -72,6 +72,8 @@ class _LeaveContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasHistory = leaveHistory.riwayat.isNotEmpty;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -84,13 +86,22 @@ class _LeaveContent extends StatelessWidget {
             onRefresh: () async {
               context.read<LeaveBloc>().add(const LeaveEvent.getLeaveHistory());
             },
-            child: ListView.builder(
-              itemCount: leaveHistory.riwayat.length,
-              itemBuilder: (context, index) {
-                final item = leaveHistory.riwayat[index];
-                return _LeaveHistoryCard(item: item);
-              },
-            ),
+            child: hasHistory
+                ? ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: leaveHistory.riwayat.length,
+                    itemBuilder: (context, index) {
+                      final item = leaveHistory.riwayat[index];
+                      return _LeaveHistoryCard(item: item);
+                    },
+                  )
+                : ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: const [
+                      SizedBox(height: AppSpacing.large),
+                      _LeaveInlineEmptyState(),
+                    ],
+                  ),
           ),
         ),
       ],
@@ -482,6 +493,39 @@ class _LeaveEmpty extends StatelessWidget {
             style: AppTypography.bodyMedium.copyWith(
               color: AppColors.neutral500,
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LeaveInlineEmptyState extends StatelessWidget {
+  const _LeaveInlineEmptyState();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.event_busy, size: 64, color: AppColors.neutral400),
+          const SizedBox(height: AppSpacing.large),
+          Text(
+            'Belum Ada Riwayat Cuti',
+            style: AppTypography.heading3.copyWith(
+              color: AppColors.neutral600,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: AppSpacing.small),
+          Text(
+            'Gunakan tombol di atas untuk mengajukan cuti pertama Anda.',
+            style: AppTypography.bodyMedium.copyWith(
+              color: AppColors.neutral500,
+            ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
