@@ -143,7 +143,7 @@ class AttendanceOvertimeDialog extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Anda Eligible untuk Lembur',
+                          'Lembur Tersedia',
                           style: AppTypography.labelLarge.copyWith(
                             fontWeight: FontWeight.w600,
                             color: AppColors.primary,
@@ -151,7 +151,7 @@ class AttendanceOvertimeDialog extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          'Apakah ingin mengajukan lembur?',
+                          'Ingin mengajukan lembur?',
                           style: AppTypography.bodySmall.copyWith(
                             color: AppColors.neutral600,
                           ),
@@ -177,7 +177,7 @@ class AttendanceOvertimeDialog extends StatelessWidget {
                 const SizedBox(width: AppSpacing.medium),
                 Expanded(
                   child: PrimaryButton(
-                    text: 'Ajukan Lembur',
+                    text: 'Ya',
                     onPressed: onSubmitOvertime,
                   ),
                 ),

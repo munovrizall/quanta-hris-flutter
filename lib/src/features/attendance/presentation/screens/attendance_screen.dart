@@ -744,12 +744,43 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               // Navigate to overtime submit screen
               context.push('/overtime/submit', extra: overtimeHistory);
             },
-            onDismiss: () {
-              // Close dialog
+            onDismiss: () async {
+              // Close overtime dialog
               Navigator.of(dialogContext).pop();
+
+              // Show success dialog (same as non-eligible case)
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (successDialogContext) => AttendanceSuccessDialog(
+                  title: 'Absensi Pulang Berhasil!',
+                  message:
+                      state.clockOutSuccessMessage ??
+                      'Absensi pulang berhasil dicatat',
+                  waktuAbsensi: clockOutData.waktuPulang,
+                  statusTerlambat: clockOutData.statusPulang,
+                  durasiTerlambat: clockOutData.durasiPulangCepat != '00:00:00'
+                      ? clockOutData.durasiPulangCepat
+                      : null,
+                  jarak: clockOutData.distanceFromBranch,
+                  icon: Icons.check_circle,
+                  iconColor: AppColors.success,
+                ),
+              );
+
+              // Wait for 4 seconds
+              await Future.delayed(const Duration(seconds: 4));
+
+              // Close success dialog
+              if (!mounted) return;
+              Navigator.of(context).pop();
+
+              if (!mounted) return;
 
               // Pop back to maps screen, then pop again to home screen
               context.pop(); // Pop from attendance screen to maps screen
+
+              if (!mounted) return;
               context.pop(); // Pop from maps screen to home screen
             },
           ),
