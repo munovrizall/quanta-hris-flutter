@@ -24,6 +24,11 @@ class NotFoundException extends ApiException {
   NotFoundException(String message) : super(message, 404);
 }
 
+/// Dilempar saat server mengembalikan respons 422 (Unprocessable Entity).
+class UnprocessableEntityException extends ApiException {
+  UnprocessableEntityException(String message) : super(message, 422);
+}
+
 /// Dilempar untuk error server (5xx).
 class ServerException extends ApiException {
   ServerException(String message) : super(message, 500);
