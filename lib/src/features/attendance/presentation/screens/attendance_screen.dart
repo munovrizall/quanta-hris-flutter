@@ -16,6 +16,7 @@ import 'package:quanta_hris/src/core/ml/recognizer.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_bloc.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_event.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/bloc/attendance_state.dart';
+import 'package:quanta_hris/src/features/attendance/presentation/widgets/attendance_failure_dialog.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/widgets/attendance_overtime_dialog.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/widgets/attendance_success_dialog.dart';
 import 'package:quanta_hris/src/features/attendance/presentation/widgets/face_detector_painter.dart';
@@ -395,12 +396,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       for (Face face in faces) {
         Rect faceRect = face.boundingBox;
 
-        final int x = faceRect.left
-            .clamp(0.0, (image!.width - 1).toDouble())
-            .toInt();
-        final int y = faceRect.top
-            .clamp(0.0, (image!.height - 1).toDouble())
-            .toInt();
+        final int x =
+            faceRect.left.clamp(0.0, (image!.width - 1).toDouble()).toInt();
+        final int y =
+            faceRect.top.clamp(0.0, (image!.height - 1).toDouble()).toInt();
         final int maxWidth = image!.width - x;
         final int maxHeight = image!.height - y;
 
@@ -709,8 +708,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           context: context,
           barrierDismissible: false,
           builder: (dialogContext) => AttendanceOvertimeDialog(
-            message:
-                state.clockOutSuccessMessage ??
+            message: state.clockOutSuccessMessage ??
                 'Absensi pulang berhasil dicatat',
             waktuAbsensi: clockOutData.waktuPulang,
             statusTerlambat: clockOutData.statusPulang,
@@ -754,8 +752,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 barrierDismissible: false,
                 builder: (successDialogContext) => AttendanceSuccessDialog(
                   title: 'Absensi Pulang Berhasil!',
-                  message:
-                      state.clockOutSuccessMessage ??
+                  message: state.clockOutSuccessMessage ??
                       'Absensi pulang berhasil dicatat',
                   waktuAbsensi: clockOutData.waktuPulang,
                   statusTerlambat: clockOutData.statusPulang,
@@ -792,8 +789,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           barrierDismissible: false,
           builder: (dialogContext) => AttendanceSuccessDialog(
             title: 'Absensi Pulang Berhasil!',
-            message:
-                state.clockOutSuccessMessage ??
+            message: state.clockOutSuccessMessage ??
                 'Absensi pulang berhasil dicatat',
             waktuAbsensi: clockOutData.waktuPulang,
             statusTerlambat: clockOutData.statusPulang,
@@ -1027,23 +1023,38 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                   _isProcessing = false;
                                 });
 
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(errorMessage),
-                                    backgroundColor: AppColors.error,
-                                  ),
-                                );
+                                if (isClockIn) {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (_) => AttendanceFailureDialog(
+                                      message: 'Absensi Gagal',
+                                      subtitle:
+                                          errorMessage,
+                                    ),
+                                  ).whenComplete(() {
+                                    if (!mounted) return;
+                                    _restartImageStream();
+                                  });
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(errorMessage),
+                                      backgroundColor: AppColors.error,
+                                    ),
+                                  );
 
-                                // Restart image stream after error
-                                _restartImageStream();
+                                  // Restart image stream after error
+                                  _restartImageStream();
+                                }
                               }
 
                               // Handle success
                               final isSuccess = isClockIn
                                   ? (state.clockInData != null &&
-                                        state.clockInSuccessMessage != null)
+                                      state.clockInSuccessMessage != null)
                                   : (state.clockOutData != null &&
-                                        state.clockOutSuccessMessage != null);
+                                      state.clockOutSuccessMessage != null);
 
                               if (isSuccess) {
                                 setState(() {
@@ -1067,8 +1078,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                 );
                               }
                               return IconButton(
-                                onPressed:
-                                    isFaceRegistered &&
+                                onPressed: isFaceRegistered &&
                                         !_isFetchingLocation &&
                                         latitude != null &&
                                         longitude != null &&
@@ -1076,8 +1086,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                     ? _takeAbsen
                                     : null,
                                 icon: const Icon(Icons.circle, size: 70.0),
-                                color:
-                                    isFaceRegistered &&
+                                color: isFaceRegistered &&
                                         !_isFetchingLocation &&
                                         latitude != null &&
                                         longitude != null &&
