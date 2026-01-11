@@ -15,6 +15,17 @@ If you are looking for the Backend API & Admin Panel, please check: [Quanta HRIS
 - **Attendance History**: Browse your complete attendance logs.
 - **Profile Management**: Update your personal profile information.
 
+## Screenshots
+
+|                                   Login                                   |                                  Home                                   |                                     Attendance                                      |
+| :-----------------------------------------------------------------------: | :---------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
+| <img src="assets/screenshots/login.png" alt="Login Screen" width="200" /> | <img src="assets/screenshots/home.png" alt="Home Screen" width="200" /> | <img src="assets/screenshots/attendance.png" alt="Attendance Screen" width="200" /> |
+
+|                                    Profile                                    |                                    Payslip                                    |                                   Leave                                   |
+| :---------------------------------------------------------------------------: | :---------------------------------------------------------------------------: | :-----------------------------------------------------------------------: |
+| <img src="assets/screenshots/profile.png" alt="Profile Screen" width="200" /> | <img src="assets/screenshots/payslip.png" alt="Payslip Screen" width="200" /> | <img src="assets/screenshots/leave.png" alt="Leave Screen" width="200" /> |
+
+
 ## Tech Stack
 
 - **Framework**: Flutter (Dart)
