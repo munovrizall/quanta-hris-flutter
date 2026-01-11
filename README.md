@@ -19,11 +19,11 @@ If you are looking for the Backend API & Admin Panel, please check: [Quanta HRIS
 
 |                                   Login                                   |                                  Home                                   |                                     Attendance                                      |
 | :-----------------------------------------------------------------------: | :---------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
-| <img src="assets/screenshots/login.png" alt="Login Screen" width="200" /> | <img src="assets/screenshots/home.png" alt="Home Screen" width="200" /> | <img src="assets/screenshots/attendance.png" alt="Attendance Screen" width="200" /> |
+| <img src="https://github.com/user-attachments/assets/1e138eae-b83b-4c12-b475-9d32c6c2dfbe" alt="Login Screen" width="200" /> | <img src="https://github.com/user-attachments/assets/b24098f3-3da3-496c-9ae1-ae313b6b5fa3" alt="Home Screen" width="200" /> | <img src="https://github.com/user-attachments/assets/bbe0edb9-ddc8-4dbe-95f5-141a7bedca77" alt="Attendance Screen" width="200" /> |
 
 |                                    Profile                                    |                                    Payslip                                    |                                   Leave                                   |
 | :---------------------------------------------------------------------------: | :---------------------------------------------------------------------------: | :-----------------------------------------------------------------------: |
-| <img src="assets/screenshots/profile.png" alt="Profile Screen" width="200" /> | <img src="assets/screenshots/payslip.png" alt="Payslip Screen" width="200" /> | <img src="assets/screenshots/leave.png" alt="Leave Screen" width="200" /> |
+| <img src="https://github.com/user-attachments/assets/f90ff5c1-6488-4041-9472-7646bb9924d5" alt="Profile Screen" width="200" /> | <img src="https://github.com/user-attachments/assets/e587bb47-fd29-4d6d-aee4-679408a3d610" alt="Payslip Screen" width="200" /> | <img src="https://github.com/user-attachments/assets/2638f9d4-5257-4b1b-bd87-69d79712f30e" alt="Leave Screen" width="200" /> |
 
 
 ## Tech Stack
